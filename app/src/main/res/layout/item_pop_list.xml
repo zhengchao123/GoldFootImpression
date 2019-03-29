@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+                name="click"
+                type="com.gold.footimpression.ui.event.EventHandler"/>
+
+        <variable
+                name="content"
+                type="java.lang.String"/>
+    </data>
+
+    <TextView
+            android:id="@+id/tv_cancle_appointment_agent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#323232"
+            android:textSize="@dimen/text_size_18"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@{content}"/>
+</layout>

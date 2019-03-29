@@ -1,0 +1,12 @@
+<resources>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="building">建设中...\n敬请期待</string>
+    <string name="tab_main">首页</string>
+    <string name="tab_life">生活</string>
+    <string name="tab_asstant">助手</string>
+    <string name="tab_mine">我的</string>
+    <string name="cancle">取消</string>
+    <string name="sure">确认</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="loadimage">
+        <attr name="image_url" format="string"/>
+        <attr name="img_reference" format="integer"/>
+        <attr name="circle_img_url" format="string"/>
+        <attr name="circle_img_reference" format="integer"/>
+        <attr name="round_corner_img_url" format="string"/>
+        <attr name="round_top_corner_img_url" format="string"/>
+        <attr name="round_radius" format="float"/>
+        <attr name="round_corner_recycler_img_url" format="string"/>
+        <attr name="custom_selected" format="boolean"/>
+
+
+        <attr name="has_fix_size" format="boolean"/>
+        <attr name="diliver_style" format="integer"/>
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr name="view_style" format="enum">
+            <enum name="listview" value="0"/>
+            <enum name="gridview" value="1"/>
+            <enum name="staggered" value="2"/>
+        </attr>
+        <attr name="column" format="integer">
+        </attr>
+    </declare-styleable>
+</resources>

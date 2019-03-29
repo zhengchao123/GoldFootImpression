@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+                name="click"
+                type="com.gold.footimpression.ui.event.EventHandler"/>
+    </data>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+            <RadioButton
+                    android:id="@+id/rb_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/tab_main"
+                    android:checked="true"
+                    android:drawablePadding="5dp"
+                    android:textColor="@drawable/color_tab_select"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/bg_tab_main_select"/>
+            <RadioButton
+                    android:id="@+id/rb_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/tab_life"
+                    android:drawablePadding="5dp"
+                    android:textColor="@drawable/color_tab_select"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/bg_tab_main_select"/>
+            <RadioButton
+                    android:id="@+id/rb_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/tab_life"
+                    android:drawablePadding="5dp"
+                    android:textColor="@drawable/color_tab_select"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/bg_tab_main_select"/>
+            <RadioButton
+                    android:id="@+id/rb_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:text="@string/tab_mine"
+                    android:drawablePadding="5dp"
+                    android:textColor="@drawable/color_tab_select"
+                    android:gravity="center_horizontal"
+                    android:drawableTop="@drawable/bg_tab_main_select"/>
+        </RadioGroup>
+
+        <FrameLayout
+                android:id="@+id/main_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/radio_group">
+
+        </FrameLayout>
+    </RelativeLayout>
+</layout>

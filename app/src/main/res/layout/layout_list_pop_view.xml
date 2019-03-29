@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="click"
+                type="com.gold.footimpression.ui.event.EventHandler"/>
+        <variable
+                name="adapter"
+                type="com.gold.footimpression.bindingadapter.CommonAdapter"/>
+    </data>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="300dp">
+
+        <LinearLayout
+                android:id="@+id/ll_pop_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:background="#ffffffff">
+            <com.gold.footimpression.widget.AutoRecyclerView
+                    android:id="@+id/list_pop_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:diliver_style="3"
+                    android:adapter="@{adapter}"/>
+            <View
+                    android:id="@+id/view_diliver"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/diliver_line_color"/>
+            <TextView
+                    android:id="@+id/tv_cancle_appointment_agent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#323232"
+                    android:textSize="@dimen/text_size_18"
+                    android:gravity="center"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{click::onClickView}"
+                    android:text="@string/cancle"/>
+
+        </LinearLayout>
+        <View
+                android:id="@+id/view_pop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_pop"
+                android:clickable="true"
+                android:focusable="true"
+                android:alpha="0.5"
+                android:onClick="@{click::onClickView}"
+                android:layout_above="@id/ll_pop_content"
+        />
+
+
+    </RelativeLayout>
+
+</layout>
