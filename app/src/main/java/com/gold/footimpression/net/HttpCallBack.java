@@ -52,7 +52,8 @@ public class HttpCallBack implements Callback {
     @Override
     public void onFailure(Call call, IOException e) {
         String errorMsg = call.request().url().toString();
-        errorMsg += " request  faild: " + e.getMessage();
+        errorMsg += " request  faild: " + "\n head: " + getHeadStr(call)+  "\n errMsg: "+e.getMessage();
+
         if (null != mOkhttpRequest) {
             Map<String, String> params = mOkhttpRequest.getmParams();
             Gson gson = new Gson();
@@ -81,6 +82,7 @@ public class HttpCallBack implements Callback {
         String responseBodyStr = response.body().string();
         LogUtils.INSTANCE.e(TAG, call.request().url()
                 + " \n method: " + call.request().method()
+                + " \n head: " + getHeadStr(call)
                 + " \n params: " + (call.request().method().equals("POST") ? gson.toJson(mOkhttpRequest.getmParams()) : "")
                 + " \n response code: " + response.code()
                 + " \n response body: " + (null == mOkhttpRequest.getmDownloadListener() ? responseBodyStr : ""));
@@ -127,4 +129,12 @@ public class HttpCallBack implements Callback {
         }
     }
 
+    private String getHeadStr(Call call) {
+        String str = "";
+
+        for (int i = 0; i < call.request().headers().names().size(); i++) {
+            str = str + " name = " + call.request().headers().name(i) + " value =" + call.request().headers().value(i) + "\n";
+        }
+        return str;
+    }
 }

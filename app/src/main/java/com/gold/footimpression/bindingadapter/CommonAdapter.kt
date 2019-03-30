@@ -81,6 +81,7 @@ open class CommonAdapter<T>() : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             dataBinding!!.setVariable(variableId, dataItem)
             dataBinding!!.setVariable(clickVariabledId, object : WorkerClickEvent<T>(mContext!!, dataItem) {
                 override fun onClickView(view: View?) {
+                    defaultAction(false)
                     super.onClickView(view)
                     LogUtils.i(TAG, " click item ${view?.id} position $position 2222")
                     mOnItemClick?.onItemClick(view!!, position, instance!!)

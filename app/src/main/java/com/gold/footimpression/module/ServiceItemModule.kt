@@ -56,5 +56,18 @@ class ServiceItemModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.priceMember)
         }
-
+    var selected=false
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.selected)
+        }
+    var planners: MutableList<PlannerModule> = mutableListOf()
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.planners)
+        }
 }

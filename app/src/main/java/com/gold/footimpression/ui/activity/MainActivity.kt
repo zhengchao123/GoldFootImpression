@@ -7,10 +7,7 @@ import androidx.fragment.app.FragmentManager
 import com.gold.footimpression.R
 import com.gold.footimpression.databinding.ActivityMainBinding
 import com.gold.footimpression.ui.base.BaseActivity
-import com.gold.footimpression.ui.fragment.OrderPreviewFragment
-import com.gold.footimpression.ui.fragment.RoomStateFragment
-import com.gold.footimpression.ui.fragment.OrderInputFragment
-import com.gold.footimpression.ui.fragment.SettingFragment
+import com.gold.footimpression.ui.fragment.*
 
 class MainActivity : BaseActivity() {
 
@@ -25,7 +22,7 @@ class MainActivity : BaseActivity() {
     private val TAG_ORDER_PREVIEW_FRAGMENT = "ORDER_PREVIEW_FRAGMENT";
     private val TAG_ROOM_STATE_FRAGMENT = "ROOM_STATE_FRAGMENT";
     private val TAG_SETTING_FRAGMENT = "SETTING_FRAGMENT";
-
+    private val TAG_SERVICE_ITEMS = "SERVICE_ITEMS_FRAGMENT";
 
     private lateinit var mMainActivityBinding: ActivityMainBinding
 
@@ -53,22 +50,18 @@ class MainActivity : BaseActivity() {
 
     override fun initListener() {
         super.initListener()
-        mMainActivityBinding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        mMainActivityBinding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_1 -> {
-//                    Toast.makeText(mContext, " rb_1 checked", Toast.LENGTH_LONG).show()
                     showFragment(TAG_ORDER_INPUT_FRAGMENT);
                 }
                 R.id.rb_2 -> {
-//                    Toast.makeText(mContext, " rb_2 checked", Toast.LENGTH_LONG).show()
                     showFragment(TAG_ROOM_STATE_FRAGMENT);
                 }
                 R.id.rb_3 -> {
-//                    Toast.makeText(mContext, " rb_3 checked", Toast.LENGTH_LONG).show()
                     showFragment(TAG_ORDER_PREVIEW_FRAGMENT);
                 }
                 R.id.rb_4 -> {
-//                    Toast.makeText(mContext, " rb_4 checked", Toast.LENGTH_LONG).show()
                     showFragment(TAG_SETTING_FRAGMENT);
                 }
             }
@@ -76,25 +69,46 @@ class MainActivity : BaseActivity() {
     }
 
 
-    fun showFragment(tag: String?): Unit {
+    public var mData: Bundle?=null
+
+    fun showFragment(tag: String?, data: Bundle = Bundle()): Unit {
+        mData = data
         if (mCurrentFragment != null) {
             getSupportFragmentManager().beginTransaction().hide(mCurrentFragment!!).commit();
         }
         mCurrentFragment = mFragmentManager.findFragmentByTag(tag);
         if (mCurrentFragment == null) {
             when (tag) {
-                TAG_ORDER_INPUT_FRAGMENT ->
+                TAG_ORDER_INPUT_FRAGMENT -> {
                     mCurrentFragment = OrderInputFragment();
-                TAG_ROOM_STATE_FRAGMENT ->
+                }
+
+                TAG_ROOM_STATE_FRAGMENT -> {
                     mCurrentFragment = RoomStateFragment();
+                }
+
                 TAG_ORDER_PREVIEW_FRAGMENT ->
                     mCurrentFragment = OrderPreviewFragment();
                 TAG_SETTING_FRAGMENT ->
                     mCurrentFragment = SettingFragment();
+                TAG_SERVICE_ITEMS -> {
+                    mCurrentFragment = ServiceItemsFragment()
+                }
 
+
+            }
+            if (mCurrentFragment is ServiceItemsFragment) {
+                if (data.keySet().size > 0) {
+                    (mCurrentFragment as ServiceItemsFragment).arguments = data
+                }
             }
             mFragmentManager.beginTransaction().add(mMainFrameLayout.id, this.mCurrentFragment!!, tag).commit();
         } else {
+            if (mCurrentFragment is ServiceItemsFragment) {
+                if (data.keySet().size > 0) {
+                    (mCurrentFragment as ServiceItemsFragment).arguments = data
+                }
+            }
             mFragmentManager.beginTransaction().show(mCurrentFragment!!).commit();
         }
     }

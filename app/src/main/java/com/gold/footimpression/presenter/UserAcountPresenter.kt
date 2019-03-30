@@ -3,9 +3,7 @@ package com.gold.footimpression.presenter
 import android.app.Activity
 import android.text.TextUtils
 import com.gold.footimpression.R
-import com.gold.footimpression.module.AcountModule
-import com.gold.footimpression.module.CustomerSourceModule
-import com.gold.footimpression.module.VIPInfoModule
+import com.gold.footimpression.module.*
 import com.gold.footimpression.net.*
 import com.gold.footimpression.net.utils.LogUtils
 import com.google.gson.Gson
@@ -52,7 +50,7 @@ class UserAcountPresenter(activity: Activity?) {
                     return
                 }
                 runCallBack {
-                    callBack(code, exceptionMsg, null)
+                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
                 }
             }
 
@@ -110,7 +108,7 @@ class UserAcountPresenter(activity: Activity?) {
                     return
                 }
                 runCallBack {
-                    callBack(code, exceptionMsg, null)
+                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
                 }
             }
 
@@ -172,7 +170,7 @@ class UserAcountPresenter(activity: Activity?) {
                     return
                 }
                 runCallBack {
-                    callBack(code, CodeUtils.getMsg(code), null)
+                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
                 }
             }
 
@@ -186,7 +184,7 @@ class UserAcountPresenter(activity: Activity?) {
                 val data = (t as BaseNetArrayModule).root!!.toString()
 
                 runCallBack {
-                    if((t as BaseNetArrayModule).success){
+                    if ((t as BaseNetArrayModule).success) {
                         if (dataCount == 0) {
                             callBack(
                                 HttpCallBack.SUCCESS_CODE_NO_DATA,
@@ -199,7 +197,7 @@ class UserAcountPresenter(activity: Activity?) {
                                 Gson().fromJson(data, object : TypeToken<MutableList<CustomerSourceModule>>() {}.type)
                             )
                         }
-                    }else{
+                    } else {
                         callBack(
                             HttpCallBack.FAILE_CODE,
                             t.msg,
@@ -214,6 +212,146 @@ class UserAcountPresenter(activity: Activity?) {
         }, object : TypeToken<BaseNetArrayModule>() {
         }.type, "getDicts", Constants.URL_DICTS)
     }
+    /**
+     * 服务项目
+     */
+    fun <T> getServiceItems(
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        Client2Server.doGetAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<ServiceItemModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "serviceitems", Constants.URL_SERVICE_ITEMS)
+    }
+    /**
+     * 获取技师
+     * mendianBianma
+    daodianTime
+    daodianHMStr
+    fuwuxiangmuBianma
+    isCurrentTime
+
+     */
+    fun <T> getPlanners(
+        mendianBianma:String,
+        daodianTime:String,
+        daodianHMStr:String,
+        fuwuxiangmuBianma:String,
+        isCurrentTime:String,
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        if(!TextUtils.isEmpty(mendianBianma)){
+            params["mendianBianma"]=mendianBianma
+        }
+        if(!TextUtils.isEmpty(daodianTime)){
+            params["daodianTime"]=daodianTime
+        }
+        if(!TextUtils.isEmpty(daodianHMStr)){
+            params["daodianHMStr"]=daodianHMStr
+        }
+        if(!TextUtils.isEmpty(fuwuxiangmuBianma)){
+            params["fuwuxiangmuBianma"]=fuwuxiangmuBianma
+        }
+        if(!TextUtils.isEmpty(isCurrentTime)){
+            params["isCurrentTime"]=isCurrentTime
+        }
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<PlannerModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "getPlanners", Constants.URL_PLANNER)
+    }
 
     public fun cancelRequest(flag: String) {
         HttpManager.getmInstance().cancleCallByKey(flag)
@@ -223,7 +361,9 @@ class UserAcountPresenter(activity: Activity?) {
         if (null != mInstance) {
             cancelRequest("login")
             cancelRequest("getVipInfo")
-
+            cancelRequest("getDicts")
+            cancelRequest("serviceitems")
+            cancelRequest("getPlanners")
             mInstance = null
         }
     }

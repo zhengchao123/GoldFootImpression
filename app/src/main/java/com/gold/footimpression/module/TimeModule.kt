@@ -5,8 +5,9 @@ import androidx.databinding.Bindable
 import com.gold.footimpression.BR
 import com.gold.footimpression.net.utils.DateUtils
 import com.gold.footimpression.net.utils.LogUtils
+import java.io.Serializable
 
-class TimeModule() : BaseObservable() {
+class TimeModule() : BaseObservable(),Serializable {
     constructor(currentTime: Long) : this() {
         fullTime = DateUtils.transferLongToDate("yyyy-MM-dd HH:mm:ss", currentTime)
         shortTime = DateUtils.transferLongToDate("HH:mm", currentTime)

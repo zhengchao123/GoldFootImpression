@@ -71,8 +71,8 @@ open class BaseActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         QMUIStatusBarHelper.translucent(this, Color.TRANSPARENT)
-        QMUIStatusBarHelper.setStatusBarLightMode(this)
-        ViewUtils.hideBottomUIMenu(this)
+//        QMUIStatusBarHelper.setStatusBarLightMode(this)
+//        ViewUtils.hideBottomUIMenu(this)
         LogUtils.d(TAG, javaClass.simpleName + " onResume")
     }
 

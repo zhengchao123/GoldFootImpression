@@ -14,95 +14,62 @@
 
         <LinearLayout
                 android:id="@+id/ll_left_lnavigator"
-                android:layout_width="100dp"
-                android:background="@color/colorPrimary"
+                android:layout_width="75dp"
+                android:background="#242C40"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
             <ImageView
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@mipmap/icon_main_logo"/>
             <RadioGroup
                     android:id="@+id/radio_group"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_marginTop="50dp"
-
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
-                    android:layout_alignParentStart="true"
                     android:orientation="vertical">
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="10dp"/>
                 <RadioButton
                         android:id="@+id/rb_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
                         android:button="@null"
-                        android:text="@string/tab_main"
+                        android:drawableTop="@mipmap/icon_tab_order"
+                        android:background="@drawable/bg_tab_main_select"
                         android:checked="true"
-                        android:drawablePadding="5dp"
+                        android:paddingTop="25dp"
                         android:textColor="@drawable/color_tab_select"
-                        android:gravity="center_horizontal"
-                        android:drawableTop="@drawable/bg_tab_main_select"/>
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="10dp"/>
+                        android:gravity="center"/>
                 <RadioButton
                         android:id="@+id/rb_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:drawableTop="@mipmap/icon_tab_order_preview"
+                        android:background="@drawable/bg_tab_main_select"
+                        android:paddingTop="25dp"
                         android:button="@null"
-                        android:text="@string/tab_life"
-                        android:drawablePadding="5dp"
-                        android:textColor="@drawable/color_tab_select"
-                        android:gravity="center_horizontal"
-                        android:drawableTop="@drawable/bg_tab_main_select"/>
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="10dp"/>
+                        android:gravity="center"/>
                 <RadioButton
                         android:id="@+id/rb_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:drawableTop="@mipmap/icon_tab_room"
+                        android:background="@drawable/bg_tab_main_select"
+                        android:paddingTop="25dp"
                         android:button="@null"
-                        android:text="@string/tab_life"
-                        android:drawablePadding="5dp"
-                        android:textColor="@drawable/color_tab_select"
-                        android:gravity="center_horizontal"
-                        android:drawableTop="@drawable/bg_tab_main_select"/>
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:gravity="center"/>
+                <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
                 <RadioButton
                         android:id="@+id/rb_4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:background="@drawable/bg_tab_main_select"
                         android:button="@null"
-                        android:text="@string/tab_mine"
-                        android:drawablePadding="5dp"
-                        android:gravity="center_horizontal"
-                        android:textColor="@drawable/color_tab_select"
-                        android:drawableTop="@drawable/bg_tab_main_select"/>
+                        android:paddingTop="25dp"
+                        android:gravity="center"
+                        android:drawableTop="@mipmap/icon_tab_settings"/>
 
             </RadioGroup>
         </LinearLayout>

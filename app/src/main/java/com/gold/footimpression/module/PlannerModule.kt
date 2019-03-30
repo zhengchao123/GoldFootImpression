@@ -40,5 +40,38 @@ class PlannerModule() : BaseObservable() {
             notifyPropertyChanged(BR.waitingTime)
         }
 
+    var hour: Boolean = false
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.hour)
+        }
 
+    var selected: Boolean = false
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.selected)
+        }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is PlannerModule) {
+            return this.gonghao.equals(other.gonghao)
+        }
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return gonghao.hashCode()
+    }
+
+//    override fun equals(other: Any?): Boolean {
+//        return (other as PlannerModule).gonghao.equals(gonghao)
+//    }
+//
+//    override fun hashCode(): Int {
+//        return super.hashCode()
+//    }
 }

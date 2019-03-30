@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.EditorInfo
 import androidx.databinding.ObservableField
+import com.gold.footimpression.R
 import com.gold.footimpression.databinding.OrderInputFragmentBinding
 import com.gold.footimpression.module.CustomerSourceModule
 import com.gold.footimpression.module.TimeModule
 import com.gold.footimpression.module.VIPInfoModule
 import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.presenter.UserAcountPresenter
+import com.gold.footimpression.ui.activity.MainActivity
 import com.gold.footimpression.ui.base.BaseActivity
 import com.gold.footimpression.ui.base.BaseFragment
 import com.gold.footimpression.ui.event.EventHandler
@@ -25,6 +27,7 @@ import com.gold.footimpression.utils.ViewUtils
 import com.gold.footimpression.widget.BasePopupWindow
 import com.gold.footimpression.widget.ListPopupWindow
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper
+import kotlinx.android.synthetic.main.order_input_fragment.view.*
 import java.util.*
 
 
@@ -148,6 +151,20 @@ class OrderInputFragment : BaseFragment() {
                             initTimePop(mTimes.filterTimeStringArrayName())
                         }
                         showPop(mTimePop, mBinding!!.tvTime)
+                    }
+                    R.id.tv_next -> {
+                        if(TextUtils.equals("",customSource.get())){
+                            toast(R.string.please_select_custom_sourse)
+                            return
+                        }
+                        if(TextUtils.equals("",time.get())){
+                            toast(R.string.please_select_time)
+                            return
+                        }
+                        val data = Bundle()
+                        data.putString("doorCode", mDoorCode.get())
+                        data.putSerializable("time", mTimes[mSelectTimePosition])
+                        (this@OrderInputFragment.activity as MainActivity).showFragment("SERVICE_ITEMS_FRAGMENT",data)
                     }
                 }
             }

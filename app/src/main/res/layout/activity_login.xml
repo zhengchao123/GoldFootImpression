@@ -25,49 +25,92 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"
-                android:layout_marginTop="100dp"/>
+                android:src="@mipmap/icon_logo"
+                android:layout_marginTop="140dp"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_dialog_light_green"
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/text_size_10"
+                    android:text="@string/user_name"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center_vertical"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_size_10"
+                    android:gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:inputType="phone"
+                    android:textColor="#ffffff"
+                    android:background="#00000000"
+                    android:paddingStart="10dp"
+                    android:textColorHint="#ffffff"
+                    android:paddingEnd="10dp"
+                    android:text="@={userName}"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_dialog_light_green"
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:textSize="@dimen/text_size_10"
+                    android:text="@string/password"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center_vertical"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/text_size_10"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="#ffffff"
+                    android:background="#00000000"
+                    android:maxLines="1"
+                    android:textColorHint="#ffffff"
+                    android:ellipsize="end"
+                    android:text="@={pwd}"/>
 
-        <EditText
-                android:layout_width="400dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/bg_dialog_white"
-                android:maxLines="1"
-                android:textSize="22sp"
-                android:gravity="center_vertical"
-                android:ellipsize="end"
-                android:inputType="phone"
-                android:hint="@string/phone_number"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="@={userName}"/>
-        <EditText
-                android:layout_width="400dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:inputType="textPassword"
-                android:hint="@string/password"
-                android:textSize="22sp"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:background="@drawable/bg_dialog_white"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="@={pwd}"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         <TextView
                 android:id="@+id/tv_submit"
-                android:layout_width="400dp"
-                android:layout_height="50dp"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="@dimen/text_size_10"
                 android:onClick="@{click::onClickView}"
                 android:background="@drawable/bg_login_submit"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:textColor="#ffffff"
                 android:text="@string/login_submit"
+        />
+
+        <TextView
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:gravity="center|bottom"
+                android:textSize="@dimen/text_size_8"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="13dp"
+                android:text="@string/about_company"
         />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

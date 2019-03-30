@@ -11,6 +11,10 @@ object Constants {
     const val URL_VIP_INFO = HOST + "searchHuiyuanByTelNo"
     //下拉列表
     const val URL_DICTS = HOST + "getDicts"
+    //服务项目
+    const val URL_SERVICE_ITEMS = HOST + "getFuwuXiangmu"
+    //技师
+    const val URL_PLANNER = HOST + "searchFreeJishi"
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =

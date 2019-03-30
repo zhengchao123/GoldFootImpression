@@ -59,7 +59,7 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        LogUtils.INSTANCE.i(TAG, getClassName() + " hidden");
+        LogUtils.INSTANCE.i(TAG, getClassName() + "hidden= "+hidden);
         super.onHiddenChanged(hidden);
     }
 

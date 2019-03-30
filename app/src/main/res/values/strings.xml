@@ -32,4 +32,18 @@
     <string name="group_promot">团购用户才可以选择平台</string>
     <string name="group_promot_code">团购顾客才可以输入此项</string>
     <string name="error_token">登录已失效</string>
+    <string name="user_name">用户名</string>
+    <string name="about_company">金足印象有限公司 ©版权所有</string>
+    <string name="order_input">订单录入</string>
+    <string name="service_items">服务项目</string>
+    <string name="select_technician">选择技师</string>
+    <string name="text_sure">确认</string>
+    <string name="job_number">工号</string>
+    <string name="is_hour">是否钟点</string>
+    <string name="wait_time">等待时间</string>
+    <string name="name">姓名</string>
+    <string name="please_select_custom_sourse">请选择客户来源</string>
+    <string name="please_select_time">请选择时间</string>
+    <string name="minite">分钟</string>
+
 </resources>
