@@ -7,4 +7,5 @@ class BaseNetObjectModule {
     var success:  Boolean = false
     var root: JsonObject? = null
     var msg: String? = ""
+    var code:Int = 0
 }

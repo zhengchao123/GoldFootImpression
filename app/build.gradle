@@ -21,6 +21,7 @@ android {
         release {
             buildConfigField("boolean", "RELEASE", "true")
             buildConfigField("String", "URL", "\"http://120.79.29.181:9000/pc_verify/\"")
+            buildConfigField("String", "URL_NO_VERIFY", "\"http://120.79.29.181:9000/pc/\"")
             //是否移除无用资源
             shrinkResources true
             //是否混淆
@@ -30,7 +31,8 @@ android {
         }
         debug {
             buildConfigField("boolean", "RELEASE", "false")
-            buildConfigField("String", "URL", "\"http://120.79.29.181:9000/pc/\"")
+            buildConfigField("String", "URL", "\"http://120.79.29.181:9000/pc_verify/\"")
+            buildConfigField("String", "URL_NO_VERIFY", "\"http://120.79.29.181:9000/pc/\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue("string", "productName", "金足印象debug")
@@ -75,11 +77,11 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all { output -> // each 改为 all
             def date = new Date(System.currentTimeMillis())
-           def calender =  Calendar.getInstance()
+            def calender = Calendar.getInstance()
             calender.setTimeInMillis(System.currentTimeMillis())
 //                def fileName = ""+date.getYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds()
 //                +"_" + "${variant.buildType.name}_${variant.productFlavors[0].name}_${variant.versionName}.apk"
-            def fileName = calender.get(Calendar.YEAR)+"" +(calender.get(Calendar.MONTH)+1)+""+ calender.get(Calendar.DAY_OF_MONTH)+"" + calender.get(Calendar.HOUR_OF_DAY)+"" + calender.get(Calendar.MINUTE)+ "_" + "${variant.buildType.name}_${variant.productFlavors[0].name}_${variant.versionName}.apk"
+            def fileName = calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DAY_OF_MONTH) + "" + calender.get(Calendar.HOUR_OF_DAY) + "" + calender.get(Calendar.MINUTE) + "_" + "${variant.buildType.name}_${variant.productFlavors[0].name}_${variant.versionName}.apk"
             def outFile = output.outputFile
             if (outFile != null && outFile.name.endsWith('.apk')) {
                 outputFileName = fileName // output.outputFile 改为 outputFileName

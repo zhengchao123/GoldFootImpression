@@ -1,19 +1,24 @@
 package com.gold.footimpression.ui.base
 
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.gold.footimpression.R
+import com.gold.footimpression.net.utils.DialogUtils
 import com.gold.footimpression.net.utils.LogUtils
 import com.gold.footimpression.ui.event.EventHandler
+import com.gold.footimpression.utils.ViewUtils
 import com.gold.footimpression.widget.TitleBar
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper
 
@@ -24,9 +29,9 @@ open class BaseActivity : AppCompatActivity() {
     var mProgress: ProgressBar? = null
     var mContentFrame: FrameLayout? = null
     var mViewTitle: TitleBar? = null
-
+    private var loadingDialog: AlertDialog? = null
     var mContext: Context? = null
-    override fun onCreate(savedInstanceState: Bundle?) :Unit{
+    override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         mContext = this.baseContext
         LogUtils.d(TAG, javaClass.simpleName + " onCreate")
@@ -35,8 +40,13 @@ open class BaseActivity : AppCompatActivity() {
         mViewTitle = viewGroup.findViewById(R.id.title_bar)
         mProgress = viewGroup.findViewById(R.id.progress)
         mContentFrame = viewGroup.findViewById(R.id.frame_content)
-        binding = DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(this.applicationContext), getContentViewId(), mContentFrame, true)
-        showPage(configLoadingPage())
+        binding = DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(this.applicationContext),
+            getContentViewId(),
+            mContentFrame,
+            true
+        )
+        showPageLoading(configLoadingPage())
         setContentView(viewGroup)
 
         initData()
@@ -45,7 +55,7 @@ open class BaseActivity : AppCompatActivity() {
         initListener()
         when (configLoadingPage()) {
             true -> viewGroup.postDelayed(Runnable {
-                showPage(false)
+                showPageLoading(false)
             }, 3000)
         }
 
@@ -53,7 +63,7 @@ open class BaseActivity : AppCompatActivity() {
 
     protected open fun configLoadingPage() = true
 
-    fun showPage(loadingPage: Boolean) {
+    fun showPageLoading(loadingPage: Boolean) {
         mProgress?.visibility = if (loadingPage) View.VISIBLE else View.GONE
         mContentFrame?.visibility = if (loadingPage) View.GONE else View.VISIBLE
     }
@@ -62,6 +72,7 @@ open class BaseActivity : AppCompatActivity() {
         super.onResume()
         QMUIStatusBarHelper.translucent(this, Color.TRANSPARENT)
         QMUIStatusBarHelper.setStatusBarLightMode(this)
+        ViewUtils.hideBottomUIMenu(this)
         LogUtils.d(TAG, javaClass.simpleName + " onResume")
     }
 
@@ -77,6 +88,7 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        releaseProgressDialog()
         LogUtils.d(TAG, javaClass.simpleName + " onStop")
     }
 
@@ -118,4 +130,31 @@ open class BaseActivity : AppCompatActivity() {
         mViewTitle!!.visibility = if (close) View.GONE else View.VISIBLE
     }
 
+    protected fun toast(content: String) {
+        Toast.makeText(mContext, content, Toast.LENGTH_SHORT).show()
+    }
+
+    protected fun toast(content: Int) {
+        Toast.makeText(mContext, getString(content), Toast.LENGTH_SHORT).show()
+    }
+
+    public fun showProgressDialog(onDiss:(it:DialogInterface)->Unit) {
+        if (null == loadingDialog) {
+            loadingDialog = DialogUtils.showProgressDialog(this, false,onDiss)
+        } else {
+            loadingDialog!!.show()
+        }
+
+    }
+
+    public fun closeProgressDialog() {
+        loadingDialog!!.dismiss()
+    }
+
+    private fun releaseProgressDialog() {
+        if (null != loadingDialog) {
+            loadingDialog!!.dismiss()
+            loadingDialog = null
+        }
+    }
 }

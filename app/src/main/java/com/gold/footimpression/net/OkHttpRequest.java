@@ -290,7 +290,7 @@ public class OkHttpRequest {
         builder.addHeader("Accept-Encoding", "identity");
 //        builder.addHeader("Transfer-Encoding", "chunked");
         builder.addHeader("Connection", "keep-alive");
-        mUrl = TextUtils.isEmpty(mUrl) ? Constants.INSTANCE.getHOST_TEST() : mUrl;
+        mUrl = TextUtils.isEmpty(mUrl) ? Constants.HOST : mUrl;
         if (mType == TYPE_GET) {
             builder.url(initUrl()).get();
         } else if (mType == TYPE_POST) {

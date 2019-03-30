@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.gold.footimpression.R
 import com.gold.footimpression.ui.base.BaseFragment
 
-class MineFragment : BaseFragment() {
+class SettingFragment : BaseFragment() {
 
     override fun getContentview() = R.layout.mine_fragment
 

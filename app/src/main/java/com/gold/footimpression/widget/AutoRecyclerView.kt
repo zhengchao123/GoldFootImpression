@@ -23,6 +23,7 @@ open class AutoRecyclerView(context: Context, attrs: AttributeSet?, defStyle: In
         di!!.setDrawable(ContextCompat.getDrawable(context, when (diliverStyle) {
             0 -> R.drawable.recyclerview_diliver_line_white_15
             1 -> R.drawable.recyclerview_diliver_line_f7f7f7_2
+            2 -> R.drawable.recyclerview_diliver_line_gray
             else -> R.drawable.recyclerview_diliver_line_transparent_15
         })!!)
 //        di!!.setDrawable(ContextCompat.getDrawable(context, if (diliverStyle == 0) R.drawable.recyclerview_diliver_line_white_15 else R.drawable.recyclerview_diliver_line_f7f7f7_2)!!)

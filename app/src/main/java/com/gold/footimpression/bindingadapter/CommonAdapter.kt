@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.gold.footimpression.net.utils.LogUtils
+import com.gold.footimpression.ui.event.OnItemClick
 import com.gold.footimpression.ui.event.WorkerClickEvent
-import decoration.scsowing.com.decoration.ui.event.OnItemClick
 
 open class CommonAdapter<T>() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

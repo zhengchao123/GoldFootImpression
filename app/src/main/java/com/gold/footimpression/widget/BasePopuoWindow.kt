@@ -5,7 +5,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.PopupWindow
-import decoration.scsowing.com.decoration.ui.event.OnItemClick
+import com.gold.footimpression.ui.event.OnItemClick
 
 open class BasePopupWindow(context: Context) {
     var mContext: Context? = null
@@ -14,8 +14,8 @@ open class BasePopupWindow(context: Context) {
 
     var mContentView: View? = null
     var mPopupWindow: PopupWindow? = null
-    var mWidth = WindowManager.LayoutParams.MATCH_PARENT
-    var mHeight = WindowManager.LayoutParams.MATCH_PARENT
+    var mWidth = WindowManager.LayoutParams.WRAP_CONTENT
+    var mHeight = WindowManager.LayoutParams.WRAP_CONTENT
     var popDatas = mutableListOf<String>()
     var mItemClick: OnItemClick? = null
 
@@ -24,6 +24,10 @@ open class BasePopupWindow(context: Context) {
     }
 
     open fun showPop(parentView: View) {
+    }
+
+    open fun setWidth(width: Int) {
+        this.mWidth = width
     }
 
     open fun showPop(popdatas: MutableList<String>, parentView: View) {}

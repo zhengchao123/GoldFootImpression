@@ -9,4 +9,27 @@
     <string name="tab_mine">我的</string>
     <string name="cancle">取消</string>
     <string name="sure">确认</string>
+    <string name="login_submit">登录</string>
+    <string name="phone_number">手机号</string>
+    <string name="password">密码</string>
+    <string name="login_fail">登录失败</string>
+    <string name="login_success">登录成功</string>
+    <string name="net_error">网络异常</string>
+    <string name="next">下一步</string>
+    <string name="door_code">门店编码</string>
+    <string name="door_name">门店名称</string>
+    <string name="custom_source">客户来源</string>
+    <string name="platform">团购平台</string>
+    <string name="platform_code">团购码</string>
+    <string name="please_vip_acount">输入会员账号</string>
+    <string name="plase_platform_code">输入团购码</string>
+    <string name="vip_name">会员姓名</string>
+    <string name="card_type">卡型</string>
+    <string name="card_number">卡号</string>
+    <string name="time">时间</string>
+    <string name="amount">储值金额</string>
+    <string name="no_data">没有数据</string>
+    <string name="group_promot">团购用户才可以选择平台</string>
+    <string name="group_promot_code">团购顾客才可以输入此项</string>
+    <string name="error_token">登录已失效</string>
 </resources>

@@ -9,4 +9,5 @@ class BaseNetArrayModule {
     var success: Boolean = false
     var root: JsonArray? = JsonArray()
     var msg: String? = ""
+    var code:Int = 0
 }

@@ -9,13 +9,15 @@ import com.gold.footimpression.BR
 import com.gold.footimpression.R
 import com.gold.footimpression.bindingadapter.CommonAdapter
 import com.gold.footimpression.databinding.LayoutListPopViewBinding
+import com.gold.footimpression.net.utils.DensyUtils
 import com.gold.footimpression.ui.event.EventHandler
 import com.gold.footimpression.utils.ViewUtils
 
 class ListPopupWindow(context: Context) : BasePopupWindow(context) {
     var viewBinding: com.gold.footimpression.databinding.LayoutListPopViewBinding? = null
     var adapterPop: CommonAdapter<String>? = null
-//    var popDatas = mutableListOf<String>()
+    //    var popDatas = mutableListOf<String>()
+    var needTransation = false
 
     override fun showPop(parentView: View) {
         showPop(popDatas, parentView)
@@ -31,7 +33,22 @@ class ListPopupWindow(context: Context) : BasePopupWindow(context) {
             if (mPopupWindow!!.isShowing) {
                 mPopupWindow!!.dismiss()
             }
-            mPopupWindow!!.showAtLocation(parentView, mOrientation, 0, 0)
+//            mPopupWindow!!.showAtLocation(parentView, mOrientation, 0, 0)
+            if (needTransation) {
+                var offsetY = 0
+                val size = popDatas.size
+                if (size > 3) {
+                    var subCounts = size - 3
+                    if (subCounts > 7) {
+                        subCounts = 7
+                    }
+                    offsetY = -subCounts * DensyUtils.dp2px(mContext!!, 50f)
+                }
+                mPopupWindow!!.showAsDropDown(parentView, 0, offsetY)
+            } else {
+                mPopupWindow!!.showAsDropDown(parentView)
+            }
+
         }
     }
 

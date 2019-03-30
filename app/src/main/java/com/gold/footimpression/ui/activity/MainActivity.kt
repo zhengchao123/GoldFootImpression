@@ -2,16 +2,15 @@ package com.gold.footimpression.ui.activity
 
 import android.os.Bundle
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.gold.footimpression.R
 import com.gold.footimpression.databinding.ActivityMainBinding
 import com.gold.footimpression.ui.base.BaseActivity
-import com.gold.footimpression.ui.fragment.AssistantFragment
-import com.gold.footimpression.ui.fragment.LifeFragment
-import com.gold.footimpression.ui.fragment.MainFragment
-import com.gold.footimpression.ui.fragment.MineFragment
+import com.gold.footimpression.ui.fragment.OrderPreviewFragment
+import com.gold.footimpression.ui.fragment.RoomStateFragment
+import com.gold.footimpression.ui.fragment.OrderInputFragment
+import com.gold.footimpression.ui.fragment.SettingFragment
 
 class MainActivity : BaseActivity() {
 
@@ -22,10 +21,10 @@ class MainActivity : BaseActivity() {
     private lateinit var mMainFrameLayout: FrameLayout;
     private lateinit var mFragmentManager: FragmentManager;
 
-    private val TAG_MAIN_FRAGMENT = "MAIN_FRAGMENT";
-    private val TAG_LIFE_FRAGMENT = "LIFE_FRAGMENT";
-    private val TAG_ASSISTANT_FRAGMENT = "ASSISTANT_FRAGMENT";
-    private val TAG_MINE_FRAGMENT = "MINE_FRAGMENT";
+    private val TAG_ORDER_INPUT_FRAGMENT = "ORDER_INPUT_FRAGMENT";
+    private val TAG_ORDER_PREVIEW_FRAGMENT = "ORDER_PREVIEW_FRAGMENT";
+    private val TAG_ROOM_STATE_FRAGMENT = "ROOM_STATE_FRAGMENT";
+    private val TAG_SETTING_FRAGMENT = "SETTING_FRAGMENT";
 
 
     private lateinit var mMainActivityBinding: ActivityMainBinding
@@ -33,8 +32,9 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showFragment(TAG_MAIN_FRAGMENT);
+        showFragment(TAG_ORDER_INPUT_FRAGMENT);
     }
+
     override fun initBinding() {
         mMainActivityBinding = binding as ActivityMainBinding;
 
@@ -50,25 +50,26 @@ class MainActivity : BaseActivity() {
         super.initData()
         mFragmentManager = supportFragmentManager;
     }
+
     override fun initListener() {
         super.initListener()
         mMainActivityBinding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_1 -> {
-                    Toast.makeText(mContext, " rb_1 checked", Toast.LENGTH_LONG).show()
-                    showFragment(TAG_MAIN_FRAGMENT);
+//                    Toast.makeText(mContext, " rb_1 checked", Toast.LENGTH_LONG).show()
+                    showFragment(TAG_ORDER_INPUT_FRAGMENT);
                 }
                 R.id.rb_2 -> {
-                    Toast.makeText(mContext, " rb_2 checked", Toast.LENGTH_LONG).show()
-                    showFragment(TAG_ASSISTANT_FRAGMENT);
+//                    Toast.makeText(mContext, " rb_2 checked", Toast.LENGTH_LONG).show()
+                    showFragment(TAG_ROOM_STATE_FRAGMENT);
                 }
                 R.id.rb_3 -> {
-                    Toast.makeText(mContext, " rb_3 checked", Toast.LENGTH_LONG).show()
-                    showFragment(TAG_LIFE_FRAGMENT);
+//                    Toast.makeText(mContext, " rb_3 checked", Toast.LENGTH_LONG).show()
+                    showFragment(TAG_ORDER_PREVIEW_FRAGMENT);
                 }
                 R.id.rb_4 -> {
-                    Toast.makeText(mContext, " rb_4 checked", Toast.LENGTH_LONG).show()
-                    showFragment(TAG_MINE_FRAGMENT);
+//                    Toast.makeText(mContext, " rb_4 checked", Toast.LENGTH_LONG).show()
+                    showFragment(TAG_SETTING_FRAGMENT);
                 }
             }
         }
@@ -82,14 +83,14 @@ class MainActivity : BaseActivity() {
         mCurrentFragment = mFragmentManager.findFragmentByTag(tag);
         if (mCurrentFragment == null) {
             when (tag) {
-                TAG_MAIN_FRAGMENT ->
-                    mCurrentFragment = MainFragment();
-                TAG_ASSISTANT_FRAGMENT ->
-                    mCurrentFragment = LifeFragment();
-                TAG_LIFE_FRAGMENT ->
-                    mCurrentFragment = AssistantFragment();
-                TAG_MINE_FRAGMENT ->
-                    mCurrentFragment = MineFragment();
+                TAG_ORDER_INPUT_FRAGMENT ->
+                    mCurrentFragment = OrderInputFragment();
+                TAG_ROOM_STATE_FRAGMENT ->
+                    mCurrentFragment = RoomStateFragment();
+                TAG_ORDER_PREVIEW_FRAGMENT ->
+                    mCurrentFragment = OrderPreviewFragment();
+                TAG_SETTING_FRAGMENT ->
+                    mCurrentFragment = SettingFragment();
 
             }
             mFragmentManager.beginTransaction().add(mMainFrameLayout.id, this.mCurrentFragment!!, tag).commit();
@@ -98,6 +99,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
+    override fun configLoadingPage(): Boolean = false
 
 }

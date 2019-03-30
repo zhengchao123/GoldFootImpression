@@ -3,14 +3,16 @@ package com.gold.footimpression.net
 import com.gold.footimpression.BuildConfig
 
 object Constants {
-    //    public static final String HOST_TEST = "http://gc.ditu.aliyun.com/geocoding";
-    val HOST_TEST = BuildConfig.URL
-    //    http://gc.ditu.aliyun.com/regeocoding?l=39.938133,116.395739&type=001
-
-    //    public static final String HOST_TEST = "http://cache.video.iqiyi.com/jp/avlist/202861101/1/?callback=jsonp9";
-
-    //    public static final String downloaadUrl = "http://image.baidu.com/search/down?tn=download&word=download&ie=utf8&fr=detail&url=http%3A%2F%2Fpic29.nipic.com%2F20130511%2F9252150_174018365301_2.jpg&thumburl=http%3A%2F%2Fimg5.imgtn.bdimg.com%2Fit%2Fu%3D2198746125%2C2255961738%26fm%3D26%26gp%3D0.jpg";
+    const val HOST = BuildConfig.URL
+    const val HOST_NO_VERIFY = BuildConfig.URL_NO_VERIFY
+    //登录
+    const val URL_LOGIN = HOST_NO_VERIFY + "login"
+    //vip信息
+    const val URL_VIP_INFO = HOST + "searchHuiyuanByTelNo"
+    //下拉列表
+    const val URL_DICTS = HOST + "getDicts"
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
+
     val downtest =
         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1540272021035&di=b9d49b78b98040338b1bf4573c6bd8c1&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F8b82b9014a90f6037cb445933312b31bb151edda.jpg"
 
@@ -67,4 +69,6 @@ object Constants {
         "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2786915463,2587402109&fm=26&gp=0.jpg"
 
     val LOGIN_TOKEN_INFO = "user_token"
+    val USER_BUMEN_CODE = "user_bumen_code"
+    val USER_BUMEN_NAME = "user_bumen_name"
 }

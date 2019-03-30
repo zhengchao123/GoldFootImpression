@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import com.gold.footimpression.R
 import com.gold.footimpression.ui.base.BaseFragment
 
-class MainFragment : BaseFragment() {
-
-    override fun getContentview() = R.layout.main_fragment
+class RoomStateFragment : BaseFragment() {
+    override fun getContentview() = R.layout.life_fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = super.onCreateView(inflater, container, savedInstanceState)
@@ -18,5 +17,3 @@ class MainFragment : BaseFragment() {
     }
 
 }
-
-

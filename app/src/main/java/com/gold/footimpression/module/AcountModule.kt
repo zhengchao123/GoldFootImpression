@@ -22,7 +22,7 @@ class AcountModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.userName)
         }
-
+    //门店编码
     var bumenCode: String = ""
         @Bindable
         get() = field
@@ -30,6 +30,13 @@ class AcountModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.bumenCode)
         }
-
+    //门店名称
+    var bumenName: String = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.bumenName)
+        }
 
 }

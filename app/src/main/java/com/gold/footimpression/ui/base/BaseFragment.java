@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -74,7 +75,9 @@ public class BaseFragment extends Fragment {
         return dataBinding.getRoot();
     }
 
-    public void initListener(){}
+    public void initListener() {
+    }
+
     public int getContentview() {
         return 0;
     }
@@ -87,6 +90,14 @@ public class BaseFragment extends Fragment {
 
     public void initView() {
 
+    }
+
+    protected void toast(String content) {
+        Toast.makeText(mContext, content, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void toast(Integer content) {
+        Toast.makeText(mContext, getString(content), Toast.LENGTH_SHORT).show();
     }
 
     public String getClassName() {

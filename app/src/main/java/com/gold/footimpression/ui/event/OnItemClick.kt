@@ -1,5 +1,4 @@
-package decoration.scsowing.com.decoration.ui.event
-
+package com.gold.footimpression.ui.event
 import android.view.View
 
  interface OnItemClick {

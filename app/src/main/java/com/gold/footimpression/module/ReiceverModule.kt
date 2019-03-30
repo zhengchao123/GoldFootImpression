@@ -5,25 +5,31 @@ import androidx.databinding.Bindable
 import com.gold.footimpression.BR
 
 /**
- * 顾客来源
+ * 接待员[]
  */
-class CustomerSourceModule() : BaseObservable() {
-    //编码
-    var ccode: String? = ""
+class ReiceverModule() : BaseObservable() {
+
+
+//    gonghao 工号
+//    name 姓名
+
+
+    var gonghao: String? = ""
         @Bindable
         get() = field
         set(value) {
             field = value
-            notifyPropertyChanged(BR.ccode)
+            notifyPropertyChanged(BR.gonghao)
         }
 
-    //名称
-    var cname: String? = ""
+
+    var name: String? = ""
         @Bindable
         get() = field
         set(value) {
             field = value
-            notifyPropertyChanged(BR.cname)
+            notifyPropertyChanged(BR.name)
         }
+
 
 }

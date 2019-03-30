@@ -12,57 +12,63 @@
                 type="com.gold.footimpression.bindingadapter.CommonAdapter"/>
     </data>
 
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="300dp">
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
 
-        <LinearLayout
-                android:id="@+id/ll_pop_content"
+    <!--<androidx.cardview.widget.CardView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@drawable/bg_regtangle"-->
+    <!--app:cardElevation="5dp">-->
+    <LinearLayout
+            android:id="@+id/ll_pop_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_regtangle"
+            android:padding="1dp"
+            android:orientation="vertical">
+        <com.gold.footimpression.widget.AutoRecyclerView
+                android:id="@+id/list_pop_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:orientation="vertical"
-                android:background="#ffffffff">
-            <com.gold.footimpression.widget.AutoRecyclerView
-                    android:id="@+id/list_pop_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:diliver_style="3"
-                    android:adapter="@{adapter}"/>
-            <View
-                    android:id="@+id/view_diliver"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/diliver_line_color"/>
-            <TextView
-                    android:id="@+id/tv_cancle_appointment_agent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#323232"
-                    android:textSize="@dimen/text_size_18"
-                    android:gravity="center"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="@{click::onClickView}"
-                    android:text="@string/cancle"/>
+                android:background="#ffffff"
+                app:diliver_style="2"
+                android:adapter="@{adapter}"/>
+        <!--<View-->
+        <!--android:id="@+id/view_diliver"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10dp"-->
+        <!--android:background="@color/diliver_line_color"/>-->
+        <!--<TextView-->
+        <!--android:id="@+id/tv_cancle_appointment_agent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="#323232"-->
+        <!--android:textSize="@dimen/text_size_18"-->
+        <!--android:gravity="center"-->
+        <!--android:paddingTop="15dp"-->
+        <!--android:paddingBottom="15dp"-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--android:onClick="@{click::onClickView}"-->
+        <!--android:text="@string/cancle"/>-->
 
-        </LinearLayout>
-        <View
-                android:id="@+id/view_pop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_pop"
-                android:clickable="true"
-                android:focusable="true"
-                android:alpha="0.5"
-                android:onClick="@{click::onClickView}"
-                android:layout_above="@id/ll_pop_content"
-        />
+    </LinearLayout>
+    <!--</androidx.cardview.widget.CardView>-->
+    <!--<View-->
+    <!--android:id="@+id/view_pop"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@drawable/bg_pop"-->
+    <!--android:clickable="true"-->
+    <!--android:focusable="true"-->
+    <!--android:alpha="0.5"-->
+    <!--android:onClick="@{click::onClickView}"-->
+    <!--android:layout_above="@id/ll_pop_content"-->
+    <!--/>-->
 
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
 </layout>

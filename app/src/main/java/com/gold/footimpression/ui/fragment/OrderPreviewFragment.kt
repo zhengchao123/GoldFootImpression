@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.gold.footimpression.R
 import com.gold.footimpression.ui.base.BaseFragment
 
-class AssistantFragment : BaseFragment() {
+class OrderPreviewFragment : BaseFragment() {
     override fun getContentview() = R.layout.assistant_fragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

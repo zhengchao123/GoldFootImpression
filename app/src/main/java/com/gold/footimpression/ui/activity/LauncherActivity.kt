@@ -10,4 +10,6 @@ class LauncherActivity : BaseActivity() {
     }
 
     override fun getContentViewId() = R.layout.activity_maind
+
+
 }
