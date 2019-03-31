@@ -68,6 +68,10 @@ class OrderInputFragment : BaseFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun initBinding() {
         super.initBinding()
         mBinding = dataBinding as OrderInputFragmentBinding
@@ -116,7 +120,7 @@ class OrderInputFragment : BaseFragment() {
                             loadDicts("203")
                         } else {
                             initCustomSourcePop("203", customSources)
-                            showPop(mCertificatesPop, mBinding!!.tvCustomerSource)
+                            showPop(mCertificatesPop, mBinding!!.tvCustomerSourceLayout)
                         }
 
                     }
@@ -128,7 +132,7 @@ class OrderInputFragment : BaseFragment() {
                                 loadDicts("201")
                             } else {
                                 initCustomSourcePop("201", customPlatforms)
-                                showPop(mCertificatesPop, mBinding!!.tvPlatform)
+                                showPop(mCertificatesPop, mBinding!!.tvPlatformLayout)
                             }
 
                         }
@@ -150,21 +154,25 @@ class OrderInputFragment : BaseFragment() {
                         if (null == mTimePop) {
                             initTimePop(mTimes.filterTimeStringArrayName())
                         }
-                        showPop(mTimePop, mBinding!!.tvTime)
+                        showPop(mTimePop, mBinding!!.tvTimeLayout)
                     }
                     R.id.tv_next -> {
-                        if(TextUtils.equals("",customSource.get())){
+                        if (TextUtils.equals("", customSource.get())) {
                             toast(R.string.please_select_custom_sourse)
                             return
                         }
-                        if(TextUtils.equals("",time.get())){
+                        if (TextUtils.equals("", time.get())) {
                             toast(R.string.please_select_time)
                             return
                         }
+
+
                         val data = Bundle()
                         data.putString("doorCode", mDoorCode.get())
                         data.putSerializable("time", mTimes[mSelectTimePosition])
-                        (this@OrderInputFragment.activity as MainActivity).showFragment("SERVICE_ITEMS_FRAGMENT",data)
+                        (this@OrderInputFragment.activity as MainActivity).group.set(customSource.get()!!.contains("团购"))
+                        (this@OrderInputFragment.activity as MainActivity).coupon.set(customSource.get()!!.contains("优惠券"))
+                        (this@OrderInputFragment.activity as MainActivity).showFragment("SERVICE_ITEMS_FRAGMENT", data)
                     }
                 }
             }
@@ -244,12 +252,12 @@ class OrderInputFragment : BaseFragment() {
                         customSources.clear()
                         customSources.addAll(result!!)
                         initCustomSourcePop(key, customSources)
-                        showPop(mCertificatesPop, mBinding!!.tvCustomerSource)
+                        showPop(mCertificatesPop, mBinding!!.tvCustomerSourceLayout)
                     } else {
                         customPlatforms.clear()
                         customPlatforms.addAll(result!!)
                         initCustomSourcePop(key, customPlatforms)
-                        showPop(mCertificatesPop, mBinding!!.tvPlatform)
+                        showPop(mCertificatesPop, mBinding!!.tvPlatformLayout)
                     }
 
                 } else {
@@ -268,9 +276,9 @@ class OrderInputFragment : BaseFragment() {
     fun initCustomSourcePop(key: String, lists: MutableList<CustomerSourceModule>) {
         mCertificatesPop = ListPopupWindow(mContext!!)
         if (TextUtils.equals(key, "203")) {
-            mCertificatesPop!!.setWidth(mBinding!!.tvCustomerSource.width)
+            mCertificatesPop!!.setWidth(mBinding!!.tvCustomerSourceLayout.width)
         } else {
-            mCertificatesPop!!.setWidth(mBinding!!.tvPlatform.width)
+            mCertificatesPop!!.setWidth(mBinding!!.tvPlatformLayout.width)
         }
         mCertificatesPop!!.popDatas = lists.filterStringArrayName()
         mCertificatesPop!!.mItemClick = object : OnItemClick {
@@ -308,7 +316,7 @@ class OrderInputFragment : BaseFragment() {
     fun initTimePop(lists: MutableList<String>) {
         mTimePop = ListPopupWindow(mContext!!)
         (mTimePop as ListPopupWindow)!!.needTransation = true
-        mTimePop!!.setWidth(mBinding!!.tvTime.width)
+        mTimePop!!.setWidth(mBinding!!.tvTimeLayout.width)
         mTimePop!!.popDatas = lists
         mTimePop!!.mItemClick = object : OnItemClick {
             override fun onItemClick(itemView: View, position: Int, instance: Any) {

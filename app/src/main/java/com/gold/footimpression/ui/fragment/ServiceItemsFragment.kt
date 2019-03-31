@@ -72,7 +72,10 @@ class ServiceItemsFragment : BaseFragment() {
         mBinding!!.plannerVisible = plannerVisible
         mBinding!!.visible = visible
 
-//        mBinding!!.time = time
+        val data = this.arguments
+        doorCode = data!!["doorCode"] as String
+        timeModule = data!!["time"] as TimeModule
+        visible.set(false)
         loadServiceItems()
     }
 
@@ -80,9 +83,15 @@ class ServiceItemsFragment : BaseFragment() {
         super.onHiddenChanged(hidden)
         if (!hidden) {
             val data = this.arguments
-            doorCode = data!!["doorCode"] as String
-            timeModule = data!!["time"] as TimeModule
-            loadServiceItems()
+            val time = data!!["time"] as TimeModule
+            val dcode =  data!!["doorCode"] as String
+            if(!time.equals(timeModule)|| !dcode.equals(doorCode)){
+                doorCode = data!!["doorCode"] as String
+                timeModule = data!!["time"] as TimeModule
+                visible.set(false)
+                loadServiceItems()
+            }
+
         }
     }
 
@@ -103,6 +112,11 @@ class ServiceItemsFragment : BaseFragment() {
                     }
                     R.id.iv_back -> {
                         (this@ServiceItemsFragment.activity as MainActivity).showFragment("ORDER_INPUT_FRAGMENT")
+                    }
+                    R.id.tv_comfire->{
+
+                        (this@ServiceItemsFragment.activity as MainActivity).services = mServiceItems
+                        (this@ServiceItemsFragment.activity as MainActivity).showFragment("SERVICE_EDIT_ITEMS")
                     }
 
                 }
@@ -158,9 +172,12 @@ class ServiceItemsFragment : BaseFragment() {
                 if (CodeUtils.isSuccess(code)) {
                     plannerVisible.set(true)
                     mPlanners.clear()
-                    mPlanners.addAll(result!!)
+                    result!!.filterFuwuCode(serviceCode)
+//                    mPlanners.addAll(result!!.filterFuwuCode(serviceCode))
                     mServiceItems.forEach { item ->
                         if (item.fuwuXiangmuBianma!!.equals(serviceCode)) {
+                            item.filterPlanners = result.filterSelect()
+                            mPlanners.addAll(item.filterPlanners)
                             item.planners = result
                             return@forEach
                         }
@@ -203,10 +220,13 @@ class ServiceItemsFragment : BaseFragment() {
                         if (item.fuwuXiangmuBianma!!.equals(serviceCode)) {
                             if (item.planners.size > 0) {
                                 needLoad = false
+                                item.filterPlanners = item.planners.filterSelect()
+//
+
                                 //有数据不用再请求了
                                 plannerVisible.set(true)
                                 mPlanners.clear()
-                                mPlanners.addAll(item.planners)
+                                mPlanners.addAll(item.filterPlanners)
 
                                 mPlannersAdapter = mPlanners.putPlannerToAdapter()
                                 mBinding!!.technicianAdapter = mPlannersAdapter
@@ -217,7 +237,7 @@ class ServiceItemsFragment : BaseFragment() {
 
                         }
                     }
-                    if(needLoad){
+                    if (needLoad) {
                         loadTechnician()
                     }
 
@@ -225,6 +245,37 @@ class ServiceItemsFragment : BaseFragment() {
             })
             it
         }
+    }
+
+    fun MutableList<PlannerModule>.filterFuwuCode(fuwuxiangmuCode: String): MutableList<PlannerModule> {
+        this.forEach {
+            it.fuwuxiangmuCode = fuwuxiangmuCode
+        }
+        return this
+    }
+
+    //当某个技师在某个服务项目中选中了后，需要在另一个服务项目中不显示
+    fun MutableList<PlannerModule>.filterSelect(): MutableList<PlannerModule> {
+        val result = mutableListOf<PlannerModule>()
+        this.forEach link@{
+            val gonghao = it.gonghao
+            if (selectedPlanners.size == 0) {
+                result.add(it)
+            } else {
+                result.add(it)
+
+                selectedPlanners.forEach { item ->
+                    if (gonghao!!.equals(item.gonghao)) {
+                        if (!serviceCode.equals(item.fuwuxiangmuCode)) {
+                            result.remove(it)
+                        }
+
+                    }
+                }
+            }
+
+        }
+        return result
     }
 
     fun MutableList<PlannerModule>.putPlannerToAdapter(): CommonAdapter<PlannerModule> {
@@ -237,17 +288,16 @@ class ServiceItemsFragment : BaseFragment() {
                 override fun onItemClick(itemView: View, position: Int, instance: Any) {
                     when (itemView.id) {
                         R.id.iv_selected -> {
-                            toast(" click select $position")
 
                             for (i in 0 until this@ServiceItemsFragment.mPlanners.size) {
                                 if (i == position) {
-                                    this@ServiceItemsFragment.mPlanners[position].selected =
-                                        !this@ServiceItemsFragment.mPlanners[position].selected
-                                    this@ServiceItemsFragment.mPlannersAdapter!!.update(this@ServiceItemsFragment.mPlanners)
-                                    if (this@ServiceItemsFragment.mPlanners[position].selected) {
-                                        selectedPlanners.add(this@ServiceItemsFragment.mPlanners[position])
+                                    mPlanners[position].selected =
+                                        !mPlanners[position].selected
+                                    mPlannersAdapter!!.update(mPlanners)
+                                    if (mPlanners[position].selected) {
+                                        selectedPlanners.add(mPlanners[position])
                                     } else {
-                                        selectedPlanners.remove(this@ServiceItemsFragment.mPlanners[position])
+                                        selectedPlanners.remove(mPlanners[position])
                                     }
                                     if (selectedPlanners.size > 0) {
                                         visible.set(true)
@@ -259,7 +309,7 @@ class ServiceItemsFragment : BaseFragment() {
                             }
                         }
                         R.id.iv_hour -> {
-                            toast(" click hour $position")
+//                            toast(" click hour $position")
                             for (i in 0 until this@ServiceItemsFragment.mPlanners.size) {
                                 if (i == position) {
                                     this@ServiceItemsFragment.mPlanners[position].hour =
@@ -273,13 +323,6 @@ class ServiceItemsFragment : BaseFragment() {
                 }
 
                 override fun onItemClick(itemView: View, position: Int) {
-//                    toast("click $position value ${this@putToAdapter[position].fuwuXiangmuMingcheng}")
-//
-//                    this@putToAdapter.forEach { item ->
-//                        item.selected = false
-//                    }
-//                    this@putToAdapter[position].selected = true
-//                    serviceCode = this@putToAdapter[position].fuwuXiangmuBianma!!
                 }
             })
             it

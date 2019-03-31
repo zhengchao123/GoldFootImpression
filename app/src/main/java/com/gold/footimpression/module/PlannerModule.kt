@@ -55,7 +55,13 @@ class PlannerModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.selected)
         }
-
+    var fuwuxiangmuCode: String = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.fuwuxiangmuCode)
+        }
     override fun equals(other: Any?): Boolean {
         if (other is PlannerModule) {
             return this.gonghao.equals(other.gonghao)

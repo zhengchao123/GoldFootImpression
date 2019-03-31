@@ -16,18 +16,19 @@
     <string name="login_success">登录成功</string>
     <string name="net_error">网络异常</string>
     <string name="next">下一步</string>
-    <string name="door_code">门店编码</string>
-    <string name="door_name">门店名称</string>
-    <string name="custom_source">客户来源</string>
-    <string name="platform">团购平台</string>
-    <string name="platform_code">团购码</string>
-    <string name="please_vip_acount">输入会员账号</string>
-    <string name="plase_platform_code">输入团购码</string>
-    <string name="vip_name">会员姓名</string>
-    <string name="card_type">卡型</string>
-    <string name="card_number">卡号</string>
-    <string name="time">时间</string>
-    <string name="amount">储值金额</string>
+    <string name="door_code">门店编码 :</string>
+    <string name="door_name">门店名称 :</string>
+    <string name="custom_source">客户来源 :</string>
+    <string name="platform">团购平台 :</string>
+    <string name="platform_code">团购码 :</string>
+    <string name="please_vip_acount">会员账号 :</string>
+    <string name="plase_platform_code">团购码 :</string>
+    <string name="vip_name">会员姓名 :</string>
+    <string name="card_type">卡型 :</string>
+    <string name="card_number">卡号 :</string>
+    <string name="time">时间 :</string>
+    <string name="amount">储值金额 :</string>
+    <string name="short_amount">储值</string>
     <string name="no_data">没有数据</string>
     <string name="group_promot">团购用户才可以选择平台</string>
     <string name="group_promot_code">团购顾客才可以输入此项</string>
@@ -37,6 +38,7 @@
     <string name="order_input">订单录入</string>
     <string name="service_items">服务项目</string>
     <string name="select_technician">选择技师</string>
+    <string name="technician">技师</string>
     <string name="text_sure">确认</string>
     <string name="job_number">工号</string>
     <string name="is_hour">是否钟点</string>
@@ -45,5 +47,17 @@
     <string name="please_select_custom_sourse">请选择客户来源</string>
     <string name="please_select_time">请选择时间</string>
     <string name="minite">分钟</string>
+    <string name="submit_order">提交订单</string>
+    <string name="items">项目</string>
+    <string name="time_long">时长</string>
+    <string name="discount_price">折扣价 :</string>
+    <string name="group_price">团购价 :</string>
+    <string name="room_num">房间号 :</string>
+    <string name="shoupai_num">手牌号 :</string>
+    <string name="reicever_name">接待姓名 :</string>
+    <string name="reicever_num">接待编码 :</string>
+    <string name="xuanchuanyuan">宣传员编码 :</string>
+    <string name="coupon_amount">优惠卷金额 :</string>
+    <string name="bucha">是否需要补差 :</string>
 
 </resources>

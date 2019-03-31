@@ -1,11 +1,14 @@
 package com.gold.footimpression.ui.activity
 
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.FrameLayout
+import androidx.databinding.ObservableField
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.gold.footimpression.R
 import com.gold.footimpression.databinding.ActivityMainBinding
+import com.gold.footimpression.module.ServiceItemModule
 import com.gold.footimpression.ui.base.BaseActivity
 import com.gold.footimpression.ui.fragment.*
 
@@ -23,11 +26,18 @@ class MainActivity : BaseActivity() {
     private val TAG_ROOM_STATE_FRAGMENT = "ROOM_STATE_FRAGMENT";
     private val TAG_SETTING_FRAGMENT = "SETTING_FRAGMENT";
     private val TAG_SERVICE_ITEMS = "SERVICE_ITEMS_FRAGMENT";
+    private val TAG_SERVICE_EDIT_ITEMS = "SERVICE_EDIT_ITEMS";
 
     private lateinit var mMainActivityBinding: ActivityMainBinding
+    public var services = mutableListOf<ServiceItemModule>()
 
 
+    //是团购
+    public var group = ObservableField<Boolean>(false)
+    //是优惠券
+    public var coupon = ObservableField<Boolean>(false)
     override fun onCreate(savedInstanceState: Bundle?) {
+        setAdjust()
         super.onCreate(savedInstanceState)
         showFragment(TAG_ORDER_INPUT_FRAGMENT);
     }
@@ -37,6 +47,9 @@ class MainActivity : BaseActivity() {
 
     }
 
+    fun setAdjust(){
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
     override fun initView() {
         super.initView()
         closeTitleBar(true)
@@ -69,7 +82,7 @@ class MainActivity : BaseActivity() {
     }
 
 
-    public var mData: Bundle?=null
+    public var mData: Bundle? = null
 
     fun showFragment(tag: String?, data: Bundle = Bundle()): Unit {
         mData = data
@@ -94,12 +107,18 @@ class MainActivity : BaseActivity() {
                 TAG_SERVICE_ITEMS -> {
                     mCurrentFragment = ServiceItemsFragment()
                 }
-
-
+                TAG_SERVICE_EDIT_ITEMS -> {
+                    mCurrentFragment = ServiceItemsEditFragment()
+                }
             }
             if (mCurrentFragment is ServiceItemsFragment) {
                 if (data.keySet().size > 0) {
                     (mCurrentFragment as ServiceItemsFragment).arguments = data
+                }
+            } else if (mCurrentFragment is ServiceItemsEditFragment) {
+                if (data.keySet().size > 0) {
+                    (mCurrentFragment as ServiceItemsEditFragment).arguments = data
+
                 }
             }
             mFragmentManager.beginTransaction().add(mMainFrameLayout.id, this.mCurrentFragment!!, tag).commit();
@@ -108,9 +127,14 @@ class MainActivity : BaseActivity() {
                 if (data.keySet().size > 0) {
                     (mCurrentFragment as ServiceItemsFragment).arguments = data
                 }
+            } else if (mCurrentFragment is ServiceItemsEditFragment) {
+                if (data.keySet().size > 0) {
+                    (mCurrentFragment as ServiceItemsEditFragment).arguments = data
+
+                }
             }
-            mFragmentManager.beginTransaction().show(mCurrentFragment!!).commit();
         }
+        mFragmentManager.beginTransaction().show(mCurrentFragment!!).commit();
     }
 
     override fun configLoadingPage(): Boolean = false

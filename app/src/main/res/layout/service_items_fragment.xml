@@ -67,7 +67,18 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="90dp"
                         android:background="#D4D4D4"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/iv_back"
+                        android:layout_marginTop="14dp"
+                        android:background="#D4D4D4"/>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                              android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                </LinearLayout>
                 <com.gold.footimpression.widget.AutoRecyclerView
                         android:id="@+id/list_pop_recycler"
                         android:layout_width="match_parent"
@@ -75,15 +86,10 @@
                         android:background="#ffffff"
                         android:layout_below="@id/iv_back"
                         android:layout_marginTop="15dp"
-                        android:paddingBottom="70dp"
+                        android:layout_above="@id/tv_comfire"
                         app:diliver_style="2"
                         android:adapter="@{itemsAdapter}"/>
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@id/iv_back"
-                        android:layout_marginTop="14dp"
-                        android:background="#D4D4D4"/>
+
                 <TextView
                         android:id="@+id/tv_comfire"
                         android:layout_width="match_parent"

@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+                name="click"
+                type="com.gold.footimpression.ui.event.EventHandler"/>
+
+        <variable
+                name="buttonShow"
+                type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
+
+        <variable
+                name="itemsAdapter"
+                type="com.gold.footimpression.bindingadapter.CommonAdapter"/>
+
+        <variable
+                name="visible"
+                type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
+        <variable
+                name="group"
+                type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
+        <variable
+                name="coupon"
+                type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
+        //折扣价
+        <variable
+                name="discountPrice"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+        //团购价
+        <variable
+                name="groupPrice"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+        //手牌号
+        <variable
+                name="shoupaiNum"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+        //房间号
+        <variable
+                name="roomNum"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+        //接待员
+        <variable
+                name="reiceverModule"
+                type="com.gold.footimpression.module.ReiceverModule"/>
+        //默认接待人，是当前用户
+        <variable
+                name="currentUserName"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+        //默认接待人，是当前用户
+        <variable
+                name="currentUserNumber"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+        //宣传员编码
+        <variable
+                name="xuanchuanyuan"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+        //优惠卷金额
+        <variable
+                name="couponAmount"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+        //补差
+        <variable
+                name="bucha"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+    </data>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff2f2f2"
+                android:orientation="horizontal">
+
+
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#fff2f2f2">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:background="@drawable/bg_input_regtangle_no_raduis"
+                        android:text="@string/service_items"
+                        android:gravity="center"
+                        android:textColor="#242C40"
+                        android:paddingTop="15dp"
+                        android:textSize="@dimen/text_size_20"/>
+                <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="25dp"
+                        android:paddingTop="15dp"
+
+                        android:src="@drawable/ic_arrow_back_black_24dp"
+                        android:onClick="@{click::onClickView}"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="90dp"
+                        android:background="#D4D4D4"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/iv_back"
+                        android:layout_marginTop="14dp"
+                        android:background="#D4D4D4"/>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_head"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/iv_back"
+                        android:layout_marginTop="15dp"
+                        android:background="#ffffff"
+                        android:orientation="horizontal">
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginStart="40dp"
+                            android:textColor="#242C40"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:text="@string/items"
+                    />
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textColor="#242C40"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:text="@string/short_amount"
+                    />
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textColor="#242C40"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:text="@string/time_long"
+                    />
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textColor="#242C40"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:text="@string/technician"
+                    />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <com.gold.footimpression.widget.AutoRecyclerView
+                        android:id="@+id/list_pop_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#ffffff"
+                        android:layout_below="@id/ll_head"
+                        android:layout_above="@id/tv_comfire"
+                        app:diliver_style="2"
+                        android:adapter="@{itemsAdapter}"/>
+
+                <TextView
+                        android:id="@+id/tv_comfire"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:clickable="true"
+                        android:onClick="@{click::onClickView}"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_size_15"
+                        android:text="@string/submit_order"
+                        android:layout_alignParentBottom="true"
+                        android:enabled="@{visible}"
+                        android:visibility="@{visible?View.VISIBLE:View.GONE}"
+                        android:textColor="@{visible?@color/title_bar_bg_color:@color/btn_gray_color}"
+                        android:background="@{visible?@drawable/bg_green_submit:@drawable/bg_gray_submit}"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#fff2f2f2">
+
+                <TextView
+                        android:id="@+id/tv_right_technician"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:background="@drawable/bg_input_regtangle_no_raduis"
+                        android:text="@string/order_input"
+                        android:gravity="center"
+                        android:textColor="#242C40"
+                        android:paddingTop="15dp"
+                        android:textSize="@dimen/text_size_20"/>
+
+                <TextView
+                        android:id="@+id/tv_edit_sure"
+                        android:layout_width="60dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="12dp"
+                        android:textColor="#ffffff"
+                        android:background="@drawable/bg_green_submit"
+                        android:text="@string/sure"
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        android:layout_marginTop="35dp"
+                />
+                <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="90dp"
+                        android:background="#D4D4D4"/>
+
+
+                <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:focusableInTouchMode="false"
+                        android:layout_below="@id/view"
+                >
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="37dp"
+                            android:paddingEnd="37dp"
+                            android:focusableInTouchMode="false"
+                            android:orientation="vertical">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ll_first"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+
+                            <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="20dp"
+                                    android:background="@{!coupon?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}">
+
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="start|center_vertical"
+                                        android:text="@string/discount_price"
+                                        android:textSize="@dimen/text_size_14"
+                                        android:textColor="@color/hint_color"
+                                />
+
+                                <EditText
+                                        android:id="@+id/price_zhekou"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="match_parent"
+                                        android:gravity="start|center_vertical"
+                                        android:paddingStart="10dp"
+                                        android:inputType="numberDecimal"
+                                        android:text="@={discountPrice}"
+                                        android:enabled="@{!coupon}"
+                                        android:background="#00000000"
+                                        android:textSize="@dimen/text_size_14"
+                                        android:textColor="@color/hint_color"
+                                />
+
+                            </LinearLayout>
+
+                            <View android:layout_width="20dp" android:layout_height="0dp"/>
+
+
+                            <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="20dp"
+                                    android:background="@{group?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}">
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="start|center_vertical"
+                                        android:text="@string/group_price"
+                                        android:textSize="@dimen/text_size_14"
+                                        android:textColor="@color/hint_color"
+                                />
+
+                                <EditText
+                                        android:id="@+id/et_price_group"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="match_parent"
+                                        android:gravity="start|center_vertical"
+                                        android:inputType="numberDecimal"
+                                        android:paddingStart="10dp"
+                                        android:text="@={groupPrice}"
+                                        android:enabled="@{group}"
+                                        android:background="#00000000"
+                                        android:textSize="@dimen/text_size_14"
+                                        android:textColor="@color/hint_color"
+
+                                />
+
+
+                            </LinearLayout>
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="20dp"
+                                android:orientation="horizontal">
+
+
+                            <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="20dp"
+                                    android:background="@drawable/bg_input_regtangle">
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="start|center_vertical"
+                                        android:text="@string/room_num"
+                                        android:textSize="@dimen/text_size_14"
+                                        android:textColor="@color/hint_color"
+                                />
+                                <EditText
+                                        android:id="@+id/et_room_num"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="start|center_vertical"
+                                        android:paddingStart="10dp"
+                                        android:inputType="number"
+                                        android:text="@={roomNum}"
+                                        android:textSize="@dimen/text_size_14"
+                                        android:textColor="@color/hint_color"
+                                        android:drawableEnd="@mipmap/icon_arraw_down"
+                                        android:paddingEnd="20dp"
+                                        android:clickable="true"
+                                        android:onClick="@{click::onClickView}"
+                                        android:focusable="true"/>
+
+                            </LinearLayout>
+
+                            <View android:layout_width="20dp" android:layout_height="0dp"/>
+
+
+                            <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="20dp"
+                                    android:background="@drawable/bg_input_regtangle">
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="start|center_vertical"
+                                        android:text="@string/shoupai_num"
+                                        android:textSize="@dimen/text_size_14"
+                                        android:textColor="@color/hint_color"
+                                />
+
+                                <EditText
+                                        android:id="@+id/shoupai_num"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="1"
+                                        android:layout_height="match_parent"
+                                        android:gravity="start|center_vertical"
+                                        android:inputType="number"
+                                        android:paddingStart="10dp"
+                                        android:text="@={shoupaiNum}"
+                                        android:textSize="@dimen/text_size_14"
+                                        android:textColor="@color/hint_color"
+                                        android:drawableEnd="@mipmap/icon_arraw_down"
+                                        android:paddingEnd="20dp"
+                                        android:clickable="true"
+                                        android:onClick="@{click::onClickView}"
+                                        android:focusable="true"
+                                />
+
+                            </LinearLayout>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="20dp"
+                                android:paddingStart="20dp"
+                                android:background="@drawable/bg_input_regtangle"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:text="@string/reicever_name"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                            />
+                            <TextView
+                                    android:id="@+id/et_reciver_name"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="10dp"
+                                    android:text="@{reiceverModule.name}"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                                    android:drawableEnd="@mipmap/icon_arraw_down"
+                                    android:paddingEnd="20dp"
+                                    android:clickable="true"
+                                    android:onClick="@{click::onClickView}"
+                                    android:focusable="true"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="20dp"
+                                android:paddingStart="20dp"
+                                android:background="@drawable/bg_input_regtangle"
+                                android:orientation="horizontal">
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:text="@string/reicever_num"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                            />
+
+                            <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="10dp"
+                                    android:text="@{reiceverModule.gonghao}"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                                    android:paddingEnd="20dp"
+                            />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="20dp"
+                                android:paddingStart="20dp"
+                                android:background="@drawable/bg_input_regtangle"
+                                android:orientation="horizontal">
+
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:text="@string/xuanchuanyuan"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                            />
+                            <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="10dp"
+                                    android:inputType="number"
+                                    android:text="@={xuanchuanyuan}"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                                    android:paddingEnd="20dp"
+                                    android:enabled="@{coupon}"
+
+                            />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="20dp"
+                                android:paddingStart="20dp"
+                                android:background="@drawable/bg_input_regtangle"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:text="@string/coupon_amount"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                            />
+                            <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="10dp"
+                                    android:inputType="numberDecimal"
+                                    android:text="@={couponAmount}"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                                    android:paddingEnd="20dp"
+                                    android:enabled="@{coupon}"
+
+                            />
+
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="20dp"
+                                android:paddingStart="20dp"
+                                android:background="@drawable/bg_input_regtangle"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:text="@string/bucha"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                            />
+
+
+                            <TextView
+                                    android:id="@+id/tv_bucha"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="10dp"
+                                    android:text="@={bucha}"
+                                    android:textSize="@dimen/text_size_14"
+                                    android:textColor="@color/hint_color"
+                                    android:drawableEnd="@mipmap/icon_arraw_down"
+                                    android:paddingEnd="20dp"
+                                    android:clickable="true"
+                                    android:onClick="@{click::onClickView}"
+                                    android:focusable="true"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </LinearLayout>
+                </ScrollView>
+            </RelativeLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="#AEAEAF"/>
+    </FrameLayout>
+</layout>

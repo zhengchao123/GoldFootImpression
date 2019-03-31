@@ -7,7 +7,7 @@ import com.gold.footimpression.net.utils.DateUtils
 import com.gold.footimpression.net.utils.LogUtils
 import java.io.Serializable
 
-class TimeModule() : BaseObservable(),Serializable {
+class TimeModule() : BaseObservable(), Serializable {
     constructor(currentTime: Long) : this() {
         fullTime = DateUtils.transferLongToDate("yyyy-MM-dd HH:mm:ss", currentTime)
         shortTime = DateUtils.transferLongToDate("HH:mm", currentTime)
@@ -38,4 +38,11 @@ class TimeModule() : BaseObservable(),Serializable {
             field = value
             notifyPropertyChanged(BR.times)
         }
+
+    override fun equals(other: Any?): Boolean {
+        if (null != other) {
+            return (other as TimeModule).shortTime.equals(this.shortTime)
+        }
+        return super.equals(other)
+    }
 }

@@ -10,7 +10,7 @@ import com.gold.footimpression.BR
 class ServiceItemModule() : BaseObservable() {
 
 
-//    "fuwuXiangmuBianma": 1,编码
+    //    "fuwuXiangmuBianma": 1,编码
 //    "fuwuXiangmuMingcheng": 名称
 //    "fuwuShichang": 80, 时长
 //    "price": 129, 价格
@@ -56,13 +56,22 @@ class ServiceItemModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.priceMember)
         }
-    var selected=false
+    var selected = false
         @Bindable
         get() = field
         set(value) {
             field = value
             notifyPropertyChanged(BR.selected)
         }
+
+    var clicked = false
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.clicked)
+        }
+
     var planners: MutableList<PlannerModule> = mutableListOf()
         @Bindable
         get() = field
@@ -70,4 +79,37 @@ class ServiceItemModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.planners)
         }
+    var filterPlanners: MutableList<PlannerModule> = mutableListOf()
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.filterPlanners)
+        }
+
+    fun loadPlannerName(): String {
+        planners.forEach {
+            if (it.selected) {
+                return it.name!!
+            }
+        }
+        return ""
+    }
+
+    //所选技师
+    var plannerName = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.plannerName)
+        }
+    var avalibleData = false
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.avalibleData)
+        }
+
 }
