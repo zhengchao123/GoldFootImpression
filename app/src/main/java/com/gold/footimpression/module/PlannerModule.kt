@@ -7,13 +7,22 @@ import com.gold.footimpression.BR
 /**
  * 技师[]
  */
-class PlannerModule() : BaseObservable() {
+class PlannerModule() : BaseObservable(), Cloneable {
 
 
-//    gonghao 工号
+    //    gonghao 工号
 //    name 姓名
 //    waitingTime 等待时间
+    public override fun clone(): PlannerModule {
+        var person: PlannerModule? = null
+        try {
+            person = super.clone() as PlannerModule
+        } catch (e: CloneNotSupportedException) {
+            e.printStackTrace()
+        }
 
+        return person!!
+    }
 
     var gonghao: String? = ""
         @Bindable
@@ -62,6 +71,7 @@ class PlannerModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.fuwuxiangmuCode)
         }
+
     override fun equals(other: Any?): Boolean {
         if (other is PlannerModule) {
             return this.gonghao.equals(other.gonghao)

@@ -38,6 +38,17 @@ class MainActivity : BaseActivity() {
     //是优惠券
     var coupon = ObservableField<Boolean>(false)
 
+    override fun onBackPressed() {
+
+        if (mCurrentFragment is OrderInputFragment) {
+            super.onBackPressed()
+        } else if (mCurrentFragment is ServiceItemsFragment) {
+            showFragment("ORDER_INPUT_FRAGMENT")
+        } else if (mCurrentFragment is ServiceItemsEditFragment) {
+            showFragment("SERVICE_ITEMS_FRAGMENT")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setAdjust()
         super.onCreate(savedInstanceState)

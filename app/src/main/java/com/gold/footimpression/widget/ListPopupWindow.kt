@@ -18,7 +18,7 @@ class ListPopupWindow(context: Context) : BasePopupWindow(context) {
     var adapterPop: CommonAdapter<String>? = null
     //    var popDatas = mutableListOf<String>()
     var needTransation = false
-
+    var mOffsetY = 0
     override fun showPop(parentView: View) {
         showPop(popDatas, parentView)
     }
@@ -42,7 +42,9 @@ class ListPopupWindow(context: Context) : BasePopupWindow(context) {
                     if (subCounts > 7) {
                         subCounts = 7
                     }
-                    offsetY = -subCounts * DensyUtils.dp2px(mContext!!, 50f)
+                    offsetY = -subCounts * DensyUtils.dp2px(mContext!!, 50f)+mOffsetY
+                }else{
+                    offsetY = mOffsetY
                 }
                 mPopupWindow!!.showAsDropDown(parentView, 0, offsetY)
             } else {

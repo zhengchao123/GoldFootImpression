@@ -150,7 +150,7 @@ class SharedPreferencesUtils private constructor(context: Context, spName: Strin
     }
 
     @JvmOverloads
-    fun getString(key: String, defValue: String = DEFAULT_STRING): String? {
+    fun getString(key: String, defValue: String = DEFAULT_STRING): String {
         return sharedPreferences.getString(key, defValue)
     }
 

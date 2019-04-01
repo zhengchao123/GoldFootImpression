@@ -14,7 +14,7 @@ class TimeModule() : BaseObservable(), Serializable {
         times = "" + currentTime
     }
 
-    var fullTime: String? = ""
+    var fullTime: String = ""
         @Bindable
         get() = field
         set(value) {

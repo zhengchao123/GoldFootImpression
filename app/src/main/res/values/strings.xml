@@ -60,5 +60,13 @@
     <string name="coupon_amount">优惠卷金额 :</string>
     <string name="bucha">是否需要补差 :</string>
     <string name="request_faild">加载失败</string>
+    <string name="please_select_room">请选择房间号</string>
+    <string name="please_select_shoupai">请选择手牌号</string>
+    <string name="please_enter_group_price">请录入团购价</string>
+    <string name="please_enter_xcrenCode">请录入宣传人编码</string>
+    <string name="please_enter_youhuijia">请录入优惠卷金额</string>
+    <string name="submit_order_success">提交成功</string>
+    <string name="please_select_platform">请选择团购平台</string>
+    <string name="please_enter_group_num">请输入团购码</string>
 
 </resources>

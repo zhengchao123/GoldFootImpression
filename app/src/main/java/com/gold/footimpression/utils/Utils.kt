@@ -52,7 +52,7 @@ object Utils {
         SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.LOGIN_TOKEN_INFO, token)
     }
 
-    fun getUserBumenCode(): String? {
+    fun getUserBumenCode(): String {
         return SharedPreferencesUtils.init(RcbApplication.getInstance()).getString(Constants.USER_BUMEN_CODE)
     }
 

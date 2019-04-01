@@ -91,6 +91,11 @@ class OrderInputFragment : BaseFragment() {
         mBinding!!.time = time
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.tuangouquanHao = groupCode.get()
+    }
+
     override fun initData() {
         super.initData()
         mDoorCode.set(Utils.getUserBumenCode())
@@ -160,6 +165,17 @@ class OrderInputFragment : BaseFragment() {
                         if (TextUtils.equals("", customSource.get())) {
                             toast(R.string.please_select_custom_sourse)
                             return
+                        } else {
+                            if (customSource.get()!!.contains("团购")) {
+                                if(TextUtils.isEmpty(platform.get())){
+                                    toast(R.string.please_select_platform)
+                                    return
+                                }
+                                if(TextUtils.isEmpty(groupCode.get())){
+                                    toast(R.string.please_enter_group_num)
+                                    return
+                                }
+                            }
                         }
                         if (TextUtils.equals("", time.get())) {
                             toast(R.string.please_select_time)
@@ -183,7 +199,10 @@ class OrderInputFragment : BaseFragment() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // 先隐藏键盘
                 Utils.closeSoftKeyBord(mContext, this@OrderInputFragment.activity!!)
-                loadVipInfo()
+                if (!TextUtils.isEmpty(v.text)) {
+                    loadVipInfo()
+                }
+
             }
             false
         }
@@ -227,6 +246,10 @@ class OrderInputFragment : BaseFragment() {
                     mVipModule.huiyuanTel = result.huiyuanTel
                     mVipModule.huiyuanZhanghao = result.huiyuanZhanghao
                     mVipModule.xianjin = result.xianjin
+                    (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.huiyuanZhanghao =
+                        mVipModule.huiyuanZhanghao
+                    (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.huiyuanTel =
+                        mVipModule.huiyuanTel
                 } else {
                     toast(msg!!)
                 }
@@ -285,12 +308,17 @@ class OrderInputFragment : BaseFragment() {
 
             override fun onItemClick(itemView: View, position: Int) {
                 mCertificatesPop!!.closePop()
+
+
                 if (TextUtils.equals(key, "203")) {
                     customSource.set(lists[position].cname)
                     customSourceCode.set(lists[position].ccode)
                     platform.set("")
                     platformCode.set("")
                     groupCode.set("")
+                    (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.kehuLaiyuan =
+                        customSourceCode.get()
+
                     if (lists[position].cname!!.contains("团购")) {
                         groupBuyAble.set(true)
                     } else {
@@ -299,6 +327,8 @@ class OrderInputFragment : BaseFragment() {
                 } else {
                     platform.set(lists[position].cname)
                     platformCode.set(lists[position].ccode)
+                    (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.tuangouHuodong =
+                        platformCode.get()
                 }
 
             }
@@ -324,6 +354,12 @@ class OrderInputFragment : BaseFragment() {
                 mTimePop!!.closePop()
                 mSelectTimePosition = position
                 time.set(mTimes[position].shortTime)
+
+
+                (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.daodianTime =
+                    mTimes[position].fullTime
+                (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.daodianHMStr =
+                    mTimes[position].shortTime
 
             }
 

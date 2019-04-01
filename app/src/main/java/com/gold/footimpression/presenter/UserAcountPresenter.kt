@@ -488,6 +488,66 @@ class UserAcountPresenter(activity: Activity?) {
         }.type, "getReicevers", Constants.URL_GET_RECIVER)
     }
 
+
+    /**
+     * 获取接待
+     */
+    fun <T> submitOrder(
+        paramFuwuStr: String, paramStr: String,
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        if (!TextUtils.isEmpty(paramFuwuStr)) {
+            params["paramFuwuStr"] = paramFuwuStr
+        }
+        if (!TextUtils.isEmpty(paramStr)) {
+            params["paramStr"] = paramStr
+        }
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        callBack(
+                            HttpCallBack.SUCCESS_CODE,
+                            CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE), null
+                        )
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "submitOrder", Constants.URL_SUBMIT_ORDER)
+    }
+
+
     public fun cancelRequest(flag: String) {
         HttpManager.getmInstance().cancleCallByKey(flag)
     }
@@ -501,6 +561,8 @@ class UserAcountPresenter(activity: Activity?) {
             cancelRequest("getPlanners")
             cancelRequest("getReicevers")
             cancelRequest("getRoom")
+            cancelRequest("submitOrder")
+
             mInstance = null
         }
     }

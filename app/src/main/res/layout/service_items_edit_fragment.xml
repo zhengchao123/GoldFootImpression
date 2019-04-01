@@ -94,7 +94,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#fff2f2f2">
+                    android:background="#ffffff">
 
                 <TextView
                         android:layout_width="match_parent"
@@ -119,6 +119,10 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="90dp"
                         android:background="#D4D4D4"/>
+                <View android:layout_width="match_parent"
+                      android:layout_marginTop="91dp"
+                      android:layout_height="13dp"
+                      android:background="#fff2f2f2"/>
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -193,7 +197,6 @@
                         android:text="@string/submit_order"
                         android:layout_alignParentBottom="true"
                         android:enabled="@{visible}"
-                        android:visibility="@{visible?View.VISIBLE:View.GONE}"
                         android:textColor="@{visible?@color/title_bar_bg_color:@color/btn_gray_color}"
                         android:background="@{visible?@drawable/bg_green_submit:@drawable/bg_gray_submit}"/>
             </RelativeLayout>
@@ -286,6 +289,7 @@
                                         android:gravity="start|center_vertical"
                                         android:paddingStart="10dp"
                                         android:inputType="numberDecimal"
+                                        android:imeOptions="actionNext"
                                         android:text="@={editServiceModule.discountPrice}"
                                         android:enabled="@{!coupon}"
                                         android:background="#00000000"
@@ -322,6 +326,7 @@
                                         android:gravity="start|center_vertical"
                                         android:inputType="numberDecimal"
                                         android:paddingStart="10dp"
+                                        android:imeOptions="actionNext"
                                         android:text="@={editServiceModule.groupPrice}"
                                         android:enabled="@{group}"
                                         android:background="#00000000"
@@ -373,7 +378,7 @@
                                         android:paddingEnd="20dp"
                                         android:clickable="true"
                                         android:onClick="@{click::onClickView}"
-                                        />
+                                />
 
                             </LinearLayout>
 
@@ -479,6 +484,7 @@
                                     android:paddingStart="10dp"
                                     android:text="@{editServiceModule.reicever.gonghao}"
                                     android:textSize="@dimen/text_size_14"
+                                    android:imeOptions="actionDone"
                                     android:textColor="@color/hint_color"
                                     android:paddingEnd="20dp"
                             />
@@ -490,7 +496,7 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="20dp"
                                 android:paddingStart="20dp"
-                                android:background="@drawable/bg_input_regtangle"
+                                android:background="@{coupon?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}"
                                 android:orientation="horizontal">
 
 
@@ -509,7 +515,8 @@
                                     android:gravity="start|center_vertical"
                                     android:paddingStart="10dp"
                                     android:inputType="number"
-                                    android:text="@={xuanchuanyuan}"
+                                    android:background="#00000000"
+                                    android:text="@={editServiceModule.xcrenCode}"
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                                     android:paddingEnd="20dp"
@@ -525,7 +532,7 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="20dp"
                                 android:paddingStart="20dp"
-                                android:background="@drawable/bg_input_regtangle"
+                                android:background="@{coupon?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}"
                                 android:orientation="horizontal">
 
                             <TextView
@@ -543,8 +550,9 @@
                                     android:gravity="start|center_vertical"
                                     android:paddingStart="10dp"
                                     android:inputType="numberDecimal"
-                                    android:text="@={couponAmount}"
+                                    android:text="@={editServiceModule.youhuijia}"
                                     android:textSize="@dimen/text_size_14"
+                                    android:background="#00000000"
                                     android:textColor="@color/hint_color"
                                     android:paddingEnd="20dp"
                                     android:enabled="@{coupon}"
@@ -555,6 +563,7 @@
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ll_bucha"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_marginTop="20dp"
@@ -579,7 +588,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="start|center_vertical"
                                     android:paddingStart="10dp"
-                                    android:text="@={bucha}"
+                                    android:text="@={editServiceModule.buchajiaValue}"
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                                     android:drawableEnd="@mipmap/icon_arraw_down"

@@ -19,6 +19,8 @@ object Constants {
     const val URL_GET_ROOM = HOST + "getOrderInitInfoForIpad"
     //获取接待
     const val URL_GET_RECIVER = HOST + "getJiedaiAuth"
+    //下单
+    const val URL_SUBMIT_ORDER = HOST + "addDingdanForIpad"
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =

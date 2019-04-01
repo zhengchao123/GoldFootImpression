@@ -17,7 +17,7 @@ class VIPInfoModule() : BaseObservable() {
 //    "cardTypeName": "普卡",
 //    "xianjin": 904
 //
-    var huiyuanZhanghao: String? = ""
+    var huiyuanZhanghao: String = ""
         @Bindable
         get() = field
         set(value) {
@@ -26,7 +26,7 @@ class VIPInfoModule() : BaseObservable() {
         }
 
 
-    var huiyuanTel: String? = ""
+    var huiyuanTel: String = ""
         @Bindable
         get() = field
         set(value) {

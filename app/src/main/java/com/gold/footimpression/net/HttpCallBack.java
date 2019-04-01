@@ -114,7 +114,6 @@ public class HttpCallBack implements Callback {
             }
             if (code == FAILE_CODE_TOKEN_DATED || code == FAILE_CODE_TOKEN_NULL) {
                 Utils.INSTANCE.clearUserInfo();
-                Toast.makeText(RcbApplication.getInstance(), RcbApplication.getInstance().getString(R.string.error_token), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RcbApplication.getInstance(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

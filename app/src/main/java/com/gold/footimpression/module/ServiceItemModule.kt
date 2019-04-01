@@ -7,7 +7,19 @@ import com.gold.footimpression.BR
 /**
  * 服务项目[]
  */
-class ServiceItemModule() : BaseObservable() {
+class ServiceItemModule() : BaseObservable(),Cloneable  {
+
+
+    public override fun clone(): ServiceItemModule {
+        var person: ServiceItemModule? = null
+        try {
+            person = super.clone() as ServiceItemModule
+        } catch (e: CloneNotSupportedException) {
+            e.printStackTrace()
+        }
+
+        return person!!
+    }
 
 
     //    "fuwuXiangmuBianma": 1,编码
@@ -136,4 +148,7 @@ class ServiceItemModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.mServiceEditModule)
         }
+
+
+
 }

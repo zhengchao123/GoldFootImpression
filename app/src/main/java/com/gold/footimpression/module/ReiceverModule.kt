@@ -7,14 +7,24 @@ import com.gold.footimpression.BR
 /**
  * 接待员[]
  */
-class ReiceverModule() : BaseObservable() {
+class ReiceverModule() : BaseObservable(), Cloneable {
 
 
 //    gonghao 工号
 //    name 姓名
 
+    public override fun clone(): ReiceverModule {
+        var person: ReiceverModule? = null
+        try {
+            person = super.clone() as ReiceverModule
+        } catch (e: CloneNotSupportedException) {
+            e.printStackTrace()
+        }
 
-    var gonghao: String? = ""
+        return person!!
+    }
+
+    var gonghao: String = ""
         @Bindable
         get() = field
         set(value) {

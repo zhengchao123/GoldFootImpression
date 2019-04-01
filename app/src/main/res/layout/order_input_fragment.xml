@@ -212,7 +212,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_input_regtangle"
+                                android:background="@{groupBuyAble?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}"
                                 android:orientation="horizontal">
                             <TextView
                                     android:layout_width="wrap_content"
@@ -247,7 +247,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_input_regtangle"
+                                android:background="@{groupBuyAble?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}"
                                 android:orientation="horizontal">
                             <TextView
                                     android:layout_width="wrap_content"
@@ -258,7 +258,6 @@
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                             />
-
 
 
                             <EditText
@@ -273,6 +272,7 @@
                                     android:text="@={groupCode}"
                                     android:imeOptions="actionNext"
                                     android:singleLine="true"
+                                    android:background="#00000000"
                                     android:textColor="@color/hint_color"
                                     android:focusable="@{groupBuyAble}"
                             />
@@ -285,7 +285,6 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
                 <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/ll_third"
                         android:layout_width="match_parent"
@@ -295,7 +294,6 @@
                         android:layout_marginEnd="50dp"
                         android:orientation="horizontal"
                         android:layout_below="@+id/ll_second">
-
 
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -313,7 +311,6 @@
                                 android:textSize="@dimen/text_size_14"
                                 android:textColor="@color/hint_color"
                         />
-
 
 
                         <EditText
@@ -369,9 +366,6 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
-
-
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -417,8 +411,6 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
-
                     <View android:layout_width="45dp" android:layout_height="0dp"/>
 
 
@@ -454,7 +446,6 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -466,7 +457,6 @@
                         android:layout_marginEnd="50dp"
                         android:orientation="horizontal"
                         android:layout_below="@+id/ll_fourth">
-
 
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -535,7 +525,6 @@
 
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

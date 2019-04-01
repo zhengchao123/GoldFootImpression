@@ -15,7 +15,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@{serviceItemModule.clicked?@color/colorPrimary:@color/title_bar_bg_color}"
+            android:background="@{serviceItemModule.clicked?@color/tab_color_un_selected:@color/title_bar_bg_color}"
             android:orientation="horizontal">
         <ImageView
                 android:id="@+id/iv_selected"

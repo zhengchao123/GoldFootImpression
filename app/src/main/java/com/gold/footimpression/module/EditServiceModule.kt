@@ -4,9 +4,18 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.gold.footimpression.BR
 
-class EditServiceModule() : BaseObservable() {
+class EditServiceModule() : BaseObservable(),Cloneable {
 
+    public override fun clone(): EditServiceModule {
+        var person: EditServiceModule? = null
+        try {
+            person = super.clone() as EditServiceModule
+        } catch (e: CloneNotSupportedException) {
+            e.printStackTrace()
+        }
 
+        return person!!
+    }
     //折扣价
     var discountPrice = ""
         @Bindable
@@ -16,7 +25,7 @@ class EditServiceModule() : BaseObservable() {
             notifyPropertyChanged(BR.discountPrice)
         }
     //团购价
-     var groupPrice = ""
+    var groupPrice = ""
         @Bindable
         get() = field
         set(value) {
@@ -49,6 +58,47 @@ class EditServiceModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.reicever)
         }
+    //宣传员姓名
+    var xcrenName = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.xcrenName)
+        }
+    //宣传员编码
+    var xcrenCode = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.xcrenCode)
+        }
 
+    //优惠金额
+    var youhuijia = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.youhuijia)
+        }
+    //补差价
+    var buchajia = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.buchajia)
+        }
+
+    //补差价
+    var buchajiaValue = "否"
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.buchajiaValue)
+        }
 
 }
