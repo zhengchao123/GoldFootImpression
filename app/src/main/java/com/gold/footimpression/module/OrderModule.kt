@@ -238,13 +238,13 @@ class OrderModule() : BaseObservable() {
 //                 notifyPropertyChanged(BR.xcrenCode)
 //             }
 
-         var xcrenName: String = ""
-             @Bindable
-             get() = field
-             set(value) {
-                 field = value
-                 notifyPropertyChanged(BR.xcrenName)
-             }
+//         var xcrenName: String = ""
+//             @Bindable
+//             get() = field
+//             set(value) {
+//                 field = value
+//                 notifyPropertyChanged(BR.xcrenName)
+//             }
 
 
 
