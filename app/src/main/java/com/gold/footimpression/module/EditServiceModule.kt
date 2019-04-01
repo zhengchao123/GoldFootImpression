@@ -4,54 +4,51 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.gold.footimpression.BR
 
-class AcountModule() : BaseObservable() {
-
-    var token: String? = ""
-        @Bindable
-        get() = field
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.token)
-        }
+class EditServiceModule() : BaseObservable() {
 
 
-    var userName: String? = ""
+    //折扣价
+    var discountPrice = ""
         @Bindable
         get() = field
         set(value) {
             field = value
-            notifyPropertyChanged(BR.userName)
+            notifyPropertyChanged(BR.discountPrice)
         }
-    var displayName: String = ""
+    //团购价
+     var groupPrice = ""
         @Bindable
         get() = field
         set(value) {
             field = value
-            notifyPropertyChanged(BR.displayName)
+            notifyPropertyChanged(BR.groupPrice)
         }
-    //门店编码
-    var bumenCode: String = ""
+    //钟房编码
+    var roomNum = ""
         @Bindable
         get() = field
         set(value) {
             field = value
-            notifyPropertyChanged(BR.bumenCode)
-        }
-    //门店名称
-    var bumenName: String = ""
-        @Bindable
-        get() = field
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.bumenName)
+            notifyPropertyChanged(BR.roomNum)
         }
 
-    var gonghao = ""
+    //手牌号
+    var shoupaiNumValue = ""
         @Bindable
         get() = field
         set(value) {
             field = value
-            notifyPropertyChanged(BR.gonghao)
+            notifyPropertyChanged(BR.shoupaiNumValue)
         }
+
+    //接待
+    var reicever = ReiceverModule()
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.reicever)
+        }
+
 
 }

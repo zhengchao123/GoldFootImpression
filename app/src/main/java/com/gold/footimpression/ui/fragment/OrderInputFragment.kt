@@ -265,8 +265,6 @@ class OrderInputFragment : BaseFragment() {
                 }
             }
         }
-
-
     }
 
 

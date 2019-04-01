@@ -81,6 +81,8 @@ class LoginActivity : BaseActivity() {
                     Utils.saveUserToken(token!!)
                     Utils.saveUserBumenCode(code)
                     Utils.saveUserBumenName(bumenName)
+                    Utils.saveDisplayName(result.displayName)
+                    Utils.saveGonghao(result.gonghao)
                     gotoMain()
                 }
             }

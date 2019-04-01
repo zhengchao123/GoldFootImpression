@@ -23,7 +23,7 @@ class ReiceverModule() : BaseObservable() {
         }
 
 
-    var name: String? = ""
+    var name: String = ""
         @Bindable
         get() = field
         set(value) {
@@ -31,5 +31,9 @@ class ReiceverModule() : BaseObservable() {
             notifyPropertyChanged(BR.name)
         }
 
+    constructor(name: String, gonghao: String) : this() {
+        this.name = name
+        this.gonghao = gonghao
+    }
 
 }

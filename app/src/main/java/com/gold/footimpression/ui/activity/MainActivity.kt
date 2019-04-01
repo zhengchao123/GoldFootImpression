@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.gold.footimpression.R
 import com.gold.footimpression.databinding.ActivityMainBinding
+import com.gold.footimpression.module.OrderModule
 import com.gold.footimpression.module.ServiceItemModule
 import com.gold.footimpression.ui.base.BaseActivity
 import com.gold.footimpression.ui.fragment.*
@@ -29,13 +30,14 @@ class MainActivity : BaseActivity() {
     private val TAG_SERVICE_EDIT_ITEMS = "SERVICE_EDIT_ITEMS";
 
     private lateinit var mMainActivityBinding: ActivityMainBinding
-    public var services = mutableListOf<ServiceItemModule>()
+    var services = mutableListOf<ServiceItemModule>()
 
-
+    var mOrderModule = OrderModule()
     //是团购
-    public var group = ObservableField<Boolean>(false)
+    var group = ObservableField<Boolean>(false)
     //是优惠券
-    public var coupon = ObservableField<Boolean>(false)
+    var coupon = ObservableField<Boolean>(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setAdjust()
         super.onCreate(savedInstanceState)
@@ -47,9 +49,10 @@ class MainActivity : BaseActivity() {
 
     }
 
-    fun setAdjust(){
+    fun setAdjust() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
+
     override fun initView() {
         super.initView()
         closeTitleBar(true)

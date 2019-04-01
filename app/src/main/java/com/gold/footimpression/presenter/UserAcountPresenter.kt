@@ -50,7 +50,11 @@ class UserAcountPresenter(activity: Activity?) {
                     return
                 }
                 runCallBack {
-                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
                 }
             }
 
@@ -108,7 +112,11 @@ class UserAcountPresenter(activity: Activity?) {
                     return
                 }
                 runCallBack {
-                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
                 }
             }
 
@@ -170,7 +178,11 @@ class UserAcountPresenter(activity: Activity?) {
                     return
                 }
                 runCallBack {
-                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
                 }
             }
 
@@ -212,6 +224,7 @@ class UserAcountPresenter(activity: Activity?) {
         }, object : TypeToken<BaseNetArrayModule>() {
         }.type, "getDicts", Constants.URL_DICTS)
     }
+
     /**
      * 服务项目
      */
@@ -227,7 +240,11 @@ class UserAcountPresenter(activity: Activity?) {
                     return
                 }
                 runCallBack {
-                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
                 }
             }
 
@@ -269,6 +286,7 @@ class UserAcountPresenter(activity: Activity?) {
         }, object : TypeToken<BaseNetArrayModule>() {
         }.type, "serviceitems", Constants.URL_SERVICE_ITEMS)
     }
+
     /**
      * 获取技师
      * mendianBianma
@@ -279,29 +297,29 @@ class UserAcountPresenter(activity: Activity?) {
 
      */
     fun <T> getPlanners(
-        mendianBianma:String,
-        daodianTime:String,
-        daodianHMStr:String,
-        fuwuxiangmuBianma:String,
-        isCurrentTime:String,
+        mendianBianma: String,
+        daodianTime: String,
+        daodianHMStr: String,
+        fuwuxiangmuBianma: String,
+        isCurrentTime: String,
         callBack: (code: Int, msg: String?, result: T?) -> Unit
     ) {
 
         val params = mutableMapOf<String, String>()
-        if(!TextUtils.isEmpty(mendianBianma)){
-            params["mendianBianma"]=mendianBianma
+        if (!TextUtils.isEmpty(mendianBianma)) {
+            params["mendianBianma"] = mendianBianma
         }
-        if(!TextUtils.isEmpty(daodianTime)){
-            params["daodianTime"]=daodianTime
+        if (!TextUtils.isEmpty(daodianTime)) {
+            params["daodianTime"] = daodianTime
         }
-        if(!TextUtils.isEmpty(daodianHMStr)){
-            params["daodianHMStr"]=daodianHMStr
+        if (!TextUtils.isEmpty(daodianHMStr)) {
+            params["daodianHMStr"] = daodianHMStr
         }
-        if(!TextUtils.isEmpty(fuwuxiangmuBianma)){
-            params["fuwuxiangmuBianma"]=fuwuxiangmuBianma
+        if (!TextUtils.isEmpty(fuwuxiangmuBianma)) {
+            params["fuwuxiangmuBianma"] = fuwuxiangmuBianma
         }
-        if(!TextUtils.isEmpty(isCurrentTime)){
-            params["isCurrentTime"]=isCurrentTime
+        if (!TextUtils.isEmpty(isCurrentTime)) {
+            params["isCurrentTime"] = isCurrentTime
         }
         Client2Server.doPostAsyn(params, object : HttpCallBack() {
             override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
@@ -310,7 +328,11 @@ class UserAcountPresenter(activity: Activity?) {
                     return
                 }
                 runCallBack {
-                    callBack(code, if(TextUtils.isEmpty(CodeUtils.getMsg(code)))exceptionMsg!! else CodeUtils.getMsg(code), null)
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
                 }
             }
 
@@ -353,6 +375,119 @@ class UserAcountPresenter(activity: Activity?) {
         }.type, "getPlanners", Constants.URL_PLANNER)
     }
 
+    //登录
+    fun <T> getRoom(callBack: (code: Int, msg: String?, result: T?) -> Unit) {
+        val params = mutableMapOf<String, String>()
+        Client2Server.doGetAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <T : Any?> onResponse(call: Call?, response: Response?, t: T) {
+                super.onResponse(call, response, t)
+                var data = ""
+                try {
+                    data = (t as BaseNetObjectModule).root.toString()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    if (!TextUtils.isEmpty(data) && (t as BaseNetObjectModule).success) {
+                        LogUtils.i(TAG, data)
+                        callBack(
+                            HttpCallBack.SUCCESS_CODE,
+                            t.msg, Gson().fromJson(
+                                data, object : TypeToken<RoomAndCardModule>() {}.type
+                            )
+                        )
+                    } else {
+                        var message = activity!!.getString(R.string.request_faild)
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            message, null
+                        )
+                    }
+                }
+            }
+        }, object : TypeToken<BaseNetObjectModule>() {
+        }.type, "getRoom", Constants.URL_GET_ROOM)
+    }
+
+    /**
+     * 获取接待
+     */
+    fun <T> getReicevers(
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        Client2Server.doGetAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<ReiceverModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "getReicevers", Constants.URL_GET_RECIVER)
+    }
+
     public fun cancelRequest(flag: String) {
         HttpManager.getmInstance().cancleCallByKey(flag)
     }
@@ -364,6 +499,8 @@ class UserAcountPresenter(activity: Activity?) {
             cancelRequest("getDicts")
             cancelRequest("serviceitems")
             cancelRequest("getPlanners")
+            cancelRequest("getReicevers")
+            cancelRequest("getRoom")
             mInstance = null
         }
     }

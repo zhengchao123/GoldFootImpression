@@ -67,11 +67,26 @@ object Utils {
     fun saveUserBumenName(token: String) {
         SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_BUMEN_NAME, token)
     }
+    fun getDisplayName(): String? {
+        return SharedPreferencesUtils.init(RcbApplication.getInstance()).getString(Constants.USER_DISPLAY_NAME)
+    }
 
+    fun saveDisplayName(token: String) {
+        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_DISPLAY_NAME, token)
+    }
+    fun getGonghao(): String? {
+        return SharedPreferencesUtils.init(RcbApplication.getInstance()).getString(Constants.USER_GONGHAO_NAME)
+    }
+
+    fun saveGonghao(token: String) {
+        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, token)
+    }
     fun clearUserInfo() {
         SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.LOGIN_TOKEN_INFO, "")
         SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_BUMEN_CODE, "")
         SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_BUMEN_NAME, "")
+        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_DISPLAY_NAME, "")
+        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, "")
     }
 
 

@@ -15,6 +15,10 @@ object Constants {
     const val URL_SERVICE_ITEMS = HOST + "getFuwuXiangmu"
     //技师
     const val URL_PLANNER = HOST + "searchFreeJishi"
+    //获取房间和手牌
+    const val URL_GET_ROOM = HOST + "getOrderInitInfoForIpad"
+    //获取接待
+    const val URL_GET_RECIVER = HOST + "getJiedaiAuth"
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =
@@ -75,4 +79,6 @@ object Constants {
     val LOGIN_TOKEN_INFO = "user_token"
     val USER_BUMEN_CODE = "user_bumen_code"
     val USER_BUMEN_NAME = "user_bumen_name"
+    val USER_DISPLAY_NAME = "user_display_name"
+    val USER_GONGHAO_NAME = "user_gonghao_name"
 }

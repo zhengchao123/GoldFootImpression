@@ -75,7 +75,7 @@ class OrderModule() : BaseObservable() {
     var paramStrContent = { Gson().toJson(paramStr) }
     var paramFuwuStrContent = { Gson().toJson(paramFuwuStr) }
 
-    inner class BaseInfo() : BaseObservable() {
+     class BaseInfo() : BaseObservable() {
 //        dingdanhao	string	订单号：固定传空
 //        huiyuanZhanghao	string	会员Id
 //        huiyuanTel	string	会员手机
@@ -184,7 +184,7 @@ class OrderModule() : BaseObservable() {
             }
     }
 
-    inner class ServiceInfo() : BaseObservable() {
+     class ServiceInfo() : BaseObservable() {
 //        dingdanUid	string	订单UID：固定传空
 //        fuwuXiangmuBianma	Integer	服务项目编码
 //        jishiGonghao	string	技师工号
@@ -194,7 +194,64 @@ class OrderModule() : BaseObservable() {
 //        zhongfangBianma	string	房间号
 
 
-        var dingdanUid: String? = ""
+//         shoupaihao	Integer	手牌号
+//         jiedaiGonghao	string	接待工号
+//         xcrenCode	string	宣传人编码
+//         xcrenName	string	宣传人姓名
+//         youhuijia	BigDecimal	优惠价
+//         buchajia	Short	是否补差价->说明：0=否；1=是
+
+//         var buchajia: String = ""
+//             @Bindable
+//             get() = field
+//             set(value) {
+//                 field = value
+//                 notifyPropertyChanged(BR.buchajia)
+//             }
+//         var youhuijia: String = ""
+//             @Bindable
+//             get() = field
+//             set(value) {
+//                 field = value
+//                 notifyPropertyChanged(BR.youhuijia)
+//             }
+//         var shoupaihao: String = ""
+//             @Bindable
+//             get() = field
+//             set(value) {
+//                 field = value
+//                 notifyPropertyChanged(BR.shoupaihao)
+//             }
+//         var jiedaiGonghao: String = ""
+//             @Bindable
+//             get() = field
+//             set(value) {
+//                 field = value
+//                 notifyPropertyChanged(BR.jiedaiGonghao)
+//             }
+//
+//         var xcrenCode: String = ""
+//             @Bindable
+//             get() = field
+//             set(value) {
+//                 field = value
+//                 notifyPropertyChanged(BR.xcrenCode)
+//             }
+
+         var xcrenName: String = ""
+             @Bindable
+             get() = field
+             set(value) {
+                 field = value
+                 notifyPropertyChanged(BR.xcrenName)
+             }
+
+
+
+
+
+
+         var dingdanUid: String? = ""
             @Bindable
             get() = field
             set(value) {
@@ -226,21 +283,21 @@ class OrderModule() : BaseObservable() {
                 notifyPropertyChanged(BR.dianzhong)
             }
 
-        var dingdanJineFwdz: Boolean = false
+        var dingdanJineFwdz = ""
             @Bindable
             get() = field
             set(value) {
                 field = value
                 notifyPropertyChanged(BR.dingdanJineFwdz)
             }
-        var tuangoujia: Boolean = false
+        var tuangoujia = ""
             @Bindable
             get() = field
             set(value) {
                 field = value
                 notifyPropertyChanged(BR.tuangoujia)
             }
-        var zhongfangBianma: Boolean = false
+        var zhongfangBianma = ""
             @Bindable
             get() = field
             set(value) {
@@ -248,4 +305,6 @@ class OrderModule() : BaseObservable() {
                 notifyPropertyChanged(BR.zhongfangBianma)
             }
     }
+
+
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View"/>
@@ -36,7 +37,7 @@
                 type="androidx.databinding.ObservableField&lt;String&gt;"/>
         //手牌号
         <variable
-                name="shoupaiNum"
+                name="shoupaiNumValue"
                 type="androidx.databinding.ObservableField&lt;String&gt;"/>
         //房间号
         <variable
@@ -69,6 +70,13 @@
         <variable
                 name="bucha"
                 type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+
+        //补差
+        <variable
+                name="editServiceModule"
+                type="com.gold.footimpression.module.EditServiceModule"/>
+
 
     </data>
 
@@ -211,6 +219,8 @@
                         android:id="@+id/tv_edit_sure"
                         android:layout_width="60dp"
                         android:layout_height="35dp"
+                        android:onClick="@{click::onClickView}"
+                        android:clickable="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="12dp"
                         android:textColor="#ffffff"
@@ -276,7 +286,7 @@
                                         android:gravity="start|center_vertical"
                                         android:paddingStart="10dp"
                                         android:inputType="numberDecimal"
-                                        android:text="@={discountPrice}"
+                                        android:text="@={editServiceModule.discountPrice}"
                                         android:enabled="@{!coupon}"
                                         android:background="#00000000"
                                         android:textSize="@dimen/text_size_14"
@@ -312,7 +322,7 @@
                                         android:gravity="start|center_vertical"
                                         android:inputType="numberDecimal"
                                         android:paddingStart="10dp"
-                                        android:text="@={groupPrice}"
+                                        android:text="@={editServiceModule.groupPrice}"
                                         android:enabled="@{group}"
                                         android:background="#00000000"
                                         android:textSize="@dimen/text_size_14"
@@ -334,6 +344,7 @@
 
 
                             <LinearLayout
+                                    android:id="@+id/ll_room"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="match_parent"
@@ -348,21 +359,21 @@
                                         android:textSize="@dimen/text_size_14"
                                         android:textColor="@color/hint_color"
                                 />
-                                <EditText
+                                <TextView
                                         android:id="@+id/et_room_num"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:gravity="start|center_vertical"
                                         android:paddingStart="10dp"
                                         android:inputType="number"
-                                        android:text="@={roomNum}"
+                                        android:text="@={editServiceModule.roomNum}"
                                         android:textSize="@dimen/text_size_14"
                                         android:textColor="@color/hint_color"
                                         android:drawableEnd="@mipmap/icon_arraw_down"
                                         android:paddingEnd="20dp"
                                         android:clickable="true"
                                         android:onClick="@{click::onClickView}"
-                                        android:focusable="true"/>
+                                        />
 
                             </LinearLayout>
 
@@ -370,6 +381,7 @@
 
 
                             <LinearLayout
+                                    android:id="@+id/ll_card"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="match_parent"
@@ -385,7 +397,7 @@
                                         android:textColor="@color/hint_color"
                                 />
 
-                                <EditText
+                                <TextView
                                         android:id="@+id/shoupai_num"
                                         android:layout_width="0dp"
                                         android:layout_weight="1"
@@ -393,7 +405,7 @@
                                         android:gravity="start|center_vertical"
                                         android:inputType="number"
                                         android:paddingStart="10dp"
-                                        android:text="@={shoupaiNum}"
+                                        android:text="@={editServiceModule.shoupaiNumValue}"
                                         android:textSize="@dimen/text_size_14"
                                         android:textColor="@color/hint_color"
                                         android:drawableEnd="@mipmap/icon_arraw_down"
@@ -408,6 +420,7 @@
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/ll_reciver_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_marginTop="20dp"
@@ -430,13 +443,13 @@
                                     android:layout_height="match_parent"
                                     android:gravity="start|center_vertical"
                                     android:paddingStart="10dp"
-                                    android:text="@{reiceverModule.name}"
+                                    android:clickable="true"
+                                    android:onClick="@{click::onClickView}"
+                                    android:text="@{editServiceModule.reicever.name}"
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                                     android:drawableEnd="@mipmap/icon_arraw_down"
                                     android:paddingEnd="20dp"
-                                    android:clickable="true"
-                                    android:onClick="@{click::onClickView}"
                                     android:focusable="true"/>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -464,7 +477,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="start|center_vertical"
                                     android:paddingStart="10dp"
-                                    android:text="@{reiceverModule.gonghao}"
+                                    android:text="@{editServiceModule.reicever.gonghao}"
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                                     android:paddingEnd="20dp"

@@ -52,7 +52,7 @@ public class HttpCallBack implements Callback {
     @Override
     public void onFailure(Call call, IOException e) {
         String errorMsg = call.request().url().toString();
-        errorMsg += " request  faild: " + "\n head: " + getHeadStr(call)+  "\n errMsg: "+e.getMessage();
+        errorMsg += " request  faild: " + "\n head: " + getHeadStr(call) + "\n errMsg: " + e.getMessage();
 
         if (null != mOkhttpRequest) {
             Map<String, String> params = mOkhttpRequest.getmParams();
@@ -113,10 +113,7 @@ public class HttpCallBack implements Callback {
                 msg = moduleO.getMsg();
             }
             if (code == FAILE_CODE_TOKEN_DATED || code == FAILE_CODE_TOKEN_NULL) {
-
-                Utils.INSTANCE.saveUserBumenCode("");
-                Utils.INSTANCE.saveUserToken("");
-                Utils.INSTANCE.saveUserBumenName("");
+                Utils.INSTANCE.clearUserInfo();
                 Toast.makeText(RcbApplication.getInstance(), RcbApplication.getInstance().getString(R.string.error_token), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RcbApplication.getInstance(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

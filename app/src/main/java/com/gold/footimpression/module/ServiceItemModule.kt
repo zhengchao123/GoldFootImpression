@@ -104,6 +104,14 @@ class ServiceItemModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.plannerName)
         }
+    //所选技师
+    var plannerGonghao = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.plannerGonghao)
+        }
     var avalibleData = false
         @Bindable
         get() = field
@@ -112,4 +120,20 @@ class ServiceItemModule() : BaseObservable() {
             notifyPropertyChanged(BR.avalibleData)
         }
 
+    //是否此项目选中了钟点
+    var selectHourService = false
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.avalibleData)
+        }
+    //服务编辑信息
+    var mServiceEditModule = EditServiceModule()
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.mServiceEditModule)
+        }
 }
