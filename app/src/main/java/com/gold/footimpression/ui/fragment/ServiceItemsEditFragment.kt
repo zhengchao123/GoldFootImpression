@@ -261,7 +261,7 @@ class ServiceItemsEditFragment : BaseFragment() {
             BR.serviceItemModule
         ).let {
             it.setOnItemClick(object : OnItemClick {
-                override fun onItemClick(itemView: View, position: Int, instance: Any) {
+                override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
                 }
 
                 override fun onItemClick(itemView: View, position: Int) {
@@ -416,7 +416,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         mRoomPopwindow!!.setWidth(mBinding!!.llRoom.width)
         mRoomPopwindow!!.popDatas = lists.filterStringArrayName()
         mRoomPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -438,7 +438,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         mShoupaiPopwindow!!.setWidth(mBinding!!.llCard.width)
         mShoupaiPopwindow!!.popDatas = lists.filterShoupaiStringArrayName()
         mShoupaiPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -462,7 +462,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         mBuchaPopwindow!!.needTransation = true
         mBuchaPopwindow!!.popDatas = mutableListOf("否", "是")
         mBuchaPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -484,7 +484,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         mReiceverPopwindow!!.setWidth(mBinding!!.llReciverName.width)
         mReiceverPopwindow!!.popDatas = lists.filterReiceverNameStringArrayName()
         mReiceverPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {

@@ -84,7 +84,7 @@ open class CommonAdapter<T>() : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                     defaultAction(false)
                     super.onClickView(view)
                     LogUtils.i(TAG, " click item ${view?.id} position $position 2222")
-                    mOnItemClick?.onItemClick(view!!, position, instance!!)
+                    mOnItemClick?.onItemClick(view!!, position, instance!!,view.id)
                 }
             })
             dataBinding!!.executePendingBindings()

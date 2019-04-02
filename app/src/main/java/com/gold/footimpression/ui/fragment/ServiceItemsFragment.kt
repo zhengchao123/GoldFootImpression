@@ -201,7 +201,7 @@ class ServiceItemsFragment : BaseFragment() {
             BR.serviceItemModule
         ).let {
             it.setOnItemClick(object : OnItemClick {
-                override fun onItemClick(itemView: View, position: Int, instance: Any) {
+                override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
                 }
 
                 override fun onItemClick(itemView: View, position: Int) {
@@ -284,7 +284,7 @@ class ServiceItemsFragment : BaseFragment() {
             BR.plannerModule, BR.click
         ).let {
             it.setOnItemClick(object : OnItemClick {
-                override fun onItemClick(itemView: View, position: Int, instance: Any) {
+                override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
                     when (itemView.id) {
                         R.id.iv_selected -> {
 

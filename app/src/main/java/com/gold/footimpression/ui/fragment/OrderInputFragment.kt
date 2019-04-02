@@ -303,7 +303,7 @@ class OrderInputFragment : BaseFragment() {
         }
         mCertificatesPop!!.popDatas = lists.filterStringArrayName()
         mCertificatesPop!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -347,7 +347,7 @@ class OrderInputFragment : BaseFragment() {
         mTimePop!!.setWidth(mBinding!!.tvTimeLayout.width)
         mTimePop!!.popDatas = lists
         mTimePop!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {

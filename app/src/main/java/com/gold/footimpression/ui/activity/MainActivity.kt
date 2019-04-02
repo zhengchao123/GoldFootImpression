@@ -12,6 +12,7 @@ import com.gold.footimpression.module.OrderModule
 import com.gold.footimpression.module.ServiceItemModule
 import com.gold.footimpression.ui.base.BaseActivity
 import com.gold.footimpression.ui.fragment.*
+import com.gold.footimpression.utils.Utils
 
 class MainActivity : BaseActivity() {
 
@@ -83,6 +84,7 @@ class MainActivity : BaseActivity() {
                     showFragment(TAG_ORDER_INPUT_FRAGMENT);
                 }
                 R.id.rb_2 -> {
+                    Utils.closeSoftKeyBord(mContext!!,this)
                     val data = Bundle()
                     data.putString("fromKey", "mainActivity")
                     showFragment(TAG_ORDER_PREVIEW_FRAGMENT, data);
@@ -102,6 +104,7 @@ class MainActivity : BaseActivity() {
     public var mData: Bundle? = null
 
     fun showFragment(tag: String?, data: Bundle = Bundle()): Unit {
+
         mData = data
         if (mCurrentFragment != null) {
             getSupportFragmentManager().beginTransaction().hide(mCurrentFragment!!).commit();

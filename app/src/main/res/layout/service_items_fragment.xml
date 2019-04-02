@@ -75,8 +75,8 @@
                         android:background="#D4D4D4"/>
                 <LinearLayout
                         android:layout_width="match_parent"
-                              android:layout_height="match_parent"
-                android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
                 </LinearLayout>
                 <com.gold.footimpression.widget.AutoRecyclerView
@@ -206,10 +206,10 @@
                 android:layout_gravity="center_horizontal"
                 android:background="#AEAEAF"/>
         <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginTop="90dp"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--android:background="#D4D4D4"/>-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_marginTop="90dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:background="#D4D4D4"/>-->
     </FrameLayout>
 </layout>

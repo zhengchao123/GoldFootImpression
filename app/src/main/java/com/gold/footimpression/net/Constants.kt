@@ -29,6 +29,8 @@ object Constants {
     const val URL_HISTORY_ORDER = HOST + "searchAllDingdanByUser"
 
 
+    //获取增值服务
+    const val URL_GET_ZENGZHI = HOST + "searchZengzhifuwu"
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =

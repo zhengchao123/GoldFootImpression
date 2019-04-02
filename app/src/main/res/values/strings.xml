@@ -54,6 +54,8 @@
     <string name="group_price">团购价 :</string>
     <string name="room_num">房间号 :</string>
     <string name="shoupai_num">手牌号 :</string>
+    <string name="shoupai_la_num">手牌号</string>
+
     <string name="reicever_name">接待姓名 :</string>
     <string name="reicever_num">接待编码 :</string>
     <string name="xuanchuanyuan">宣传员编码 :</string>
@@ -93,5 +95,13 @@
     <string name="planner_name">技师姓名</string>
     <string name="reicever_va_num">接待编码</string>
     <string name="reicever_va_name">接待姓名</string>
+    <string name="zengzhifuwu">增值服务</string>
+    <string name="service_type">服务类型</string>
+    <string name="acount">数量</string>
+    <string name="la_amount">金额</string>
+    <string name="per_price">单价</string>
+    <string name="ticheng_no">提成人编号</string>
+    <string name="ticheng_name">提成人姓名</string>
+    <string name="reicever_la_num">接待人编号</string>
 
 </resources>
