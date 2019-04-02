@@ -34,7 +34,7 @@ class OrderDetailModule() : BaseObservable() {
     var huiyuanZhanghao = ""//	string	会员Id
     var jiedaiGonghao = ""//	string	接待工号
     var jiedaiName = ""//	string	接待姓名
-    var jiesuanStatus = ""//	int	是否结算->说明：0：否；1：是
+    var jiesuanStatus = 1//	int	是否结算->说明：0：否；1：是
     var jishiGonghao = ""//	string	技师工号
     var jishiName = ""//	string	技师姓名
     var mendianBianma = ""//	string	门店编码
@@ -45,6 +45,11 @@ class OrderDetailModule() : BaseObservable() {
     var shangzhongShijianStr = ""//		string	上钟时间（HH:MM）
     var shifouLiusu = ""//	string	是否留宿
     var shoupaiReturn = ""//		int	是否归还手牌->说明：0：否；1：是
+    var shoupaihao = ""//		int	是否归还手牌->说明：0：否；1：是
+
+
     //增值服务
     var orderIncrements = mutableListOf<OrderIncrementModule>()
+
+   var firstItem = false
 }

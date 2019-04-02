@@ -6,21 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ObservableField
+import androidx.databinding.library.baseAdapters.BR
 import com.gold.footimpression.R
+import com.gold.footimpression.bindingadapter.CommonAdapter
 import com.gold.footimpression.databinding.OrderListFragmentBinding
 import com.gold.footimpression.module.OrderDetailModule
+import com.gold.footimpression.module.RoomAndCardModule
+import com.gold.footimpression.module.ServiceItemModule
+import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.presenter.OrderPresenter
+import com.gold.footimpression.ui.base.BaseActivity
 import com.gold.footimpression.ui.base.BaseFragment
 import com.gold.footimpression.ui.event.EventHandler
+import com.gold.footimpression.ui.event.OnItemClick
+import com.gold.footimpression.utils.Utils
 
 class OrderPreviewFragment : BaseFragment() {
     override fun getContentview() = R.layout.order_list_fragment
 
     private var mBinding: OrderListFragmentBinding? = null
     private var mOrderPresenter: OrderPresenter? = null
+    private var orderDetailModule: OrderDetailModule? = null
     private var mOrderDetailLists = mutableListOf<OrderDetailModule>()
     private var fromKey = ""
-
+    //订单列表
+    private var mCurrentOrdersAdapter: CommonAdapter<OrderDetailModule>? = null
     private var history = ObservableField<Boolean>(false)
 
     override fun initBinding() {
@@ -31,6 +41,7 @@ class OrderPreviewFragment : BaseFragment() {
     override fun initView() {
         super.initView()
         mBinding!!.history = history
+        preView()
     }
 
     override fun initData() {
@@ -61,6 +72,7 @@ class OrderPreviewFragment : BaseFragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (hidden) {
+            preView()
         }
     }
 
@@ -74,9 +86,49 @@ class OrderPreviewFragment : BaseFragment() {
         if (!TextUtils.equals(fromKey, "SERVICEEDIT") && mOrderDetailLists.size > 0) {
 //直接加载
         } else {
-//请求数据
+            loadOrderList("0", "20")
         }
     }
 
-    fun loadOrderList() {}
+    fun loadOrderList(start: String, limit: String) {
+
+
+        if (!Utils.isNetworkConnected(mContext)) {
+            toast(com.gold.footimpression.R.string.net_error)
+        } else {
+            (this.activity as BaseActivity).showProgressDialog { }
+            mOrderPresenter!!.getOrders<MutableList<OrderDetailModule>>(start, limit) { code, msg, result ->
+                (this.activity as BaseActivity).closeProgressDialog()
+
+                if (CodeUtils.isSuccess(code)) {
+                    mOrderDetailLists = result!!
+                    mCurrentOrdersAdapter = mOrderDetailLists.putToAdapter()
+                    mBinding!!.currentOrderAdapter = mCurrentOrdersAdapter
+                } else {
+                    toast(msg!!)
+                }
+            }
+        }
+
+    }
+
+
+    fun MutableList<OrderDetailModule>.putToAdapter(): CommonAdapter<OrderDetailModule> {
+
+        return CommonAdapter(
+            mContext!!, this, R.layout.item_order_list,
+            BR.orderDetailModule, BR.click
+        ).let {
+            it.setOnItemClick(object : OnItemClick {
+                override fun onItemClick(itemView: View, position: Int, instance: Any) {
+                }
+
+                override fun onItemClick(itemView: View, position: Int) {
+                }
+            })
+            it
+        }
+    }
+
+
 }

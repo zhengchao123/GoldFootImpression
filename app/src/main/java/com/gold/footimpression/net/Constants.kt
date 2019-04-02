@@ -21,6 +21,14 @@ object Constants {
     const val URL_GET_RECIVER = HOST + "getJiedaiAuth"
     //下单
     const val URL_SUBMIT_ORDER = HOST + "addDingdanForIpad"
+
+    //订单预览
+    const val URL_PREVIEW_ORDER = HOST + "searchAllDingdanList"
+
+    //历史订单订单预览
+    const val URL_HISTORY_ORDER = HOST + "searchAllDingdanByUser"
+
+
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =
