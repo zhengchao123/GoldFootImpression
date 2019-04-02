@@ -167,11 +167,11 @@ class OrderInputFragment : BaseFragment() {
                             return
                         } else {
                             if (customSource.get()!!.contains("团购")) {
-                                if(TextUtils.isEmpty(platform.get())){
+                                if (TextUtils.isEmpty(platform.get())) {
                                     toast(R.string.please_select_platform)
                                     return
                                 }
-                                if(TextUtils.isEmpty(groupCode.get())){
+                                if (TextUtils.isEmpty(groupCode.get())) {
                                     toast(R.string.please_enter_group_num)
                                     return
                                 }
@@ -408,7 +408,13 @@ class OrderInputFragment : BaseFragment() {
     private fun initTimes() {
         var currentTime = System.currentTimeMillis()
         val calender = Calendar.getInstance()
-        calender.timeInMillis = currentTime
+
+        var minite = calender.get(Calendar.MINUTE)
+        var yushu = minite % 10
+        if (yushu > 0) {
+            currentTime += (10 - yushu) * 60 * 1000
+            calender.timeInMillis = currentTime
+        }
         getAfterDay(calender)
         calender.set(Calendar.HOUR_OF_DAY, 0)
         calender.set(Calendar.MINUTE, 0)

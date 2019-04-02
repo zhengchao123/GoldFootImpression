@@ -16,6 +16,9 @@
     <color name="btn_gray_color">#AEAEAF</color>
     <color name="text_242c40_color">#242C40</color>
     <color name="normal_show">#000000</color>
-
+    <color name="gray_e2e2e2_color">#e2e2e2</color>
     <color name="hint_color">#9B9B9B</color>
+
+
+
 </resources>

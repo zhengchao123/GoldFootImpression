@@ -83,10 +83,13 @@ class MainActivity : BaseActivity() {
                     showFragment(TAG_ORDER_INPUT_FRAGMENT);
                 }
                 R.id.rb_2 -> {
-                    showFragment(TAG_ROOM_STATE_FRAGMENT);
+                    val data = Bundle()
+                    data.putString("fromKey", "mainActivity")
+                    showFragment(TAG_ORDER_PREVIEW_FRAGMENT, data);
+
                 }
                 R.id.rb_3 -> {
-                    showFragment(TAG_ORDER_PREVIEW_FRAGMENT);
+                    showFragment(TAG_ROOM_STATE_FRAGMENT);
                 }
                 R.id.rb_4 -> {
                     showFragment(TAG_SETTING_FRAGMENT);
@@ -134,6 +137,12 @@ class MainActivity : BaseActivity() {
                     (mCurrentFragment as ServiceItemsEditFragment).arguments = data
 
                 }
+            } else if (mCurrentFragment is OrderPreviewFragment) {
+                if (data.keySet().size > 0) {
+                    (mCurrentFragment as OrderPreviewFragment).arguments = data
+
+                }
+
             }
             mFragmentManager.beginTransaction().add(mMainFrameLayout.id, this.mCurrentFragment!!, tag).commit();
         } else {
@@ -146,6 +155,12 @@ class MainActivity : BaseActivity() {
                     (mCurrentFragment as ServiceItemsEditFragment).arguments = data
 
                 }
+            } else if (mCurrentFragment is OrderPreviewFragment) {
+                if (data.keySet().size > 0) {
+                    (mCurrentFragment as OrderPreviewFragment).arguments = data
+
+                }
+
             }
         }
         mFragmentManager.beginTransaction().show(mCurrentFragment!!).commit();

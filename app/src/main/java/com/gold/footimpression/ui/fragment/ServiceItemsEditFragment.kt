@@ -1,5 +1,6 @@
 package com.gold.footimpression.ui.fragment
 
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.databinding.ObservableField
@@ -141,7 +142,7 @@ class ServiceItemsEditFragment : BaseFragment() {
                         }
                     }
                     R.id.tv_edit_sure -> {
-                        if( null != this@ServiceItemsEditFragment.activity){
+                        if (null != this@ServiceItemsEditFragment.activity) {
                             Utils.closeSoftKeyBord(mContext, this@ServiceItemsEditFragment.activity!!)
                         }
 
@@ -387,6 +388,13 @@ class ServiceItemsEditFragment : BaseFragment() {
 
                 if (CodeUtils.isSuccess(code)) {
                     toast(R.string.submit_order_success)
+
+                    var data = Bundle()
+                    data.putString("fromKey", "SERVICEEDIT")
+                    (this@ServiceItemsEditFragment.activity as MainActivity).showFragment(
+                        "ORDER_PREVIEW_FRAGMENT",
+                        data
+                    )
                 } else {
                     toast(msg!!)
                 }

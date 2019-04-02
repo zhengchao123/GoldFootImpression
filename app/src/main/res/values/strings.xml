@@ -12,7 +12,7 @@
     <string name="login_submit">登录</string>
     <string name="phone_number">手机号</string>
     <string name="password">密码</string>
-    <string name="login_fail">登录失败</string>
+    <string name="login_fail">登录失败,请检查您的用户名或密码</string>
     <string name="login_success">登录成功</string>
     <string name="net_error">网络异常</string>
     <string name="next">下一步</string>
@@ -68,5 +68,30 @@
     <string name="submit_order_success">提交成功</string>
     <string name="please_select_platform">请选择团购平台</string>
     <string name="please_enter_group_num">请输入团购码</string>
+    <string name="order_list">当前订单</string>
+    <string name="history_list">历史订单</string>
+    <string name="zengzhi_fuwu">增值服务</string>
+    <string name="order_channel">订单渠道</string>
+    <string name="order_code">订单编号</string>
+    <string name="order_hanghao">订单行号</string>
+    <string name="order_date">订单日期</string>
+    <string name="item_name">项目名称</string>
+    <string name="item_amount">项目金额</string>
+    <string name="item_during">项目时长</string>
+    <string name="daodian_time">到店时间</string>
+    <string name="shagnzhong_shijian">上钟时间</string>
+    <string name="over_time">结束倒计时</string>
+    <string name="room_name">钟房名称</string>
+    <string name="stay_overnight">是否留宿</string>
+    <string name="vip_num">会员号</string>
+    <string name="vip_title_name">会员姓名</string>
+    <string name="is_settlement">是否结算</string>
+    <string name="order_state">订单状态</string>
+    <string name="should_pay">应收金额</string>
+    <string name="actual_pay">实收</string>
+    <string name="planner_no">技师编码</string>
+    <string name="planner_name">技师姓名</string>
+    <string name="reicever_va_num">接待编码</string>
+    <string name="reicever_va_name">接待姓名</string>
 
 </resources>

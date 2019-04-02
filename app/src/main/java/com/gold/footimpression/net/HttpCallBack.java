@@ -87,9 +87,14 @@ public class HttpCallBack implements Callback {
                 + " \n response code: " + response.code()
                 + " \n response body: " + (null == mOkhttpRequest.getmDownloadListener() ? responseBodyStr : ""));
         HttpManager.getmInstance().cancleCallByKey(mOkhttpRequest.getmRequestFlag());
-        onResponse(call, response, (null != mOkhttpRequest.getmClassType()) ?
-                gson.fromJson(responseBodyStr, mOkhttpRequest.getmClassType()) :
-                null);
+        try {
+            onResponse(call, response, (null != mOkhttpRequest.getmClassType()) ?
+                    gson.fromJson(responseBodyStr, mOkhttpRequest.getmClassType()) :
+                    null);
+        } catch (Exception e) {
+            onFailure(call ,new IOException(e.getMessage()));
+        }
+
 
     }
 

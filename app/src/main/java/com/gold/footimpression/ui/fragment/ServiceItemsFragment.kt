@@ -114,11 +114,10 @@ class ServiceItemsFragment : BaseFragment() {
                         (this@ServiceItemsFragment.activity as MainActivity).showFragment("ORDER_INPUT_FRAGMENT")
                     }
                     R.id.tv_comfire->{
-
-                        (this@ServiceItemsFragment.activity as MainActivity).services = mServiceItems
+                        (this@ServiceItemsFragment.activity as MainActivity).services.clear()
+                        (this@ServiceItemsFragment.activity as MainActivity).services.addAll(mServiceItems)
                         (this@ServiceItemsFragment.activity as MainActivity).showFragment("SERVICE_EDIT_ITEMS")
                     }
-
                 }
             }
         }
