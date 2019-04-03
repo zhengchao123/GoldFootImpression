@@ -3,6 +3,7 @@ package com.gold.footimpression.module
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.gold.footimpression.BR
+import com.gold.footimpression.R
 import com.gold.footimpression.net.utils.LogUtils
 import java.lang.Exception
 
@@ -27,8 +28,28 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
 //    zengzhiFuwuMingcheng	string	增值服务项目名称
 //    amount	BigDecimal	数量
 
+    var iconId = R.mipmap.icon_service
     var typeHead = false
     var typeHeadName = ""
+
+    fun _iconId(): Int {
+        var id = iconId
+        when (typeHeadName) {
+            "增值服务" -> {
+                id = R.mipmap.icon_service
+            }
+            "茶水" -> {
+                id = R.mipmap.icon_tea
+            }
+            "小吃" -> {
+                id = R.mipmap.icon_food
+            }
+            "留宿" -> {
+                id = R.mipmap.icon_zhusu
+            }
+        }
+        return id
+    }
 
     var zengzhiFuwuTypeName: String? = ""
         @Bindable
@@ -38,13 +59,20 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
             notifyPropertyChanged(BR.zengzhiFuwuTypeName)
         }
 
-
-    var zengzhiFuwuBianma: String? = ""
+    //
+//    var zengzhiFuwuBianma: String? = ""
+//        @Bindable
+//        get() = field
+//        set(value) {
+//            field = value
+//            notifyPropertyChanged(BR.zengzhiFuwuBianma)
+//        }
+    var dingdanJine: String? = ""
         @Bindable
         get() = field
         set(value) {
             field = value
-            notifyPropertyChanged(BR.zengzhiFuwuBianma)
+            notifyPropertyChanged(BR.dingdanJine)
         }
 
 
@@ -58,20 +86,6 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
 
     }
 
-    var jinge: String = ""
-        @Bindable
-        get() = "" + (price.toDouble() * amount.toInt())
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.jinge)
-        }
-    var priceMember: String = ""
-        @Bindable
-        get() = field
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.priceMember)
-        }
     var price: String = ""
         @Bindable
         get() = field
@@ -96,14 +110,6 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
         }
 
 
-    var dingdanUid: String = ""
-        @Bindable
-        get() = field
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.dingdanUid)
-        }
-
     var gonghao: String = ""
         @Bindable
         get() = field
@@ -111,6 +117,23 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
             field = value
             notifyPropertyChanged(BR.gonghao)
         }
+    var jishiGonghao: String = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.jishiGonghao)
+        }
+
+
+    var dingdanUid = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.dingdanUid)
+        }
+
 
     var tcrenGonghao = ""
         @Bindable
@@ -118,6 +141,13 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
         set(value) {
             field = value
             notifyPropertyChanged(BR.tcrenGonghao)
+        }
+    var tcrenName = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.tcrenName)
         }
 
 
@@ -130,13 +160,13 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
         }
 
 
-    var waitingTime: String = ""
-        @Bindable
-        get() = field
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.waitingTime)
-        }
+//    var waitingTime: String = ""
+//        @Bindable
+//        get() = field
+//        set(value) {
+//            field = value
+//            notifyPropertyChanged(BR.waitingTime)
+//        }
 
     override fun equals(other: Any?): Boolean {
         if (other is OrderIncrementModule) {

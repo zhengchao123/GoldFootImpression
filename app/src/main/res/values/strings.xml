@@ -103,5 +103,8 @@
     <string name="ticheng_no">提成人编号</string>
     <string name="ticheng_name">提成人姓名</string>
     <string name="reicever_la_num">接待人编号</string>
+    <string name="load_empty">加载为空</string>
+    <string name="load_faild">加载失败</string>
+    <string name="please_enter_vip">请输入账号</string>
 
 </resources>

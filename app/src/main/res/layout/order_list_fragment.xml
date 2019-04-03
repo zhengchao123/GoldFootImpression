@@ -14,20 +14,35 @@
                 name="history"
                 type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
 
-
+        <!--订单增值服务详情-->
+        <variable
+                name="orderDetailPropAdapter"
+                type="com.gold.footimpression.bindingadapter.CommonAdapter"/>
+        <!--订单详情-->
         <variable
                 name="currentOrderAdapter"
                 type="com.gold.footimpression.bindingadapter.CommonAdapter"/>
+        <!--订单增值服务编辑-->
         <variable
                 name="editZengzhifuwuAdapter"
                 type="com.gold.footimpression.bindingadapter.CommonAdapter"/>
+        <!--订单增值服务详情可见-->
+        <variable
+                name="orderCreateDetail"
+                type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
+        <!--订单增值服务编辑可见-->
         <variable
                 name="editZengzhi"
                 type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
-
+        <!--历史订单-->
         <variable
                 name="historyOrderAdapter"
                 type="com.gold.footimpression.bindingadapter.CommonAdapter"/>
+        <!--有增值详情信息-->
+        <variable
+                name="hasZengzhiDetail"
+                type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
+
 
     </data>
 
@@ -162,12 +177,12 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
         </FrameLayout>
 
-        <!--android:visibility="@{editZengzhi?View.VISIBLE:View.GONE}"-->
+        <!--添加增值服务视图-->
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
                 android:background="#ffffff"
+                android:visibility="@{editZengzhi?View.VISIBLE:View.GONE}"
                 android:orientation="vertical">
             <FrameLayout
                     android:layout_width="match_parent"
@@ -288,32 +303,144 @@
                     app:diliver_style="2"
                     android:adapter="@{editZengzhifuwuAdapter}"/>
         </LinearLayout>
-
+        <!--增值服务详情视图-->
         <FrameLayout
-                android:layout_gravity="end"
                 android:layout_width="480dp"
-                android:layout_height="match_parent">
-            <RelativeLayout
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:visibility="@{orderCreateDetail?View.VISIBLE:View.GONE}"
+                android:layout_gravity="end">
+            <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
-            >
-                <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="400dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="50dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp">
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp">
+                        <TextView
+                                android:id="@+id/tv_detail_back"
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:paddingStart="25dp"
+                                android:onClick="@{click::onClickView}"
+                                android:clickable="true"
+                                android:layout_gravity="center_vertical|start"
+                                android:gravity="center"
+                                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+                        />
+                        <TextView
+                                android:clickable="true"
+                                android:onClick="@{click::onClickView}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="90dp"
+                                android:paddingStart="25dp"
+                                android:layout_gravity="center"
+                                android:text="@string/zengzhifuwu"
+                                android:textColor="@color/text_242c40_color"
+                                android:gravity="center"
+                                android:background="#ffffff"
+                                android:textSize="@dimen/text_size_20"
+
+                        />
+
+                    </FrameLayout>
+
+                    <View
+                            android:background="#D4D4D4"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="14dp"
+                        android:background="#ffffff"
                         android:orientation="horizontal">
 
-                    //TODO
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.9"
+                            android:layout_height="match_parent"
+                            android:textColor="#242C40"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:text="@string/service_type"/>
 
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_height="match_parent"
+                            android:textColor="#242C40"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:text="@string/acount"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.7"
+                            android:layout_height="match_parent"
+                            android:textColor="#242C40"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:text="@string/per_price"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.7"
+                            android:layout_height="match_parent"
+                            android:textColor="#242C40"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:text="@string/la_amount"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:textColor="#242C40"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:text="@string/ticheng_no"/>
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:textColor="#242C40"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:text="@string/ticheng_name"/>
+                </LinearLayout>
                 <View
                         android:background="#D4D4D4"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignParentBottom="true"/>
-            </RelativeLayout>
+                        android:layout_height="1dp"/>
+                <com.gold.footimpression.widget.AutoRecyclerView
+                        android:id="@+id/recycler_detail_service"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{hasZengzhiDetail?View.VISIBLE:View.GONE}"
+                        android:background="#ffffff"
+                        app:diliver_style="2"
+                        android:adapter="@{orderDetailPropAdapter}"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:visibility="@{hasZengzhiDetail?View.GONE:View.VISIBLE}"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="150dp"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/text_size_20"
+                        android:textColor="#D2D2D3"
+                        android:drawableTop="@mipmap/icon_no_data"
+                        android:text="@string/load_empty"/>
 
+            </LinearLayout>
+            <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#D4D4D4"
+            />
         </FrameLayout>
     </FrameLayout>
 </layout>

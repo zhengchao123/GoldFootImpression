@@ -112,6 +112,7 @@ class OrderPresenter(activity: Activity?) {
     ) {
 
         val params = mutableMapOf<String, String>()
+
         Client2Server.doPostAsyn(params, object : HttpCallBack() {
             override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
                 super.onFailed(code, exceptionMsg, call)
@@ -346,12 +347,12 @@ class OrderPresenter(activity: Activity?) {
 
                 runCallBack {
                     if ((t as BaseNetArrayModule).success) {
-                        if (dataCount == 0) {
-                            callBack(
-                                HttpCallBack.SUCCESS_CODE_NO_DATA,
-                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
-                            )
-                        } else {
+//                        if (dataCount == 0) {
+//                            callBack(
+//                                HttpCallBack.SUCCESS_CODE,
+//                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE), null
+//                            )
+//                        } else {
                             callBack(
                                 HttpCallBack.SUCCESS_CODE,
                                 CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
@@ -360,7 +361,7 @@ class OrderPresenter(activity: Activity?) {
                                     object : TypeToken<MutableList<OrderIncrementModule>>() {}.type
                                 )
                             )
-                        }
+//                        }
                     } else {
                         callBack(
                             HttpCallBack.FAILE_CODE,
@@ -377,6 +378,74 @@ class OrderPresenter(activity: Activity?) {
         }.type, "submitCreateService", Constants.URL_ADD_SERVICES)
     }
 
+
+    /**
+     * 获取订单
+     */
+    fun <T> getZengzhiDetails(
+        dingdanUid: String,
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        if (!TextUtils.isEmpty(dingdanUid)) {
+            params["dingdanUid"] = dingdanUid
+        }
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<OrderIncrementModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "getZengzhiDetails", Constants.URL_GET_ZENGZHI_DETAIL)
+    }
+
+
     public fun cancelRequest(flag: String) {
         HttpManager.getmInstance().cancleCallByKey(flag)
     }
@@ -388,6 +457,7 @@ class OrderPresenter(activity: Activity?) {
             cancelRequest("getZengzhi")
             cancelRequest("getJishiAuth")
             cancelRequest("submitCreateService")
+            cancelRequest("getZengzhiDetails")
             mInstance = null
         }
     }

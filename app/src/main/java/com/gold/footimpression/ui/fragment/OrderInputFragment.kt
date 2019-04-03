@@ -1,13 +1,10 @@
 package com.gold.footimpression.ui.fragment
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.EditorInfo
 import androidx.databinding.ObservableField
 import com.gold.footimpression.R
@@ -23,11 +20,8 @@ import com.gold.footimpression.ui.base.BaseFragment
 import com.gold.footimpression.ui.event.EventHandler
 import com.gold.footimpression.ui.event.OnItemClick
 import com.gold.footimpression.utils.Utils
-import com.gold.footimpression.utils.ViewUtils
 import com.gold.footimpression.widget.BasePopupWindow
 import com.gold.footimpression.widget.ListPopupWindow
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper
-import kotlinx.android.synthetic.main.order_input_fragment.view.*
 import java.util.*
 
 
@@ -62,11 +56,6 @@ class OrderInputFragment : BaseFragment() {
     private var mCertificatesPop: BasePopupWindow? = null
     private var mTimePop: BasePopupWindow? = null
     override fun getContentview() = com.gold.footimpression.R.layout.order_input_fragment
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        var view = super.onCreateView(inflater, container, savedInstanceState)
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,7 +132,7 @@ class OrderInputFragment : BaseFragment() {
                         }
 
                     }
-                    com.gold.footimpression.R.id.tv_platform_code -> {
+                    R.id.tv_platform_code -> {
                         if (!groupBuyAble.get()!!) {
                             mBinding!!.tvPlatformCode.isFocusableInTouchMode = false
                             mBinding!!.tvPlatformCode.isFocusable = false
@@ -303,7 +292,7 @@ class OrderInputFragment : BaseFragment() {
         }
         mCertificatesPop!!.popDatas = lists.filterStringArrayName()
         mCertificatesPop!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -347,7 +336,7 @@ class OrderInputFragment : BaseFragment() {
         mTimePop!!.setWidth(mBinding!!.tvTimeLayout.width)
         mTimePop!!.popDatas = lists
         mTimePop!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -428,7 +417,6 @@ class OrderInputFragment : BaseFragment() {
             }
 
         }
-//        LogUtils.i(TAG, " current time $currentTime  nextday time ${calender.timeInMillis}")
     }
 
     /**

@@ -22,6 +22,7 @@ import com.gold.footimpression.utils.Utils
 import com.gold.footimpression.widget.BasePopupWindow
 import com.gold.footimpression.widget.ListPopupWindow
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 
 class OrderPreviewFragment : BaseFragment() {
     override fun getContentview() = R.layout.order_list_fragment
@@ -37,10 +38,14 @@ class OrderPreviewFragment : BaseFragment() {
     //订单列表
     private var mCurrentOrdersAdapter: CommonAdapter<OrderDetailModule>? = null
     private var mCurrentHistoryOrdersAdapter: CommonAdapter<OrderDetailModule>? = null
+    private var orderDetailPropAdapter: CommonAdapter<OrderIncrementModule>? = null
+
     private var mReiceverLists = mutableListOf<ReiceverModule>()
     private var mOrderIncreateAdapter: CommonAdapter<OrderIncrementModule>? = null
     private var history = ObservableField<Boolean>(false)
     private var editZengzhi = ObservableField<Boolean>(false)
+    private var orderCreateDetail = ObservableField<Boolean>(false)
+    private var hasZengzhiDetail = ObservableField<Boolean>(false)
 
     override fun initBinding() {
         super.initBinding()
@@ -51,6 +56,8 @@ class OrderPreviewFragment : BaseFragment() {
         super.initView()
         mBinding!!.history = history
         mBinding!!.editZengzhi = editZengzhi
+        mBinding!!.orderCreateDetail = orderCreateDetail
+        mBinding!!.hasZengzhiDetail = hasZengzhiDetail
         preView()
     }
 
@@ -66,22 +73,33 @@ class OrderPreviewFragment : BaseFragment() {
             override fun onClickView(view: View?) {
                 when (view!!.id) {
                     R.id.tv_history -> {
+                        if (!history.get()!!) {
+                            orderCreateDetail.set(false)
+                        }
                         history.set(true)
                         if (mOrderHistoryDetailLists.size == 0) {
                             loadHistoryList("0", "1000")
                         }
                     }
                     R.id.tv_current -> {
+                        if (history.get()!!) {
+                            orderCreateDetail.set(false)
+                        }
+
                         history.set(false)
                     }
                     R.id.tv_back -> {
                         editZengzhi.set(false)
                     }
+                    R.id.tv_detail_back -> {
+                        orderCreateDetail.set(false)
+                    }
                     R.id.tv_submit_create_service -> {
+
 
                         submitCreateService(
                             mOrderDetailLists[mCurrentOrderSelectPosition].huiyuanZhanghao,
-                            Gson().toJson(mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements)
+                            Gson().toJson(mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.filterUsefulData())
                         )
                     }
                 }
@@ -91,6 +109,7 @@ class OrderPreviewFragment : BaseFragment() {
         mBinding!!.click = click
 
     }
+
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
@@ -174,6 +193,8 @@ class OrderPreviewFragment : BaseFragment() {
      * huiyuanZhanghao 会员账号
      * paramFuwuStr 增值服务内容
      */
+
+
     fun submitCreateService(huiyuanZhanghao: String, paramFuwuStr: String) {
 
 
@@ -188,13 +209,16 @@ class OrderPreviewFragment : BaseFragment() {
                 (this.activity as BaseActivity).closeProgressDialog()
 
                 if (CodeUtils.isSuccess(code)) {
-                    mOrderHistoryDetailLists = result!!
-                    mOrderHistoryDetailLists.add(0, OrderDetailModule(true))
-                    mOrderHistoryDetailLists.forEach {
-                        it.history = true
-                    }
-                    mCurrentHistoryOrdersAdapter = mOrderHistoryDetailLists.putToAdapter()
-                    mBinding!!.historyOrderAdapter = mCurrentHistoryOrdersAdapter
+//                    mOrderHistoryDetailLists = result!!
+//                    mOrderHistoryDetailLists.add(0, OrderDetailModule(true))
+//                    mOrderHistoryDetailLists.forEach {
+//                        it.history = true
+//                    }
+//                    mCurrentHistoryOrdersAdapter = mOrderHistoryDetailLists.putToAdapter()
+//                    mBinding!!.historyOrderAdapter = mCurrentHistoryOrdersAdapter
+
+                    editZengzhi.set(false)
+                    loadOrderList("", "")
                 } else {
                     toast(msg!!)
                 }
@@ -208,6 +232,8 @@ class OrderPreviewFragment : BaseFragment() {
 
     //当前选中的订单position
     private var mCurrentOrderSelectPosition: Int = 0
+    //当前选中的查看增值详情的订单position
+    private var mCurrentOrderCreateDetailPosition: Int = 0
 
     fun MutableList<OrderDetailModule>.putToAdapter(): CommonAdapter<OrderDetailModule> {
 
@@ -219,17 +245,44 @@ class OrderPreviewFragment : BaseFragment() {
                 override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
                     when (viewid) {
                         R.id.iv_gouwuche -> {
-                            editZengzhi.set(true)
-                            mCurrentOrderSelectPosition = position
-                            if (mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.size == 0) {
-                                loadZengzhi()
-                            } else {
-                                mOrderIncreateAdapter!!.update(mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements)
-                                mOrderIncreateAdapter!!.notifyDataSetChanged()
+                            if (position == 0) {
+                                return
                             }
-                            toast(" click item $position ishistory = ${(instance as OrderDetailModule).history} clickid = start")
+                            orderCreateDetail.set(false)
+                            editZengzhi.set(true)
+                            if (!history.get()!!) {
+                                mCurrentOrderSelectPosition = position
+                                if (mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.size == 0) {
+                                    loadZengzhi()
+                                } else {
+                                    mOrderIncreateAdapter!!.update(mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements)
+                                    mOrderIncreateAdapter!!.notifyDataSetChanged()
+                                }
+                            }
+
+//                            toast(" click item $position ishistory = ${(instance as OrderDetailModule).history} clickid = start")
                         }
                         R.id.ll_end -> {
+
+                            mCurrentOrderCreateDetailPosition = position
+                            orderCreateDetail.set(true)
+                            if (!history.get()!!) {
+//                                if (mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
+                                    loadZengzhiDetail(mOrderDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
+//                                } else {
+//                                    hasZengzhiDetail.set(true)
+//                                    orderDetailPropAdapter!!.update(mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
+//                                    orderDetailPropAdapter!!.notifyDataSetChanged()
+//                                }
+                            } else {
+                                if (mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
+                                    loadZengzhiDetail(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
+                                } else {
+                                    hasZengzhiDetail.set(true)
+                                    orderDetailPropAdapter!!.update(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
+                                    orderDetailPropAdapter!!.notifyDataSetChanged()
+                                }
+                            }
 
                         }
                     }
@@ -237,7 +290,7 @@ class OrderPreviewFragment : BaseFragment() {
                 }
 
                 override fun onItemClick(itemView: View, position: Int) {
-                    toast(" click item $position ")
+//                    toast(" click item $position ")
                 }
             })
             it
@@ -294,6 +347,25 @@ class OrderPreviewFragment : BaseFragment() {
         }
     }
 
+    fun MutableList<OrderIncrementModule>.putIntoCreateDetailAdapter(): CommonAdapter<OrderIncrementModule> {
+
+        return CommonAdapter(
+            mContext!!, this, R.layout.item_zengzhi_detail,
+            BR.orderIncrementModule, BR.click
+        ).let {
+            it.setOnItemClick(object : OnItemClick {
+                override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
+                }
+
+                override fun onItemClick(itemView: View, position: Int) {
+                }
+
+            })
+            it
+        }
+    }
+
+
     /**
      * 弹出popwindow 知道popwindow类型
      */
@@ -306,6 +378,7 @@ class OrderPreviewFragment : BaseFragment() {
 
     override fun onStop() {
         super.onStop()
+        mOrderPresenter!!.release()
         closePopWindow(mTcPersoPopwindow)
     }
 
@@ -349,6 +422,38 @@ class OrderPreviewFragment : BaseFragment() {
         }
     }
 
+    fun loadZengzhiDetail(dingdanUid: String) {
+
+        if (!Utils.isNetworkConnected(mContext)) {
+            toast(com.gold.footimpression.R.string.net_error)
+        } else {
+            (this.activity as BaseActivity).showProgressDialog { }
+            mOrderPresenter!!.getZengzhiDetails<MutableList<OrderIncrementModule>>(dingdanUid) { code, msg, result ->
+                (this.activity as BaseActivity).closeProgressDialog()
+
+                if (CodeUtils.isSuccess(code)) {
+                    hasZengzhiDetail.set(true)
+                    if(history.get()!!){
+                        mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements = result!!.filterFuwuCode()
+                        orderDetailPropAdapter =
+                            mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.putIntoCreateDetailAdapter()
+                    }else{
+                        mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements = result!!.filterFuwuCode()
+                        orderDetailPropAdapter =
+                            mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.putIntoCreateDetailAdapter()
+                    }
+
+                    mBinding!!.orderDetailPropAdapter = orderDetailPropAdapter
+                } else {
+                    if (CodeUtils.isSuccessNodata(code)) {
+                        hasZengzhiDetail.set(false)
+                    }
+                    toast(msg!!)
+                }
+            }
+        }
+    }
+
     fun loadTcPersons(width: Int, view: View) {
 
         if (!Utils.isNetworkConnected(mContext)) {
@@ -376,9 +481,14 @@ class OrderPreviewFragment : BaseFragment() {
         this.forEach {
             if (!mapItem.containsKey(it.zengzhiFuwuTypeName)) {
                 val arry = mutableListOf<OrderIncrementModule>()
+
+                val orderIncrementModule = OrderIncrementModule()
+                orderIncrementModule.typeHead =true
+                orderIncrementModule.typeHeadName = it.zengzhiFuwuTypeName!!
+                arry.add(orderIncrementModule)
                 arry.add(it)
-                it.typeHead = true
-                it.typeHeadName = it.zengzhiFuwuTypeName!!
+//                it.typeHead = true
+//                it.typeHeadName = it.zengzhiFuwuTypeName!!
                 mapItem[it.zengzhiFuwuTypeName!!] = arry
             } else {
                 mapItem[it.zengzhiFuwuTypeName]!!.add(it)
@@ -410,6 +520,11 @@ class OrderPreviewFragment : BaseFragment() {
                     lists[position].name
                 mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements[mCurrentPositionCreation].tcrenGonghao =
                     lists[position].gonghao
+                mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements[mCurrentPositionCreation].jishiGonghao =
+                    lists[position].gonghao
+
+                mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements[mCurrentPositionCreation].dingdanUid =
+                    mOrderDetailLists[mCurrentOrderSelectPosition].dingdanUid
                 closePopWindow(mTcPersoPopwindow)
             }
 
@@ -425,5 +540,19 @@ class OrderPreviewFragment : BaseFragment() {
         return results
     }
 
+    /**
+     * 提交增值服务的时候 ，处理下数据，编辑了的数量大于零的 才提价到服务器
+     */
+    private fun MutableList<OrderIncrementModule>.filterUsefulData(): MutableList<OrderIncrementModule> {
+        val results = mutableListOf<OrderIncrementModule>()
+        this.forEach {
+            if (it.amount.toInt() > 0) {
+                results.add(it)
+            }
+        }
+        return results
+    }
 }
+
+
 

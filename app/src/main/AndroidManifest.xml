@@ -20,7 +20,7 @@
         <activity
                 android:name="com.gold.footimpression.ui.activity.MainActivity"
                 android:theme="@style/AppTheme"
-                android:windowSoftInputMode="stateHidden"
+                android:windowSoftInputMode="adjustResize|stateHidden"
                 android:screenOrientation="landscape">
             <!--   <intent-filter>
                    <action android:name="android.intent.action.MAIN"/>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+                name="click"
+                type="com.gold.footimpression.ui.event.EventHandler"/>
+
+        <variable
+                name="orderIncrementModule"
+                type="com.gold.footimpression.module.OrderIncrementModule"/>
+    </data>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <View
+                android:layout_width="match_parent"
+                android:background="#D4D4D4"
+                android:visibility="@{orderIncrementModule.typeHead?View.VISIBLE:View.GONE}"
+                android:layout_height="1dp"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:visibility="@{orderIncrementModule.typeHead?View.VISIBLE:View.GONE}"
+                android:drawableStart="@{orderIncrementModule._iconId()}"
+                android:paddingStart="30dp"
+                android:textSize="14sp"
+                android:drawablePadding="10dp"
+                android:textColor="@color/btn_gray_color"
+                android:background="#F9F9F9"
+                android:text="@{orderIncrementModule.typeHeadName}"
+        />
+        <View
+                android:layout_width="match_parent"
+                android:background="#D4D4D4"
+                android:visibility="@{orderIncrementModule.typeHead?View.VISIBLE:View.GONE}"
+                android:layout_marginTop="46dp"
+                android:layout_height="1dp"/>
+        <!--android:visibility="@{orderIncrementModule.typeHead?View.VISIBLE:GONE.VISIBLE}"-->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:visibility="@{orderIncrementModule.typeHead?View.GONE:View.VISIBLE}"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.9"
+                    android:layout_height="match_parent"
+                    android:textColor="#242C40"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:text="@{orderIncrementModule.zengzhiFuwuMingcheng}"/>
+
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="match_parent"
+                    android:textColor="#242C40"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_size_15"
+                    android:text="@{orderIncrementModule.amount}"
+            />
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:layout_height="match_parent"
+                    android:textColor="#242C40"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:text='@{"¥"+orderIncrementModule.price}'/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:layout_height="match_parent"
+                    android:textColor="#242C40"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:text='@{"¥"+orderIncrementModule.dingdanJine}'
+            />
+            <TextView
+                    android:id="@+id/tv_reicver_num"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:textColor="#242C40"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:paddingEnd="5dp"
+                    android:text="@{orderIncrementModule.tcrenGonghao}"/>
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:textColor="#242C40"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:text="@{orderIncrementModule.tcrenName}"/>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+</layout>
