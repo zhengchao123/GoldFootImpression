@@ -3,14 +3,24 @@ package com.gold.footimpression.module
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.gold.footimpression.BR
+import com.gold.footimpression.net.utils.LogUtils
 import java.lang.Exception
 
 /**
  * 增值订单
  */
-class OrderIncrementModule() : BaseObservable() {
+class OrderIncrementModule() : BaseObservable(), Cloneable {
 
+    public override fun clone(): OrderIncrementModule {
+        var person: OrderIncrementModule? = null
+        try {
+            person = super.clone() as OrderIncrementModule
+        } catch (e: CloneNotSupportedException) {
+            e.printStackTrace()
+        }
 
+        return person!!
+    }
 //    zengzhiFuwuTypeName	string	增值服务项目类别
 //    例：茶水、小吃、增值服务、留宿
 //    zengzhiFuwuBianma	Integer	增值服务项目编码
@@ -39,9 +49,8 @@ class OrderIncrementModule() : BaseObservable() {
 
 
     fun allAmount(): String {
-
-//        return "999"
         try {
+            LogUtils.i("Zc", "== price ${price.toDouble()} amount = ${amount.toInt()}")
             return "" + (price.toDouble() * amount.toInt())
         } catch (e: Exception) {
             return ""
@@ -51,7 +60,7 @@ class OrderIncrementModule() : BaseObservable() {
 
     var jinge: String = ""
         @Bindable
-        get() = field
+        get() = "" + (price.toDouble() * amount.toInt())
         set(value) {
             field = value
             notifyPropertyChanged(BR.jinge)
@@ -87,10 +96,13 @@ class OrderIncrementModule() : BaseObservable() {
         }
 
 
-//    gonghao	string	工号
-//    name	string	姓名
-//    waitingTime	Integer	等待时间
-
+    var dingdanUid: String = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.dingdanUid)
+        }
 
     var gonghao: String = ""
         @Bindable
@@ -98,6 +110,14 @@ class OrderIncrementModule() : BaseObservable() {
         set(value) {
             field = value
             notifyPropertyChanged(BR.gonghao)
+        }
+
+    var tcrenGonghao = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.tcrenGonghao)
         }
 
 

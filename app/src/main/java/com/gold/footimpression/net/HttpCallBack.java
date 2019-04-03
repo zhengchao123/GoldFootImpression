@@ -80,11 +80,12 @@ public class HttpCallBack implements Callback {
     public void onResponse(Call call, Response response) throws IOException {
         Gson gson = new Gson();
         String responseBodyStr = response.body().string();
-        LogUtils.INSTANCE.e(TAG, call.request().url()
+        LogUtils.INSTANCE.i(TAG, call.request().url()
                 + " \n method: " + call.request().method()
                 + " \n head: " + getHeadStr(call)
-                + " \n params: " + (call.request().method().equals("POST") ? gson.toJson(mOkhttpRequest.getmParams()) : "")
-                + " \n response code: " + response.code()
+                + " \n params: " + (call.request().method().equals("POST") ? gson.toJson(mOkhttpRequest.getmParams()) : ""));
+//        LogUtils.INSTANCE.i(TAG, " \n params: " + (call.request().method().equals("POST") ? gson.toJson(mOkhttpRequest.getmParams()) : ""));
+        LogUtils.INSTANCE.i(TAG, " \n response code: " + response.code()
                 + " \n response body: " + (null == mOkhttpRequest.getmDownloadListener() ? responseBodyStr : ""));
         HttpManager.getmInstance().cancleCallByKey(mOkhttpRequest.getmRequestFlag());
         try {
@@ -92,7 +93,7 @@ public class HttpCallBack implements Callback {
                     gson.fromJson(responseBodyStr, mOkhttpRequest.getmClassType()) :
                     null);
         } catch (Exception e) {
-            onFailure(call ,new IOException(e.getMessage()));
+            onFailure(call, new IOException(e.getMessage()));
         }
 
 

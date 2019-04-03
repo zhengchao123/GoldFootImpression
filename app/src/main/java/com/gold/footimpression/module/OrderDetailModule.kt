@@ -34,7 +34,7 @@ class OrderDetailModule(firstItem:Boolean = false) : BaseObservable() {
     var huiyuanAcc = "0"//		Decimal	会员账户余额
     var huiyuanName = "-"//		string	会员姓名
     var huiyuanTel = "-"//		string	会员手机
-    var huiyuanZhanghao = "-"//	string	会员Id
+    var huiyuanZhanghao = ""//	string	会员Id
     var jiedaiGonghao = "-"//	string	接待工号
     var jiedaiName = "-"//	string	接待姓名
     var jiesuanStatus = 0//	int	是否结算->说明：0：否；1：是
@@ -63,5 +63,6 @@ class OrderDetailModule(firstItem:Boolean = false) : BaseObservable() {
     //增值服务
     var orderIncrements = mutableListOf<OrderIncrementModule>()
 
-
+    //在编辑的增值服务
+    var orderEditIncrements = mutableListOf<OrderIncrementModule>()
 }

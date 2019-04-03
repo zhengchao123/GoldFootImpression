@@ -28,9 +28,12 @@ object Constants {
     //历史订单订单预览
     const val URL_HISTORY_ORDER = HOST + "searchAllDingdanByUser"
 
-
+    //获取提成人
+    const val URL_GET_AUTH = HOST + "getJishiAuth"
     //获取增值服务
     const val URL_GET_ZENGZHI = HOST + "searchZengzhifuwu"
+    //提交增值服务
+    const val URL_ADD_SERVICES = HOST + "addDingdanZzForIpad"
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =

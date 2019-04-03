@@ -67,7 +67,7 @@
                         android:id="@+id/iv_less"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
+                        android:clickable='@{orderIncrementModule.amount.equals("0")?false:true}'
                         android:onClick="@{click::onClickView}"
                         android:src='@{orderIncrementModule.amount.equals("0")?@drawable/icon_un_less:@drawable/icon_less}'/>
 
@@ -119,20 +119,19 @@
                     android:paddingEnd="5dp"
                     android:clickable="true"
                     android:onClick="@{click::onClickView}"
-                    android:text="@={orderIncrementModule.gonghao}"/>
-            <EditText
+                    android:text="@{orderIncrementModule.tcrenGonghao}"/>
+            <TextView
                     android:layout_width="150dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
-                    android:imeOptions="actionDone"
                     android:textColor="#242C40"
                     android:gravity="center"
                     android:singleLine="true"
                     android:textSize="14sp"
                     android:ellipsize="end"
                     android:background="@drawable/bg_input_regtangle"
-                    android:text="@={orderIncrementModule.name}"/>
+                    android:text="@{orderIncrementModule.name}"/>
             <!--<EditText-->
             <!--android:layout_width="180dp"-->
             <!--android:layout_height="40dp"-->

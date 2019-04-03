@@ -101,8 +101,9 @@ class OrderPresenter(activity: Activity?) {
 
             }
         }, object : TypeToken<BaseNetArrayModule>() {
-        }.type, "getOrders", Constants.URL_PREVIEW_ORDER)
+        }.type, "getHistory", Constants.URL_HISTORY_ORDER)
     }
+
     /**
      * 获取订单
      */
@@ -232,9 +233,149 @@ class OrderPresenter(activity: Activity?) {
 
             }
         }, object : TypeToken<BaseNetArrayModule>() {
-        }.type, "getHistory", Constants.URL_HISTORY_ORDER)
+        }.type, "getOrders", Constants.URL_PREVIEW_ORDER)
     }
 
+
+    /**
+     * 获取提成人
+     *
+     */
+    fun <T> getJishiAuth(
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        Client2Server.doGetAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<ReiceverModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "getJishiAuth", Constants.URL_GET_AUTH)
+    }
+
+
+    /**
+     * 添加增值服务
+     * huiyuanZhanghao
+    paramFuwuStr
+
+     */
+    fun <T> submitCreateService(
+        huiyuanZhanghao: String,
+        paramFuwuStr: String,
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        if (!TextUtils.isEmpty(huiyuanZhanghao)) {
+            params["huiyuanZhanghao"] = huiyuanZhanghao
+        }
+        if (!TextUtils.isEmpty(paramFuwuStr)) {
+            params["paramFuwuStr"] = paramFuwuStr
+        }
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(
+                                    data,
+                                    object : TypeToken<MutableList<OrderIncrementModule>>() {}.type
+                                )
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "submitCreateService", Constants.URL_ADD_SERVICES)
+    }
 
     public fun cancelRequest(flag: String) {
         HttpManager.getmInstance().cancleCallByKey(flag)
@@ -245,6 +386,8 @@ class OrderPresenter(activity: Activity?) {
             cancelRequest("getOrders")
             cancelRequest("getHistory")
             cancelRequest("getZengzhi")
+            cancelRequest("getJishiAuth")
+            cancelRequest("submitCreateService")
             mInstance = null
         }
     }
