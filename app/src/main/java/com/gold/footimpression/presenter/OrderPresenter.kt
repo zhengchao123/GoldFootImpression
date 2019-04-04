@@ -309,17 +309,17 @@ class OrderPresenter(activity: Activity?) {
 
      */
     fun <T> submitCreateService(
-        huiyuanZhanghao: String,
-        paramFuwuStr: String,
+        huiyuanZhanghao: String?,
+        paramFuwuStr: String?,
         callBack: (code: Int, msg: String?, result: T?) -> Unit
     ) {
 
         val params = mutableMapOf<String, String>()
         if (!TextUtils.isEmpty(huiyuanZhanghao)) {
-            params["huiyuanZhanghao"] = huiyuanZhanghao
+            params["huiyuanZhanghao"] = huiyuanZhanghao!!
         }
         if (!TextUtils.isEmpty(paramFuwuStr)) {
-            params["paramFuwuStr"] = paramFuwuStr
+            params["paramFuwuStr"] = paramFuwuStr!!
         }
         Client2Server.doPostAsyn(params, object : HttpCallBack() {
             override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {

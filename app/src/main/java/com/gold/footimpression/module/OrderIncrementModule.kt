@@ -174,7 +174,13 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
         }
         return super.equals(other)
     }
-
+        var zengzhiFuwuBianma: String? = ""
+            @Bindable
+            get() = field
+            set(value) {
+                field = value
+                notifyPropertyChanged(BR.zengzhiFuwuBianma)
+            }
     override fun hashCode(): Int {
         return this.zengzhiFuwuTypeName.hashCode()
     }

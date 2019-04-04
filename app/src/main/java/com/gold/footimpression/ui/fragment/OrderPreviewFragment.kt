@@ -195,7 +195,7 @@ class OrderPreviewFragment : BaseFragment() {
      */
 
 
-    fun submitCreateService(huiyuanZhanghao: String, paramFuwuStr: String) {
+    fun submitCreateService(huiyuanZhanghao: String?, paramFuwuStr: String) {
 
 
         if (!Utils.isNetworkConnected(mContext)) {
@@ -207,21 +207,14 @@ class OrderPreviewFragment : BaseFragment() {
                 paramFuwuStr
             ) { code, msg, result ->
                 (this.activity as BaseActivity).closeProgressDialog()
-
+                toast(msg!!)
                 if (CodeUtils.isSuccess(code)) {
-//                    mOrderHistoryDetailLists = result!!
-//                    mOrderHistoryDetailLists.add(0, OrderDetailModule(true))
-//                    mOrderHistoryDetailLists.forEach {
-//                        it.history = true
-//                    }
-//                    mCurrentHistoryOrdersAdapter = mOrderHistoryDetailLists.putToAdapter()
-//                    mBinding!!.historyOrderAdapter = mCurrentHistoryOrdersAdapter
-
                     editZengzhi.set(false)
                     loadOrderList("", "")
-                } else {
-                    toast(msg!!)
                 }
+//                else {
+//                    toast(msg!!)
+//                }
             }
         }
 
@@ -243,11 +236,11 @@ class OrderPreviewFragment : BaseFragment() {
         ).let {
             it.setOnItemClick(object : OnItemClick {
                 override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
+                    if (position == 0) {
+                        return
+                    }
                     when (viewid) {
                         R.id.iv_gouwuche -> {
-                            if (position == 0) {
-                                return
-                            }
                             orderCreateDetail.set(false)
                             editZengzhi.set(true)
                             if (!history.get()!!) {
@@ -268,7 +261,7 @@ class OrderPreviewFragment : BaseFragment() {
                             orderCreateDetail.set(true)
                             if (!history.get()!!) {
 //                                if (mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
-                                    loadZengzhiDetail(mOrderDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
+                                loadZengzhiDetail(mOrderDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
 //                                } else {
 //                                    hasZengzhiDetail.set(true)
 //                                    orderDetailPropAdapter!!.update(mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
@@ -404,6 +397,7 @@ class OrderPreviewFragment : BaseFragment() {
 
                 if (CodeUtils.isSuccess(code)) {
 //                    mOrderIncreateLists = result!!.filterFuwuCode()
+
                     mOrderDetailLists.forEach {
                         it.orderEditIncrements.clear()
                         result!!.filterFuwuCode().forEach { item ->
@@ -433,11 +427,12 @@ class OrderPreviewFragment : BaseFragment() {
 
                 if (CodeUtils.isSuccess(code)) {
                     hasZengzhiDetail.set(true)
-                    if(history.get()!!){
-                        mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements = result!!.filterFuwuCode()
+                    if (history.get()!!) {
+                        mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements =
+                            result!!.filterFuwuCode()
                         orderDetailPropAdapter =
                             mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.putIntoCreateDetailAdapter()
-                    }else{
+                    } else {
                         mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements = result!!.filterFuwuCode()
                         orderDetailPropAdapter =
                             mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.putIntoCreateDetailAdapter()
@@ -483,7 +478,7 @@ class OrderPreviewFragment : BaseFragment() {
                 val arry = mutableListOf<OrderIncrementModule>()
 
                 val orderIncrementModule = OrderIncrementModule()
-                orderIncrementModule.typeHead =true
+                orderIncrementModule.typeHead = true
                 orderIncrementModule.typeHeadName = it.zengzhiFuwuTypeName!!
                 arry.add(orderIncrementModule)
                 arry.add(it)
@@ -523,8 +518,8 @@ class OrderPreviewFragment : BaseFragment() {
                 mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements[mCurrentPositionCreation].jishiGonghao =
                     lists[position].gonghao
 
-                mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements[mCurrentPositionCreation].dingdanUid =
-                    mOrderDetailLists[mCurrentOrderSelectPosition].dingdanUid
+//                mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements[mCurrentPositionCreation].dingdanUid =
+//                    mOrderDetailLists[mCurrentOrderSelectPosition].dingdanUid
                 closePopWindow(mTcPersoPopwindow)
             }
 
@@ -548,6 +543,7 @@ class OrderPreviewFragment : BaseFragment() {
         this.forEach {
             if (it.amount.toInt() > 0) {
                 results.add(it)
+                it.dingdanUid = mOrderDetailLists[mCurrentOrderSelectPosition].dingdanUid
             }
         }
         return results
