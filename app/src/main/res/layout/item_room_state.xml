@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+                name="click"
+                type="com.gold.footimpression.ui.event.EventHandler"/>
+
+        <variable
+                name="roomStateModule"
+                type="com.gold.footimpression.module.RoomStateModule"/>
+    </data>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="#242C40"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:text="@{roomStateModule.zhongfangBianma}"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="#242C40"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:text="@{roomStateModule.chuangweishu}"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="#242C40"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:text="@{roomStateModule.kongxianshu}"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@{roomStateModule.stateColor()}"
+                android:drawableStart="@{roomStateModule.stateDrawable()}"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:drawablePadding="5dp"
+                android:text="@{roomStateModule.roomStateStr()}"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="match_parent"
+                android:textColor="#242C40"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:text="@{roomStateModule.floor}"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.9"
+                android:layout_height="match_parent"
+                android:textColor="#242C40"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:text="@{roomStateModule.daojishi}"/>
+    </LinearLayout>
+
+</layout>

@@ -353,14 +353,14 @@ class OrderPresenter(activity: Activity?) {
 //                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE), null
 //                            )
 //                        } else {
-                            callBack(
-                                HttpCallBack.SUCCESS_CODE,
-                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
-                                Gson().fromJson(
-                                    data,
-                                    object : TypeToken<MutableList<OrderIncrementModule>>() {}.type
-                                )
+                        callBack(
+                            HttpCallBack.SUCCESS_CODE,
+                            CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                            Gson().fromJson(
+                                data,
+                                object : TypeToken<MutableList<OrderIncrementModule>>() {}.type
                             )
+                        )
 //                        }
                     } else {
                         callBack(
@@ -446,6 +446,194 @@ class OrderPresenter(activity: Activity?) {
     }
 
 
+    /**
+     * 获取订单
+     */
+    fun <T> getRoomStae(
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<RoomStateModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "getRoomState", Constants.URL_GET_ROMM_STATE)
+    }
+
+    /**
+     * 获取订单
+     */
+    fun <T> getPlannerState(
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<PlannerStateModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "getPlannerState", Constants.URL_GET_PLANNER_STATE)
+    }
+
+    /**
+     * 获取订单
+     */
+    fun <T> updatePwd(
+        oldPass:String?,
+        newPass:String?,
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<RoomStateModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "updatePwd", Constants.URL_GET_PLANNER_STATE)
+    }
+
     public fun cancelRequest(flag: String) {
         HttpManager.getmInstance().cancleCallByKey(flag)
     }
@@ -458,6 +646,8 @@ class OrderPresenter(activity: Activity?) {
             cancelRequest("getJishiAuth")
             cancelRequest("submitCreateService")
             cancelRequest("getZengzhiDetails")
+            cancelRequest("getRoomState")
+            cancelRequest("getPlannerState")
             mInstance = null
         }
     }

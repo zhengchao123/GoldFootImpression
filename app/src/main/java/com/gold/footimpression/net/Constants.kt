@@ -37,6 +37,12 @@ object Constants {
     const val URL_GET_ZENGZHI_DETAIL = HOST + "searchAllDingdanZzList"
     //提交增值服务
     const val URL_ADD_SERVICES = HOST + "addDingdanZzForIpad"
+    //获取房间状态
+    const val URL_GET_ROMM_STATE = HOST + "searchMendianZhongfangStatus"
+    //获取技师状态
+    const val URL_GET_PLANNER_STATE = HOST + "searchMendianJishiStatus"
+    //修改密码
+    const val URL_UPDATE_PWD = HOST + "updatePwd"
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =

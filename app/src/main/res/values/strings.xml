@@ -106,5 +106,12 @@
     <string name="load_empty">加载为空</string>
     <string name="load_faild">加载失败</string>
     <string name="please_enter_vip">请输入账号</string>
+    <string name="bed_count">总床位数</string>
+    <string name="empty_bed_count">空床位数</string>
+    <string name="room_state">房间状态</string>
+    <string name="floor">楼层</string>
+    <string name="count_down">倒计时</string>
+    <string name="free_state">空闲状态</string>
+    <string name="service_room">服务房间</string>
 
 </resources>

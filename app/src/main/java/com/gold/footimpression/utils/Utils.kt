@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat.startActivity
 import com.gold.footimpression.application.RcbApplication
 import com.gold.footimpression.net.Constants
 import com.gold.footimpression.net.utils.SharedPreferencesUtils
+import java.lang.Exception
 
 
 object Utils {
@@ -91,10 +92,15 @@ object Utils {
 
 
     fun closeSoftKeyBord(context: Context, activity: Activity) {
-        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-            activity.currentFocus.windowToken,
-            InputMethodManager.HIDE_NOT_ALWAYS
-        )
+        try {
+            (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+                activity.currentFocus.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
     }
 
     fun showSoftKeyBord(context: Context,  view: View) {

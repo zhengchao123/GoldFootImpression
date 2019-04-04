@@ -3,6 +3,7 @@ package com.gold.footimpression.module
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.gold.footimpression.BR
+import com.gold.footimpression.R
 
 /**
  * 技师状态
@@ -17,6 +18,51 @@ class PlannerStateModule() : BaseObservable() {
 //    zhongfangBianma	String	服务房间
 
 
+    fun plannerStateStr(): String {
+        var result = "空闲"
+        when (jishiZhuangtai) {
+            "1" -> {
+                result = "空闲"
+            }
+            "2" -> {
+                result = "服务"
+            }
+            "3" -> {
+                result = "休息"
+            }
+        }
+        return result
+    }
+
+    fun stateColor(): Int {
+        var color = R.color.colorPrimary
+        when (jishiZhuangtai) {
+            "1" -> color = R.color.colorPrimary
+            "2" -> {
+                color = R.color.red_state_color
+            }
+            "3" -> {
+                color = R.color.red_state_color
+            }
+        }
+        return color
+
+    }
+
+    fun stateDrawable(): Int {
+        var color = R.mipmap.icon_state_free
+        when (jishiZhuangtai) {
+            "1" -> color = R.mipmap.icon_state_free
+            "2" -> {
+                color = R.mipmap.icon_state_in_service
+            }
+            "3" -> {
+                color = R.mipmap.icon_state_rest
+            }
+        }
+        return color
+
+    }
 
     var gonghao: String? = ""
         @Bindable

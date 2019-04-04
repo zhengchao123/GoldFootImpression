@@ -30,6 +30,7 @@ class MainActivity : BaseActivity() {
     private val TAG_SERVICE_ITEMS = "SERVICE_ITEMS_FRAGMENT";
     private val TAG_SERVICE_EDIT_ITEMS = "SERVICE_EDIT_ITEMS";
 
+
     private lateinit var mMainActivityBinding: ActivityMainBinding
     var services = mutableListOf<ServiceItemModule>()
 
@@ -81,6 +82,7 @@ class MainActivity : BaseActivity() {
         mMainActivityBinding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_1 -> {
+                    Utils.closeSoftKeyBord(mContext!!,this)
                     showFragment(TAG_ORDER_INPUT_FRAGMENT);
                 }
                 R.id.rb_2 -> {
@@ -91,9 +93,11 @@ class MainActivity : BaseActivity() {
 
                 }
                 R.id.rb_3 -> {
+                    Utils.closeSoftKeyBord(mContext!!,this)
                     showFragment(TAG_ROOM_STATE_FRAGMENT);
                 }
                 R.id.rb_4 -> {
+                    Utils.closeSoftKeyBord(mContext!!,this)
                     showFragment(TAG_SETTING_FRAGMENT);
                 }
             }
