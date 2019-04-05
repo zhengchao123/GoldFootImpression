@@ -1,7 +1,7 @@
 package com.gold.footimpression.net.download;
 
 import android.text.TextUtils;
-import com.gold.footimpression.application.RcbApplication;
+import com.gold.footimpression.application.GoldFootApplication;
 import com.gold.footimpression.net.HttpCallBack;
 import com.gold.footimpression.net.OkHttpRequest;
 import com.gold.footimpression.net.utils.LogUtils;
@@ -39,7 +39,7 @@ public class DownLoadCallBack extends HttpCallBack {
             if (is != null) {
                 File file;
                 if (TextUtils.isEmpty(mOkhttpRequest.getmDownloadFilePath())) {
-                    file = new File(RcbApplication.getInstance().mContext.getFilesDir(), "test.jpg");
+                    file = new File(GoldFootApplication.getInstance().mContext.getFilesDir(), "test.jpg");
                 } else {
                     file = new File(mOkhttpRequest.getmDownloadFilePath(), getNameFromUrl(call.request().url().toString()));
                 }

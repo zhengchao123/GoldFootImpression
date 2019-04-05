@@ -1,14 +1,9 @@
 package com.gold.footimpression.net;
 
 import android.content.Intent;
-import android.text.TextUtils;
-import android.widget.Toast;
-import com.gold.footimpression.R;
-import com.gold.footimpression.application.RcbApplication;
+import com.gold.footimpression.application.GoldFootApplication;
 import com.gold.footimpression.net.utils.LogUtils;
-import com.gold.footimpression.net.utils.SharedPreferencesUtils;
 import com.gold.footimpression.ui.activity.LoginActivity;
-import com.gold.footimpression.ui.base.BaseActivity;
 import com.gold.footimpression.utils.Utils;
 import com.google.gson.Gson;
 import com.rcb.financialservice.model.BaseNetArrayModule;
@@ -21,7 +16,6 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.Map;
-import java.util.Objects;
 
 public class HttpCallBack implements Callback {
     protected OkHttpRequest mOkhttpRequest;
@@ -120,10 +114,10 @@ public class HttpCallBack implements Callback {
             }
             if (code == FAILE_CODE_TOKEN_DATED || code == FAILE_CODE_TOKEN_NULL) {
                 Utils.INSTANCE.clearUserInfo();
-                Intent intent = new Intent(RcbApplication.getInstance(), LoginActivity.class);
+                Intent intent = new Intent(GoldFootApplication.getInstance(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                RcbApplication.getInstance().startActivity(intent);
+                GoldFootApplication.getInstance().startActivity(intent);
 
             }
         } catch (Exception e) {

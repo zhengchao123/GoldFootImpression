@@ -5,13 +5,13 @@ import android.content.Context;
 import decoration.scsowing.com.decoration.ui.event.OwnCrashHandler;
 
 
-public class RcbApplication extends Application {
+public class GoldFootApplication extends Application {
 
     public Context mContext;
 
-    public static com.gold.footimpression.application.RcbApplication mInstance;
+    public static GoldFootApplication mInstance;
 
-    public static com.gold.footimpression.application.RcbApplication getInstance() {
+    public static GoldFootApplication getInstance() {
         return mInstance;
     }
 

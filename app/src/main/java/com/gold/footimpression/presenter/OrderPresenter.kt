@@ -10,6 +10,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.rcb.financialservice.model.BaseNetArrayModule
 import com.rcb.financialservice.model.BaseNetObjectModule
+import com.rcb.financialservice.model.BaseNetPwdModule
 import com.rcb.financialservice.model.BaseNetStringModule
 import okhttp3.Call
 import okhttp3.Response
@@ -574,12 +575,18 @@ class OrderPresenter(activity: Activity?) {
      * 获取订单
      */
     fun <T> updatePwd(
-        oldPass:String?,
-        newPass:String?,
+        oldPass: String?,
+        newPass: String?,
         callBack: (code: Int, msg: String?, result: T?) -> Unit
     ) {
 
         val params = mutableMapOf<String, String>()
+        if (!TextUtils.isEmpty(oldPass)) {
+            params["oldPass"] = oldPass!!
+        }
+        if (!TextUtils.isEmpty(newPass)) {
+            params["newPass"] = newPass!!
+        }
         Client2Server.doPostAsyn(params, object : HttpCallBack() {
             override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
                 super.onFailed(code, exceptionMsg, call)
@@ -601,23 +608,12 @@ class OrderPresenter(activity: Activity?) {
                     return
                 }
 
-                val dataCount = (t as BaseNetArrayModule).root!!.size()
-                val data = (t as BaseNetArrayModule).root!!.toString()
-
                 runCallBack {
                     if ((t as BaseNetArrayModule).success) {
-                        if (dataCount == 0) {
-                            callBack(
-                                HttpCallBack.SUCCESS_CODE_NO_DATA,
-                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
-                            )
-                        } else {
-                            callBack(
-                                HttpCallBack.SUCCESS_CODE,
-                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
-                                Gson().fromJson(data, object : TypeToken<MutableList<RoomStateModule>>() {}.type)
-                            )
-                        }
+                        callBack(
+                            HttpCallBack.SUCCESS_CODE,
+                            CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE), null
+                        )
                     } else {
                         callBack(
                             HttpCallBack.FAILE_CODE,
@@ -631,7 +627,58 @@ class OrderPresenter(activity: Activity?) {
 
             }
         }, object : TypeToken<BaseNetArrayModule>() {
-        }.type, "updatePwd", Constants.URL_GET_PLANNER_STATE)
+        }.type, "updatePwd", Constants.URL_UPDATE_PWD)
+    }
+
+    /**
+     * 获取订单
+     */
+    fun <T> logOut(
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        Client2Server.doGetAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                runCallBack {
+                    if ((t as BaseNetPwdModule).success) {
+                        callBack(
+                            HttpCallBack.SUCCESS_CODE,
+                            CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE), null
+                        )
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetPwdModule>() {
+        }.type, "logOut", Constants.URL_LOG_OUT)
     }
 
     public fun cancelRequest(flag: String) {
@@ -648,6 +695,8 @@ class OrderPresenter(activity: Activity?) {
             cancelRequest("getZengzhiDetails")
             cancelRequest("getRoomState")
             cancelRequest("getPlannerState")
+            cancelRequest("updatePwd")
+            cancelRequest("logOut")
             mInstance = null
         }
     }

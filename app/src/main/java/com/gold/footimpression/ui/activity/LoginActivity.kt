@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.databinding.ObservableField
 import com.gold.footimpression.R
 import com.gold.footimpression.databinding.ActivityLoginBinding
@@ -58,6 +59,18 @@ class LoginActivity : BaseActivity() {
             }
         }
         mBinding!!.click = click
+
+
+
+        mBinding!!.etPwd.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // 先隐藏键盘
+                Utils.closeSoftKeyBord(mContext!!, this)
+                login()
+            }
+            false
+        }
+
     }
 
     override fun configLoadingPage(): Boolean = false

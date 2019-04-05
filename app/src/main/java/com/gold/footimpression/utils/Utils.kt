@@ -1,20 +1,13 @@
 package com.gold.footimpression.utils
 
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.text.TextUtils
-import android.transition.ChangeTransform
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import com.gold.footimpression.application.RcbApplication
+import com.gold.footimpression.application.GoldFootApplication
 import com.gold.footimpression.net.Constants
 import com.gold.footimpression.net.utils.SharedPreferencesUtils
 import java.lang.Exception
@@ -46,48 +39,48 @@ object Utils {
     }
 
     fun getUserToken(): String? {
-        return SharedPreferencesUtils.init(RcbApplication.getInstance()).getString(Constants.LOGIN_TOKEN_INFO)
+        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.LOGIN_TOKEN_INFO)
     }
 
     fun saveUserToken(token: String) {
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.LOGIN_TOKEN_INFO, token)
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.LOGIN_TOKEN_INFO, token)
     }
 
     fun getUserBumenCode(): String {
-        return SharedPreferencesUtils.init(RcbApplication.getInstance()).getString(Constants.USER_BUMEN_CODE)
+        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_BUMEN_CODE)
     }
 
     fun saveUserBumenCode(token: String) {
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_BUMEN_CODE, token)
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_BUMEN_CODE, token)
     }
 
     fun getUserBumenName(): String? {
-        return SharedPreferencesUtils.init(RcbApplication.getInstance()).getString(Constants.USER_BUMEN_NAME)
+        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_BUMEN_NAME)
     }
 
     fun saveUserBumenName(token: String) {
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_BUMEN_NAME, token)
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_BUMEN_NAME, token)
     }
     fun getDisplayName(): String? {
-        return SharedPreferencesUtils.init(RcbApplication.getInstance()).getString(Constants.USER_DISPLAY_NAME)
+        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_DISPLAY_NAME)
     }
 
     fun saveDisplayName(token: String) {
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_DISPLAY_NAME, token)
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_DISPLAY_NAME, token)
     }
     fun getGonghao(): String? {
-        return SharedPreferencesUtils.init(RcbApplication.getInstance()).getString(Constants.USER_GONGHAO_NAME)
+        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_GONGHAO_NAME)
     }
 
     fun saveGonghao(token: String) {
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, token)
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, token)
     }
     fun clearUserInfo() {
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.LOGIN_TOKEN_INFO, "")
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_BUMEN_CODE, "")
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_BUMEN_NAME, "")
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_DISPLAY_NAME, "")
-        SharedPreferencesUtils.init(RcbApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, "")
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.LOGIN_TOKEN_INFO, "")
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_BUMEN_CODE, "")
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_BUMEN_NAME, "")
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_DISPLAY_NAME, "")
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, "")
     }
 
 

@@ -43,6 +43,8 @@ object Constants {
     const val URL_GET_PLANNER_STATE = HOST + "searchMendianJishiStatus"
     //修改密码
     const val URL_UPDATE_PWD = HOST + "updatePwd"
+    //注销
+    const val URL_LOG_OUT = HOST + "logout"
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =

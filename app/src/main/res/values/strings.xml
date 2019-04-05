@@ -113,5 +113,15 @@
     <string name="count_down">倒计时</string>
     <string name="free_state">空闲状态</string>
     <string name="service_room">服务房间</string>
+    <string name="setting">设置</string>
+    <string name="update_pwd">修改密码</string>
+    <string name="logout">退出登录</string>
+    <string name="old_pwd">旧密码</string>
+    <string name="please_enter_old_pwd">请输入旧密码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="please_enter_new_pwd">请输入新密码</string>
+    <string name="sure_new_pwd">确认密码</string>
+    <string name="done">完成</string>
+    <string name="not_equal_new_pwd">两次密码输入不一致</string>
 
 </resources>

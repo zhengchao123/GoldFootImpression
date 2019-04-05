@@ -29,7 +29,6 @@ class OrderPreviewFragment : BaseFragment() {
 
     private var mBinding: OrderListFragmentBinding? = null
     private var mOrderPresenter: OrderPresenter? = null
-    private var orderDetailModule: OrderDetailModule? = null
     private var mOrderDetailLists = mutableListOf<OrderDetailModule>()
     private var mOrderHistoryDetailLists = mutableListOf<OrderDetailModule>()
     //编辑增值服务
@@ -373,6 +372,7 @@ class OrderPreviewFragment : BaseFragment() {
         super.onStop()
         mOrderPresenter!!.release()
         closePopWindow(mTcPersoPopwindow)
+        (this.activity as BaseActivity).closeProgressDialog()
     }
 
     /**

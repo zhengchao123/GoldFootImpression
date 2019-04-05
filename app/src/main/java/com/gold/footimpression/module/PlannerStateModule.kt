@@ -6,7 +6,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.gold.footimpression.BR
 import com.gold.footimpression.R
-import com.gold.footimpression.application.RcbApplication
+import com.gold.footimpression.application.GoldFootApplication
 
 /**
  * 技师状态
@@ -53,14 +53,14 @@ class PlannerStateModule() : BaseObservable() {
     }
 
     fun stateDrawable(): Drawable {
-        var color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_free)
+        var color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_free)
         when (jishiZhuangtai) {
-            "1" -> color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_free)
+            "1" -> color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_free)
             "2" -> {
-                color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_in_service)
+                color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_in_service)
             }
             "3" -> {
-                color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_rest)
+                color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_rest)
             }
         }
         return color!!

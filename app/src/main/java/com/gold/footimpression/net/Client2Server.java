@@ -1,9 +1,7 @@
 package com.gold.footimpression.net;
 
 import android.text.TextUtils;
-import android.widget.Toast;
-import com.gold.footimpression.BuildConfig;
-import com.gold.footimpression.application.RcbApplication;
+import com.gold.footimpression.application.GoldFootApplication;
 import com.gold.footimpression.net.download.DownLoadCallBack;
 import com.gold.footimpression.net.download.DownloadListener;
 import com.gold.footimpression.utils.Utils;
@@ -45,7 +43,7 @@ public class Client2Server {
                 .requestFlag(flag)
                 .url(url)
                 .build();
-        OkHttpClient okHttpClient = HttpClientManager.getInstance(RcbApplication.getInstance().mContext).getOkHttpInstance();
+        OkHttpClient okHttpClient = HttpClientManager.getInstance(GoldFootApplication.getInstance().mContext).getOkHttpInstance();
         HttpManager.getmInstance().asynchronousHttp(okHttpRequest, okHttpClient);
     }
 
@@ -85,7 +83,7 @@ public class Client2Server {
                 .url(url)
                 .requestFlag(flag)
                 .build();
-        OkHttpClient okHttpClient = HttpClientManager.getInstance(RcbApplication.getInstance().mContext).getOkHttpInstance();
+        OkHttpClient okHttpClient = HttpClientManager.getInstance(GoldFootApplication.getInstance().mContext).getOkHttpInstance();
         HttpManager.getmInstance().asynchronousHttp(okHttpRequest, okHttpClient);
     }
 
@@ -100,7 +98,7 @@ public class Client2Server {
                 .requestFlag(flag)
                 .filePath(filePath)
                 .build();
-        OkHttpClient okHttpClient = HttpClientManager.getInstance(RcbApplication.getInstance().mContext).getOkHttpInstance();
+        OkHttpClient okHttpClient = HttpClientManager.getInstance(GoldFootApplication.getInstance().mContext).getOkHttpInstance();
         HttpManager.getmInstance().asynchronousHttp(okHttpRequest, okHttpClient);
     }
 
@@ -114,7 +112,7 @@ public class Client2Server {
                 .callBack(callback)
                 .url(Constants.INSTANCE.getDownloaadUrl())
                 .build();
-        OkHttpClient okHttpClient = HttpClientManager.getInstance(RcbApplication.getInstance().mContext).getDownLoadOkHttpInstance(listener);
+        OkHttpClient okHttpClient = HttpClientManager.getInstance(GoldFootApplication.getInstance().mContext).getDownLoadOkHttpInstance(listener);
         HttpManager.getmInstance().asynchronousHttp(okHttpRequest, okHttpClient);
     }
 

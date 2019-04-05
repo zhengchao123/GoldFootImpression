@@ -6,8 +6,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.gold.footimpression.BR
 import com.gold.footimpression.R
-import com.gold.footimpression.application.RcbApplication
-import com.google.gson.Gson
+import com.gold.footimpression.application.GoldFootApplication
 
 /**
  * 房间状态
@@ -39,14 +38,14 @@ class RoomStateModule() : BaseObservable() {
     }
 
     fun stateColor(): Int {
-        var color = ContextCompat.getColor(RcbApplication.mInstance.mContext, R.color.colorPrimary)
+        var color = ContextCompat.getColor(GoldFootApplication.mInstance.mContext, R.color.colorPrimary)
         when (fangjianZhuangtai) {
-            "1" -> color = ContextCompat.getColor(RcbApplication.mInstance.mContext, R.color.colorPrimary)
+            "1" -> color = ContextCompat.getColor(GoldFootApplication.mInstance.mContext, R.color.colorPrimary)
             "2" -> {
-                color = ContextCompat.getColor(RcbApplication.mInstance.mContext, R.color.red_state_color)
+                color = ContextCompat.getColor(GoldFootApplication.mInstance.mContext, R.color.red_state_color)
             }
             "3" -> {
-                color = ContextCompat.getColor(RcbApplication.mInstance.mContext, R.color.red_state_color)
+                color = ContextCompat.getColor(GoldFootApplication.mInstance.mContext, R.color.red_state_color)
             }
         }
         return color
@@ -54,14 +53,14 @@ class RoomStateModule() : BaseObservable() {
     }
 
     fun stateDrawable(): Drawable {
-        var color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_free)
+        var color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_free)
         when (fangjianZhuangtai) {
-            "1" -> color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_free)
+            "1" -> color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_free)
             "2" -> {
-                color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_in_service)
+                color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_in_service)
             }
             "3" -> {
-                color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_rest)
+                color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_rest)
             }
         }
         return color!!
