@@ -61,7 +61,7 @@ class RoomStateModule() : BaseObservable() {
                 color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_in_service)
             }
             "3" -> {
-                color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_in_service)
+                color = ContextCompat.getDrawable(RcbApplication.mInstance.mContext, R.mipmap.icon_state_rest)
             }
         }
         return color!!
