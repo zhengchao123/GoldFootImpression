@@ -308,6 +308,7 @@
                 android:layout_width="480dp"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
+                android:clickable="true"
                 android:visibility="@{orderCreateDetail?View.VISIBLE:View.GONE}"
                 android:layout_gravity="end">
             <LinearLayout

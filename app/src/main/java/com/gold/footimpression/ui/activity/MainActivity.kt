@@ -48,7 +48,7 @@ class MainActivity : BaseActivity() {
             showFragment("ORDER_INPUT_FRAGMENT")
         } else if (mCurrentFragment is ServiceItemsEditFragment) {
             showFragment("SERVICE_ITEMS_FRAGMENT")
-        }else{
+        } else {
             super.onBackPressed()
         }
     }
@@ -84,22 +84,22 @@ class MainActivity : BaseActivity() {
         mMainActivityBinding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_1 -> {
-                    Utils.closeSoftKeyBord(mContext!!,this)
+                    Utils.closeSoftKeyBord(mContext!!, this)
                     showFragment(TAG_ORDER_INPUT_FRAGMENT);
                 }
                 R.id.rb_2 -> {
-                    Utils.closeSoftKeyBord(mContext!!,this)
+                    Utils.closeSoftKeyBord(mContext!!, this)
                     val data = Bundle()
                     data.putString("fromKey", "mainActivity")
                     showFragment(TAG_ORDER_PREVIEW_FRAGMENT, data);
 
                 }
                 R.id.rb_3 -> {
-                    Utils.closeSoftKeyBord(mContext!!,this)
+                    Utils.closeSoftKeyBord(mContext!!, this)
                     showFragment(TAG_ROOM_STATE_FRAGMENT);
                 }
                 R.id.rb_4 -> {
-                    Utils.closeSoftKeyBord(mContext!!,this)
+                    Utils.closeSoftKeyBord(mContext!!, this)
                     showFragment(TAG_SETTING_FRAGMENT);
                 }
             }
@@ -109,6 +109,9 @@ class MainActivity : BaseActivity() {
 
     public var mData: Bundle? = null
 
+    fun selectRb2(tag: String?, data: Bundle = Bundle()){
+        mMainActivityBinding!!.rb2.isChecked = true
+    }
     fun showFragment(tag: String?, data: Bundle = Bundle()): Unit {
 
         mData = data
@@ -149,6 +152,7 @@ class MainActivity : BaseActivity() {
             } else if (mCurrentFragment is OrderPreviewFragment) {
                 if (data.keySet().size > 0) {
                     (mCurrentFragment as OrderPreviewFragment).arguments = data
+
 
                 }
 

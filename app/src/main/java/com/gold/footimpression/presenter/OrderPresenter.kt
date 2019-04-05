@@ -2,16 +2,10 @@ package com.gold.footimpression.presenter
 
 import android.app.Activity
 import android.text.TextUtils
-import com.gold.footimpression.R
 import com.gold.footimpression.module.*
 import com.gold.footimpression.net.*
-import com.gold.footimpression.net.utils.LogUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.rcb.financialservice.model.BaseNetArrayModule
-import com.rcb.financialservice.model.BaseNetObjectModule
-import com.rcb.financialservice.model.BaseNetPwdModule
-import com.rcb.financialservice.model.BaseNetStringModule
 import okhttp3.Call
 import okhttp3.Response
 
@@ -205,8 +199,8 @@ class OrderPresenter(activity: Activity?) {
                     return
                 }
 
-                val dataCount = (t as BaseNetArrayModule).root!!.size()
-                val data = (t as BaseNetArrayModule).root!!.toString()
+                val dataCount = (t as BaseNetArrayModule).root.size()
+                val data = (t as BaseNetArrayModule).root.toString()
 
                 runCallBack {
                     if ((t as BaseNetArrayModule).success) {

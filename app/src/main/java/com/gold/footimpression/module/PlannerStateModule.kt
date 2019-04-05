@@ -37,27 +37,30 @@ class PlannerStateModule() : BaseObservable() {
         return result
     }
 
+
     fun stateColor(): Int {
-        var color = R.color.colorPrimary
+        var color = ContextCompat.getColor(GoldFootApplication.mInstance.mContext, R.color.colorPrimary)
         when (jishiZhuangtai) {
-            "1" -> color = R.color.colorPrimary
+            "1" -> color = ContextCompat.getColor(GoldFootApplication.mInstance.mContext, R.color.colorPrimary)
             "2" -> {
-                color = R.color.red_state_color
+                color = ContextCompat.getColor(GoldFootApplication.mInstance.mContext, R.color.red_state_color)
             }
             "3" -> {
-                color = R.color.red_state_color
+                color = ContextCompat.getColor(GoldFootApplication.mInstance.mContext, R.color.red_state_color)
             }
         }
         return color
 
     }
 
+
     fun stateDrawable(): Drawable {
         var color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_free)
         when (jishiZhuangtai) {
             "1" -> color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_free)
             "2" -> {
-                color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_in_service)
+                color =
+                    ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_in_service)
             }
             "3" -> {
                 color = ContextCompat.getDrawable(GoldFootApplication.mInstance.mContext, R.mipmap.icon_state_rest)

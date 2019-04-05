@@ -123,5 +123,7 @@
     <string name="sure_new_pwd">确认密码</string>
     <string name="done">完成</string>
     <string name="not_equal_new_pwd">两次密码输入不一致</string>
-
+    <string name="push_transmission_data">收到一条透传测试消息</string>
+    <string name="no_room">没有房间号信息，请切换项目尝试</string>
+    <string name="no_shoupai">没有手牌信息，请切换项目尝试</string>
 </resources>

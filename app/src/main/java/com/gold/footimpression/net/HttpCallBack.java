@@ -2,13 +2,13 @@ package com.gold.footimpression.net;
 
 import android.content.Intent;
 import com.gold.footimpression.application.GoldFootApplication;
+import com.gold.footimpression.module.BaseNetArrayModule;
+import com.gold.footimpression.module.BaseNetObjectModule;
+import com.gold.footimpression.module.BaseNetStringModule;
 import com.gold.footimpression.net.utils.LogUtils;
 import com.gold.footimpression.ui.activity.LoginActivity;
 import com.gold.footimpression.utils.Utils;
 import com.google.gson.Gson;
-import com.rcb.financialservice.model.BaseNetArrayModule;
-import com.rcb.financialservice.model.BaseNetObjectModule;
-import com.rcb.financialservice.model.BaseNetStringModule;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -87,6 +87,7 @@ public class HttpCallBack implements Callback {
                     gson.fromJson(responseBodyStr, mOkhttpRequest.getmClassType()) :
                     null);
         } catch (Exception e) {
+            LogUtils.INSTANCE.i(TAG," exception "+ e.getMessage());
             onFailure(call, new IOException(e.getMessage()));
         }
 
@@ -112,10 +113,10 @@ public class HttpCallBack implements Callback {
                 code = moduleO.getCode();
                 msg = moduleO.getMsg();
             }
-            if (code == FAILE_CODE_TOKEN_DATED || code == FAILE_CODE_TOKEN_NULL) {
+            if (code == FAILE_CODE_TOKEN_DATED || code == FAILE_CODE_TOKEN_NULL || Utils.INSTANCE.getCommand()) {
                 Utils.INSTANCE.clearUserInfo();
                 Intent intent = new Intent(GoldFootApplication.getInstance(), LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 GoldFootApplication.getInstance().startActivity(intent);
 

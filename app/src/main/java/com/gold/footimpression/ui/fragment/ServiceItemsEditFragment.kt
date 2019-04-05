@@ -337,11 +337,21 @@ class ServiceItemsEditFragment : BaseFragment() {
                 if (CodeUtils.isSuccess(code)) {
                     mRoomCardModule = result as RoomAndCardModule
                     if (fromRoom) {
-                        initRoomPopwindow((result as RoomAndCardModule).zhongfang)
-                        showPop(mRoomPopwindow, mBinding!!.llRoom)
+                        if((result as RoomAndCardModule).zhongfang.size == 0){
+                            toast(R.string.no_room)
+                        }else{
+                            initRoomPopwindow((result as RoomAndCardModule).zhongfang)
+                            showPop(mRoomPopwindow, mBinding!!.llRoom)
+                        }
+
                     } else {
-                        initShoupaiPopwindow((result as RoomAndCardModule).shoupai)
-                        showPop(mShoupaiPopwindow, mBinding!!.llCard)
+                        if((result as RoomAndCardModule).shoupai.size == 0){
+                            toast(R.string.no_shoupai)
+                        }else{
+                            initShoupaiPopwindow((result as RoomAndCardModule).shoupai)
+                            showPop(mShoupaiPopwindow, mBinding!!.llCard)
+                        }
+
                     }
 
                 } else {

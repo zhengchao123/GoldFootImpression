@@ -1,9 +1,7 @@
-package com.rcb.financialservice.model
-
-import com.google.gson.JsonObject
+package com.gold.footimpression.module
 
 
 class BaseNetPwdModule {
-    var success:  Boolean = false
+    var success: Boolean = false
     var msg: String? = ""
 }

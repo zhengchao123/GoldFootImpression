@@ -107,4 +107,7 @@ object Constants {
     val USER_BUMEN_NAME = "user_bumen_name"
     val USER_DISPLAY_NAME = "user_display_name"
     val USER_GONGHAO_NAME = "user_gonghao_name"
+    val COMMAND_KEY = "command_key"
+    const val  COMMAND_STR = "stop"
+    const val  COMMAND_RELEASE_STR = "release"
 }

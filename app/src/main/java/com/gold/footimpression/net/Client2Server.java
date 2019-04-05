@@ -84,7 +84,11 @@ public class Client2Server {
                 .requestFlag(flag)
                 .build();
         OkHttpClient okHttpClient = HttpClientManager.getInstance(GoldFootApplication.getInstance().mContext).getOkHttpInstance();
-        HttpManager.getmInstance().asynchronousHttp(okHttpRequest, okHttpClient);
+        try {
+            HttpManager.getmInstance().asynchronousHttp(okHttpRequest, okHttpClient);
+        } catch (Exception e) {
+        }
+
     }
 
     //上传图片专用

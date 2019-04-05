@@ -61,13 +61,23 @@ object Utils {
     fun saveUserBumenName(token: String) {
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_BUMEN_NAME, token)
     }
+
     fun getDisplayName(): String? {
         return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_DISPLAY_NAME)
+    }
+
+    fun saveCommandStr(command: String) {
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.COMMAND_KEY, command)
+    }
+
+    fun getCommandStr(): String {
+        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.COMMAND_KEY, "")
     }
 
     fun saveDisplayName(token: String) {
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_DISPLAY_NAME, token)
     }
+
     fun getGonghao(): String? {
         return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_GONGHAO_NAME)
     }
@@ -75,6 +85,7 @@ object Utils {
     fun saveGonghao(token: String) {
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, token)
     }
+
     fun clearUserInfo() {
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.LOGIN_TOKEN_INFO, "")
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_BUMEN_CODE, "")
@@ -90,16 +101,20 @@ object Utils {
                 activity.currentFocus.windowToken,
                 InputMethodManager.HIDE_NOT_ALWAYS
             )
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
     }
 
-    fun showSoftKeyBord(context: Context,  view: View) {
+    fun showSoftKeyBord(context: Context, view: View) {
         var inputMethodManager = (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
         view.requestFocus();
         inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED);
 
+    }
+
+    fun getCommand(): Boolean {
+        return getCommandStr().equals(Constants.COMMAND_STR)
     }
 }

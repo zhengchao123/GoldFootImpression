@@ -8,9 +8,6 @@ import com.gold.footimpression.net.*
 import com.gold.footimpression.net.utils.LogUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.rcb.financialservice.model.BaseNetArrayModule
-import com.rcb.financialservice.model.BaseNetObjectModule
-import com.rcb.financialservice.model.BaseNetStringModule
 import okhttp3.Call
 import okhttp3.Response
 
@@ -194,7 +191,8 @@ class UserAcountPresenter(activity: Activity?) {
 
                 val dataCount = (t as BaseNetArrayModule).root!!.size()
                 val data = (t as BaseNetArrayModule).root!!.toString()
-
+                LogUtils.i(TAG, " exception ${(t as BaseNetArrayModule).success} + msg= $(t as BaseNetArrayModule).msg"
+                        +"root =${(t as BaseNetArrayModule).root.toString()}")
                 runCallBack {
                     if ((t as BaseNetArrayModule).success) {
                         if (dataCount == 0) {

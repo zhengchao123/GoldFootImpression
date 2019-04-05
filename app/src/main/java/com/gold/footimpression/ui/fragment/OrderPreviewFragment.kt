@@ -118,8 +118,6 @@ class OrderPreviewFragment : BaseFragment() {
     }
 
     fun preView() {
-
-
         val data = this.arguments
         if (null != data && data.containsKey("fromKey")) {
             fromKey = data.getString("fromKey", "")

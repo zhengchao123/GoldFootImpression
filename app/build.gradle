@@ -15,6 +15,14 @@ android {
         versionCode rootProject.ext.version_code
         versionName rootProject.ext.version_name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+        }
+        manifestPlaceholders = [
+                GETUI_APP_ID : "EAwiEIncNu9eE8IJAr5HU",
+                GETUI_APP_KEY : "nyMZDWRC2I7ZT2DptJf3I1",
+                GETUI_APP_SECRET : "HEDtQGRAH76uscMLIOStBA"
+        ]
     }
 
     buildTypes {
@@ -133,5 +141,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.qmuiteam:qmui:1.1.3'
+    implementation 'com.getui:sdk:2.13.1.0'
 
 }

@@ -1,4 +1,4 @@
-package com.rcb.financialservice.model
+package com.gold.footimpression.module
 
 import com.google.gson.JsonObject
 
