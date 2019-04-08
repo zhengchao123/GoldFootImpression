@@ -56,7 +56,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setAdjust()
         super.onCreate(savedInstanceState)
-        showFragment(TAG_ORDER_INPUT_FRAGMENT);
+        showFragment(TAG_ROOM_STATE_FRAGMENT);
     }
 
     override fun initBinding() {
@@ -107,11 +107,8 @@ class MainActivity : BaseActivity() {
     }
 
 
-    public var mData: Bundle? = null
+     var mData: Bundle? = null
 
-    fun selectRb2(tag: String?, data: Bundle = Bundle()){
-        mMainActivityBinding!!.rb2.isChecked = true
-    }
     fun showFragment(tag: String?, data: Bundle = Bundle()): Unit {
 
         mData = data

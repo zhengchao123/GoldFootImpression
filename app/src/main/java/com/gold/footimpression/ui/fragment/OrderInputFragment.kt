@@ -1,11 +1,14 @@
 package com.gold.footimpression.ui.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.databinding.ObservableField
 import com.gold.footimpression.R
 import com.gold.footimpression.databinding.OrderInputFragmentBinding
@@ -55,10 +58,12 @@ class OrderInputFragment : BaseFragment() {
     private var mTimes = mutableListOf<TimeModule>()
     private var mCertificatesPop: BasePopupWindow? = null
     private var mTimePop: BasePopupWindow? = null
+    private var mActivity: MainActivity? = null
     override fun getContentview() = com.gold.footimpression.R.layout.order_input_fragment
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mActivity = context as MainActivity?
     }
 
     override fun initBinding() {
@@ -82,7 +87,7 @@ class OrderInputFragment : BaseFragment() {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.tuangouquanHao = groupCode.get()
+        mActivity!!.mOrderModule.paramStr.tuangouquanHao = groupCode.get()
     }
 
     override fun initData() {
@@ -107,9 +112,11 @@ class OrderInputFragment : BaseFragment() {
         val click = object : EventHandler(mContext, false) {
             override fun onClickView(view: View?) {
                 super.onClickView(view)
+                Utils.closeSoftKeyBord(mContext, mActivity!!)
+                clearInputFocuse()
                 when (view!!.id) {
                     com.gold.footimpression.R.id.tv_customer_source -> {
-
+                        clearInputFocuse()
                         if (customSources.size == 0) {
                             loadDicts("203")
                         } else {
@@ -175,11 +182,12 @@ class OrderInputFragment : BaseFragment() {
                         val data = Bundle()
                         data.putString("doorCode", mDoorCode.get())
                         data.putSerializable("time", mTimes[mSelectTimePosition])
-                        (this@OrderInputFragment.activity as MainActivity).group.set(customSource.get()!!.contains("团购"))
-                        (this@OrderInputFragment.activity as MainActivity).coupon.set(customSource.get()!!.contains("优惠券"))
-                        (this@OrderInputFragment.activity as MainActivity).showFragment("SERVICE_ITEMS_FRAGMENT", data)
+                        mActivity!!.group.set(customSource.get()!!.contains("团购"))
+                        mActivity!!.coupon.set(customSource.get()!!.contains("优惠券"))
+                        mActivity!!.showFragment("SERVICE_ITEMS_FRAGMENT", data)
                     }
                 }
+                clearInputFocuse()
             }
         }
         mBinding!!.click = click
@@ -187,7 +195,7 @@ class OrderInputFragment : BaseFragment() {
         mBinding!!.tvVipAcount.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // 先隐藏键盘
-                Utils.closeSoftKeyBord(mContext, this@OrderInputFragment.activity!!)
+                Utils.closeSoftKeyBord(mContext, mActivity!!)
                 if (!TextUtils.isEmpty(v.text)) {
                     loadVipInfo()
                 }
@@ -196,25 +204,12 @@ class OrderInputFragment : BaseFragment() {
             false
         }
 
-//        mBinding!!.tvVipAcount.viewTreeObserver.addOnGlobalLayoutListener(OnGlobalLayoutListener //当键盘弹出隐藏的时候会 调用此方法。
-//        {
-//            val r = Rect()
-//            //获取当前界面可视部分
-//            this@OrderInputFragment.activity!!.window.decorView.getWindowVisibleDisplayFrame(r)
-//            //获取屏幕的高度
-//            val screenHeight = this@OrderInputFragment.activity!!.window.decorView.rootView.height
-//            //此处就是用来获取键盘的高度的， 在键盘没有弹出的时候 此高度为0 键盘弹出的时候为一个正数
-//            val heightDifference = screenHeight - r.bottom
-//            Log.d(
-//                "Keyboard Size",
-//                "====Size: $heightDifference statrusbar height = ${QMUIStatusBarHelper.getStatusbarHeight(mContext)}"
-//            )
-//            if (heightDifference in 1..99) {
-//                ViewUtils.hideBottomUIMenu(this@OrderInputFragment.activity!!)
-//            }
-//
-//        })
 
+    }
+
+    private fun clearInputFocuse() {
+        var view = (mBinding!!.tvVipAcount)
+        view.clearFocus()
     }
 
     private fun loadVipInfo() {
@@ -235,9 +230,9 @@ class OrderInputFragment : BaseFragment() {
                     mVipModule.huiyuanTel = result.huiyuanTel
                     mVipModule.huiyuanZhanghao = result.huiyuanZhanghao
                     mVipModule.xianjin = result.xianjin
-                    (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.huiyuanZhanghao =
+                    mActivity!!.mOrderModule.paramStr.huiyuanZhanghao =
                         mVipModule.huiyuanZhanghao
-                    (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.huiyuanTel =
+                    mActivity!!.mOrderModule.paramStr.huiyuanTel =
                         mVipModule.huiyuanTel
                 } else {
                     toast(msg!!)
@@ -305,7 +300,7 @@ class OrderInputFragment : BaseFragment() {
                     platform.set("")
                     platformCode.set("")
                     groupCode.set("")
-                    (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.kehuLaiyuan =
+                    mActivity!!.mOrderModule.paramStr.kehuLaiyuan =
                         customSourceCode.get()
 
                     if (lists[position].cname!!.contains("团购")) {
@@ -316,7 +311,7 @@ class OrderInputFragment : BaseFragment() {
                 } else {
                     platform.set(lists[position].cname)
                     platformCode.set(lists[position].ccode)
-                    (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.tuangouHuodong =
+                    mActivity!!.mOrderModule.paramStr.tuangouHuodong =
                         platformCode.get()
                 }
 
@@ -345,9 +340,9 @@ class OrderInputFragment : BaseFragment() {
                 time.set(mTimes[position].shortTime)
 
 
-                (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.daodianTime =
+                mActivity!!.mOrderModule.paramStr.daodianTime =
                     mTimes[position].fullTime
-                (this@OrderInputFragment.activity as MainActivity).mOrderModule.paramStr.daodianHMStr =
+                mActivity!!.mOrderModule.paramStr.daodianHMStr =
                     mTimes[position].shortTime
 
             }

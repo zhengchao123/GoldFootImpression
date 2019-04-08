@@ -14,6 +14,14 @@
                 name="history"
                 type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
 
+
+
+        <variable
+                name="searchText"
+                type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+
+
         <!--订单增值服务详情-->
         <variable
                 name="orderDetailPropAdapter"
@@ -57,7 +65,7 @@
                 android:visibility="@{editZengzhi?View.GONE:View.VISIBLE}"
         >
             <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="400dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginTop="50dp"
@@ -98,6 +106,42 @@
                         android:onClick="@{click::onClickView}"
                         android:text="@string/history_list"
                 />
+
+                <RelativeLayout
+                        android:layout_width="400dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="15dp">
+
+                    <EditText
+                            android:id="@+id/et_right_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_toStartOf="@id/tv_search"
+                            android:drawablePadding="10dp"
+                            android:paddingStart="10dp"
+                            android:drawableStart="@mipmap/icon_search"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:text="@={searchText}"
+                            android:textColor="@color/title_color"
+                            android:background="@drawable/bg_regtangle"/>
+                    <TextView
+                            android:id="@+id/tv_search"
+                            android:layout_width="60dp"
+                            android:layout_height="35dp"
+                            android:onClick="@{click::onClickView}"
+                            android:clickable="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_gravity="center_vertical|end"
+                            android:textColor="#ffffff"
+                            android:background="@drawable/bg_green_submit"
+                            android:text="@string/sure"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                    />
+                </RelativeLayout>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="400dp"
@@ -144,18 +188,25 @@
                     android:visibility="@{history?View.GONE:View.VISIBLE}"
                     android:orientation="vertical"
                     android:layout_marginTop="14dp">
-
-                <HorizontalScrollView
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/swipe_fresh_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                    <com.gold.footimpression.widget.AutoRecyclerView
-                            android:id="@+id/recycler_order_list"
+                        android:layout_height="match_parent"
+                        android:background="#00000000">
+                    <HorizontalScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#ffffff"
-                            app:diliver_style="2"
-                            android:adapter="@{currentOrderAdapter}"/>
-                </HorizontalScrollView>
+                            android:layout_height="match_parent">
+
+                        <com.gold.footimpression.widget.AutoRecyclerView
+                                android:id="@+id/recycler_order_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#ffffff"
+                                app:diliver_style="2"
+                                android:adapter="@{currentOrderAdapter}"/>
+
+                    </HorizontalScrollView>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -163,17 +214,24 @@
                     android:visibility="@{!history?View.GONE:View.VISIBLE}"
                     android:orientation="vertical"
                     android:layout_marginTop="14dp">
-                <HorizontalScrollView
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/swipe_fresh_history_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                    <com.gold.footimpression.widget.AutoRecyclerView
-                            android:id="@+id/recycler_order_history_list"
+                        android:layout_height="match_parent"
+                        android:background="#00000000">
+                    <HorizontalScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#ffffff"
-                            app:diliver_style="2"
-                            android:adapter="@{historyOrderAdapter}"/>
-                </HorizontalScrollView>
+                            android:layout_height="match_parent">
+                        <com.gold.footimpression.widget.AutoRecyclerView
+                                android:id="@+id/recycler_order_history_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#ffffff"
+                                app:diliver_style="2"
+                                android:adapter="@{historyOrderAdapter}"/>
+                    </HorizontalScrollView>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </FrameLayout>
 
@@ -295,6 +353,7 @@
                     android:background="#D4D4D4"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"/>
+
             <com.gold.footimpression.widget.AutoRecyclerView
                     android:id="@+id/recycler_service"
                     android:layout_width="match_parent"

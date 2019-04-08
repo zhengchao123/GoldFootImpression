@@ -8,11 +8,13 @@ import com.google.gson.Gson
 /**
  * 订单预览
  */
-class OrderDetailModule(firstItem:Boolean = false) : BaseObservable() {
+class OrderDetailModule(firstItem: Boolean = false) : BaseObservable() {
     var firstItem = false
+
     init {
         this.firstItem = firstItem
     }
+
     //    dingdanUid	string	订单Uid
     var dingdanUid = ""
     var dingdanhao = ""//	string	订单编号
@@ -51,6 +53,8 @@ class OrderDetailModule(firstItem:Boolean = false) : BaseObservable() {
     var shoupaihao = "-"//		int	是否归还手牌->说明：0：否；1：是
     var weizhifu = "-"
     var yizhifu = "0"
+    var xiazhongShijian = ""
+    var xiazhongShijianStr = ""
 
     var history = false
     fun jiesuanStatusValue(): String {

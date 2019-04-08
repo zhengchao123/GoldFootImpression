@@ -1,5 +1,6 @@
 package com.gold.footimpression.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
@@ -29,6 +30,7 @@ import com.gold.footimpression.utils.ViewUtils
 import com.gold.footimpression.widget.BasePopupWindow
 import com.gold.footimpression.widget.ListPopupWindow
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper
+import kotlinx.android.synthetic.main.service_items_fragment.*
 import java.util.*
 
 
@@ -50,6 +52,7 @@ class ServiceItemsFragment : BaseFragment() {
     //时间
     private var timeModule: TimeModule? = null
 
+    private var mActivity: MainActivity? = null
     //存储已被选中的技师
     private var selectedPlanners = mutableSetOf<PlannerModule>()
     private var serviceCode = ""
@@ -59,6 +62,10 @@ class ServiceItemsFragment : BaseFragment() {
     private var visible = ObservableField<Boolean>(false)
     override fun getContentview() = com.gold.footimpression.R.layout.service_items_fragment
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mActivity = context as MainActivity?
+    }
 
     override fun initBinding() {
         super.initBinding()
@@ -72,6 +79,18 @@ class ServiceItemsFragment : BaseFragment() {
         mBinding!!.plannerVisible = plannerVisible
         mBinding!!.visible = visible
 
+        mBinding!!.swipeFreshLayout.setColorSchemeResources(
+            R.color.colorPrimary,
+            R.color.colorPrimary,
+            R.color.colorPrimary
+        )
+
+//        mBinding!!.swipeFreshPlannerLayout.setColorSchemeResources(
+//            R.color.colorPrimary,
+//            R.color.colorPrimary,
+//            R.color.colorPrimary
+//        )
+
         val data = this.arguments
         doorCode = data!!["doorCode"] as String
         timeModule = data!!["time"] as TimeModule
@@ -84,8 +103,8 @@ class ServiceItemsFragment : BaseFragment() {
         if (!hidden) {
             val data = this.arguments
             val time = data!!["time"] as TimeModule
-            val dcode =  data!!["doorCode"] as String
-            if(!time.equals(timeModule)|| !dcode.equals(doorCode)){
+            val dcode = data!!["doorCode"] as String
+            if (!time.equals(timeModule) || !dcode.equals(doorCode)) {
                 doorCode = data!!["doorCode"] as String
                 timeModule = data!!["time"] as TimeModule
                 visible.set(false)
@@ -111,41 +130,67 @@ class ServiceItemsFragment : BaseFragment() {
 
                     }
                     R.id.iv_back -> {
-                        (this@ServiceItemsFragment.activity as MainActivity).showFragment("ORDER_INPUT_FRAGMENT")
+                        mActivity!!.showFragment("ORDER_INPUT_FRAGMENT")
                     }
-                    R.id.tv_comfire->{
-                        (this@ServiceItemsFragment.activity as MainActivity).services.clear()
-                        (this@ServiceItemsFragment.activity as MainActivity).services.addAll(mServiceItems)
-                        (this@ServiceItemsFragment.activity as MainActivity).showFragment("SERVICE_EDIT_ITEMS")
+                    R.id.tv_comfire -> {
+                        this@ServiceItemsFragment.mActivity!!.services.clear()
+                        this@ServiceItemsFragment.mActivity!!.services.addAll(mServiceItems)
+                        this@ServiceItemsFragment.mActivity!!.showFragment("SERVICE_EDIT_ITEMS")
                     }
                 }
             }
         }
         mBinding!!.click = click
-
-
+        mBinding!!.swipeFreshLayout.setOnRefreshListener {
+            loadServiceItems(true)
+        }
+//        mBinding!!.swipeFreshPlannerLayout.setOnRefreshListener {
+//            loadTechnician(true)
+//        }
     }
 
     /**
      * 加載服务项目
      */
-    private fun loadServiceItems() {
+    private fun loadServiceItems(isFresh: Boolean = false) {
 
         if (!Utils.isNetworkConnected(mContext)) {
             toast(R.string.net_error)
+            if (isFresh) {
+                mBinding!!.swipeFreshLayout.isRefreshing = false
+            }
         } else {
-            (this.activity as BaseActivity).showProgressDialog { }
+            if (!isFresh) {
+                (this.activity as BaseActivity).showProgressDialog { }
+            }
             mLoginPresenter!!.getServiceItems<MutableList<ServiceItemModule>>() { code, msg, result ->
-                (this.activity as BaseActivity).closeProgressDialog()
-                if (CodeUtils.isSuccess(code)) {
+                mActivity!!.closeProgressDialog()
 
-                    mServiceItems.clear()
-                    mServiceItems.addAll(result!!)
-                    mServiceItemsAdapter = mServiceItems.putToAdapter()
-                    mBinding!!.itemsAdapter = mServiceItemsAdapter
+                if (isFresh) {
+                    mBinding!!.swipeFreshLayout.isRefreshing = false
+                    if (CodeUtils.isSuccess(code)) {
+                        toast(R.string.refresh_success)
+                        mPlanners.clear()
+                        plannerVisible.set(false)
+
+                        mServiceItems.clear()
+                        mServiceItems.addAll(result!!)
+                        mServiceItemsAdapter!!.update(mServiceItems)
+                    } else {
+                        toast(msg!!)
+                    }
                 } else {
-                    toast(msg!!)
+                    if (CodeUtils.isSuccess(code)) {
+
+                        mServiceItems.clear()
+                        mServiceItems.addAll(result!!)
+                        mServiceItemsAdapter = mServiceItems.putToAdapter()
+                        mBinding!!.itemsAdapter = mServiceItemsAdapter
+                    } else {
+                        toast(msg!!)
+                    }
                 }
+
             }
         }
 
@@ -154,12 +199,18 @@ class ServiceItemsFragment : BaseFragment() {
     /**
      * 加載技师
      */
-    private fun loadTechnician() {
+    private fun loadTechnician(isFresh: Boolean = false) {
 
         if (!Utils.isNetworkConnected(mContext)) {
+
             toast(com.gold.footimpression.R.string.net_error)
+//            if (isFresh) {
+//                mBinding!!.swipeFreshPlannerLayout.isRefreshing = false
+//            }
         } else {
-            (this.activity as BaseActivity).showProgressDialog { }
+//            if (!isFresh) {
+                mActivity!!.showProgressDialog { }
+//            }
             mLoginPresenter!!.getPlanners<MutableList<PlannerModule>>(
                 doorCode,
                 if (null != timeModule) timeModule!!.fullTime!! else "",
@@ -167,27 +218,47 @@ class ServiceItemsFragment : BaseFragment() {
                 serviceCode,
                 "true"
             ) { code, msg, result ->
-                (this.activity as BaseActivity).closeProgressDialog()
-                if (CodeUtils.isSuccess(code)) {
-                    plannerVisible.set(true)
-                    mPlanners.clear()
-                    result!!.filterFuwuCode(serviceCode)
-//                    mPlanners.addAll(result!!.filterFuwuCode(serviceCode))
-                    mServiceItems.forEach { item ->
-                        if (item.fuwuXiangmuBianma!!.equals(serviceCode)) {
-                            item.filterPlanners = result.filterSelect()
-                            mPlanners.addAll(item.filterPlanners)
-                            item.planners = result
-                            return@forEach
+                mActivity!!.closeProgressDialog()
+                if (isFresh) {
+//                    mBinding!!.swipeFreshPlannerLayout.isRefreshing = false
+                    if (CodeUtils.isSuccess(code)) {
+                        toast(R.string.refresh_success)
+                        result!!.filterFuwuCode(serviceCode)
+                        mServiceItems.forEach { item ->
+                            if (item.fuwuXiangmuBianma!!.equals(serviceCode)) {
+                                item.filterPlanners = result.filterSelect()
+                                mPlanners=item.filterPlanners
+                                item.planners = result
+                                return@forEach
+                            }
                         }
+                        mPlannersAdapter!!.update(mPlanners)
+
+                    }else{
+                        toast(msg!!)
                     }
-                    mPlannersAdapter = mPlanners.putPlannerToAdapter()
-                    mBinding!!.technicianAdapter = mPlannersAdapter
                 } else {
-                    toast(msg!!)
-                    visible.set(false)
-                    plannerVisible.set(false)
+                    if (CodeUtils.isSuccess(code)) {
+                        plannerVisible.set(true)
+                        mPlanners.clear()
+                        result!!.filterFuwuCode(serviceCode)
+                        mServiceItems.forEach { item ->
+                            if (item.fuwuXiangmuBianma!!.equals(serviceCode)) {
+                                item.filterPlanners = result.filterSelect()
+                                mPlanners.addAll(item.filterPlanners)
+                                item.planners = result
+                                return@forEach
+                            }
+                        }
+                        mPlannersAdapter = mPlanners.putPlannerToAdapter()
+                        mBinding!!.technicianAdapter = mPlannersAdapter
+                    } else {
+                        toast(msg!!)
+                        visible.set(false)
+                        plannerVisible.set(false)
+                    }
                 }
+
             }
         }
 
@@ -201,11 +272,11 @@ class ServiceItemsFragment : BaseFragment() {
             BR.serviceItemModule
         ).let {
             it.setOnItemClick(object : OnItemClick {
-                override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+                override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
                 }
 
                 override fun onItemClick(itemView: View, position: Int) {
-                    toast("click $position value ${this@putToAdapter[position].fuwuXiangmuMingcheng}")
+//                    toast("click $position value ${this@putToAdapter[position].fuwuXiangmuMingcheng}")
 
                     this@putToAdapter.forEach { item ->
                         item.selected = false
@@ -284,7 +355,7 @@ class ServiceItemsFragment : BaseFragment() {
             BR.plannerModule, BR.click
         ).let {
             it.setOnItemClick(object : OnItemClick {
-                override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+                override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
                     when (itemView.id) {
                         R.id.iv_selected -> {
 

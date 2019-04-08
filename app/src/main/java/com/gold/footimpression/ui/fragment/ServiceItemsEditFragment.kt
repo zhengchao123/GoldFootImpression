@@ -1,14 +1,16 @@
 package com.gold.footimpression.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.library.baseAdapters.BR
 import com.gold.footimpression.R
 import com.gold.footimpression.bindingadapter.CommonAdapter
-import com.gold.footimpression.module.*
 import com.gold.footimpression.module.OrderModule.ServiceInfo
+import com.gold.footimpression.module.ReiceverModule
+import com.gold.footimpression.module.RoomAndCardModule
+import com.gold.footimpression.module.ServiceItemModule
 import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.net.utils.DensyUtils
 import com.gold.footimpression.net.utils.LogUtils
@@ -19,11 +21,9 @@ import com.gold.footimpression.ui.base.BaseFragment
 import com.gold.footimpression.ui.event.EventHandler
 import com.gold.footimpression.ui.event.OnItemClick
 import com.gold.footimpression.utils.Utils
-import com.gold.footimpression.utils.ViewUtils
 import com.gold.footimpression.widget.BasePopupWindow
 import com.gold.footimpression.widget.ListPopupWindow
 import com.google.gson.Gson
-import okhttp3.internal.Util
 
 
 class ServiceItemsEditFragment : BaseFragment() {
@@ -44,27 +44,19 @@ class ServiceItemsEditFragment : BaseFragment() {
     private var group = ObservableField<Boolean>(false)
     //是优惠券
     private var coupon = ObservableField<Boolean>(false)
-    //房间号
-//    private var roomNum = ObservableField<String>("")
-//    //手牌号
-//    private var shoupaiNumValue = ObservableField<String>("")
 
     //当前选中的编辑服务项目
     private var mCurrentServiceItem = ServiceItemModule()
-    //    //折扣价
-//    private var discountPrice = ObservableField<String>("")
-    //团购价
-//    private var groupPrice = ObservableField<String>("")
     private var visible = ObservableField<Boolean>(false)
 
     override fun getContentview() = com.gold.footimpression.R.layout.service_items_edit_fragment
     //房间和手牌信息
     private var mRoomCardModule = RoomAndCardModule()
 
-    //    private var mServiceEditModule = EditServiceModule()
     //接待人员
     private var reiceverModule = ReiceverModule(Utils.getDisplayName()!!, Utils.getGonghao()!!)
 
+    private var mActivity:MainActivity?=null
 
     override fun initBinding() {
         super.initBinding()
@@ -74,14 +66,13 @@ class ServiceItemsEditFragment : BaseFragment() {
         mBinding!!.coupon = coupon
         mBinding!!.group = group
 
-//        mBinding!!.reiceverModule = reiceverModule
-//        mBinding!!.roomNum = roomNum
-//        mBinding!!.shoupaiNumValue = shoupaiNumValue
-//        mBinding!!.discountPrice = discountPrice
-//        mBinding!!.groupPrice = groupPrice
-        mLoginPresenter = UserAcountPresenter(this.activity)
+        mLoginPresenter = UserAcountPresenter(mActivity!!)
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mActivity = context as MainActivity?
+    }
     override fun initView() {
         super.initView()
 
@@ -97,15 +88,14 @@ class ServiceItemsEditFragment : BaseFragment() {
     }
 
     fun preview() {
-        group.set((this.activity as MainActivity).group.get())
-        coupon.set((this.activity as MainActivity).coupon.get())
+        group.set(mActivity!!.group.get())
+        coupon.set(mActivity!!.coupon.get())
 
         if (!coupon.get()!!) {
             mBinding!!.priceZhekou.requestFocus()
         }
-//        mBinding!!.etPriceGroup.isEnabled = group.get()!!
 
-        mServiceItems = (this.activity as MainActivity).services.filterArrays()
+        mServiceItems = mActivity!!.services.filterArrays()
         visible.set(false)
         mServiceItemsAdapter = mServiceItems.putToAdapter()
         mBinding!!.itemsAdapter = mServiceItemsAdapter
@@ -113,6 +103,13 @@ class ServiceItemsEditFragment : BaseFragment() {
         mCurrentServiceItem.mServiceEditModule.reicever = reiceverModule
         mBinding!!.editServiceModule = mCurrentServiceItem.mServiceEditModule
 
+    }
+
+    private fun clearInputFocuse() {
+        mBinding!!.priceZhekou.clearFocus()
+        mBinding!!.etPriceGroup.clearFocus()
+        mBinding!!.etXuanchuanyuanCode.clearFocus()
+        mBinding!!.etYouhuiAmount.clearFocus()
     }
 
     override fun onStop() {
@@ -132,6 +129,9 @@ class ServiceItemsEditFragment : BaseFragment() {
         val click = object : EventHandler(mContext, false) {
             override fun onClickView(view: View?) {
                 super.onClickView(view)
+                
+                Utils.closeSoftKeyBord(mContext,mActivity!!)
+                clearInputFocuse()
                 when (view!!.id) {
                     R.id.tv_bucha -> {
                         if (null == mBuchaPopwindow) {
@@ -142,8 +142,8 @@ class ServiceItemsEditFragment : BaseFragment() {
                         }
                     }
                     R.id.tv_edit_sure -> {
-                        if (null != this@ServiceItemsEditFragment.activity) {
-                            Utils.closeSoftKeyBord(mContext, this@ServiceItemsEditFragment.activity!!)
+                        if (null != mActivity) {
+                            Utils.closeSoftKeyBord(mContext, mActivity!!)
                         }
 
                         if (group.get()!!) {
@@ -179,7 +179,7 @@ class ServiceItemsEditFragment : BaseFragment() {
                         mServiceItemsAdapter!!.update(mServiceItems)
                     }
                     R.id.tv_comfire -> {
-                        (this@ServiceItemsEditFragment.activity as MainActivity).mOrderModule.paramFuwuStr.clear()
+                        mActivity!!.mOrderModule.paramFuwuStr.clear()
                         mServiceItems.forEach {
                             if (it.selected) {
                                 val mServiceInfo = ServiceInfo()
@@ -197,25 +197,25 @@ class ServiceItemsEditFragment : BaseFragment() {
                                 mServiceInfo.buchajia =
                                     if (mCurrentServiceItem.mServiceEditModule.buchajiaValue.equals("是")) "1" else "0"
                                 mServiceInfo.buchajiaValue = mCurrentServiceItem.mServiceEditModule.buchajiaValue
-                                (this@ServiceItemsEditFragment.activity as MainActivity).mOrderModule.paramFuwuStr.add(
+                                mActivity!!.mOrderModule.paramFuwuStr.add(
                                     mServiceInfo
                                 )
                             }
                         }
 
-                        (this@ServiceItemsEditFragment.activity as MainActivity).mOrderModule.paramStr.mendianBianma =
+                        mActivity!!.mOrderModule.paramStr.mendianBianma =
                             Utils.getUserBumenCode()
                         LogUtils.i(
                             TAG,
-                            "=== submit order str = ${Gson().toJson((this@ServiceItemsEditFragment.activity as MainActivity).mOrderModule)}"
+                            "=== submit order str = ${Gson().toJson(mActivity!!.mOrderModule)}"
                         )
-                        var orderModule = (this@ServiceItemsEditFragment.activity as MainActivity).mOrderModule
+                        var orderModule = mActivity!!.mOrderModule
                         submitOrder(Gson().toJson(orderModule.paramFuwuStr), Gson().toJson(orderModule.paramStr))
 
                     }
                     R.id.iv_back -> {
                         mCurrentPosition = 0
-                        (this@ServiceItemsEditFragment.activity as MainActivity).showFragment("SERVICE_ITEMS_FRAGMENT")
+                        mActivity!!.showFragment("SERVICE_ITEMS_FRAGMENT")
                     }
                     R.id.et_room_num -> {
                         if (mRoomCardModule.zhongfang.size == 0) {
@@ -261,7 +261,7 @@ class ServiceItemsEditFragment : BaseFragment() {
             BR.serviceItemModule
         ).let {
             it.setOnItemClick(object : OnItemClick {
-                override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+                override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
                 }
 
                 override fun onItemClick(itemView: View, position: Int) {
@@ -269,7 +269,6 @@ class ServiceItemsEditFragment : BaseFragment() {
                         item.clicked = false
                     }
                     mServiceItems[position].clicked = true
-//                    mServiceItems[position].copy(mCurrentServiceItem)
                     mCurrentServiceItem = mServiceItems[position].clone()
                     mServiceItems[position].copy(mCurrentServiceItem)
 
@@ -330,24 +329,24 @@ class ServiceItemsEditFragment : BaseFragment() {
         if (!Utils.isNetworkConnected(mContext)) {
             toast(com.gold.footimpression.R.string.net_error)
         } else {
-            (this.activity as BaseActivity).showProgressDialog { }
+            mActivity!!.showProgressDialog { }
             mLoginPresenter!!.getRoom<RoomAndCardModule>() { code, msg, result ->
-                (this.activity as BaseActivity).closeProgressDialog()
+                mActivity!!.closeProgressDialog()
 
                 if (CodeUtils.isSuccess(code)) {
                     mRoomCardModule = result as RoomAndCardModule
                     if (fromRoom) {
-                        if((result as RoomAndCardModule).zhongfang.size == 0){
+                        if ((result as RoomAndCardModule).zhongfang.size == 0) {
                             toast(R.string.no_room)
-                        }else{
+                        } else {
                             initRoomPopwindow((result as RoomAndCardModule).zhongfang)
                             showPop(mRoomPopwindow, mBinding!!.llRoom)
                         }
 
                     } else {
-                        if((result as RoomAndCardModule).shoupai.size == 0){
+                        if ((result as RoomAndCardModule).shoupai.size == 0) {
                             toast(R.string.no_shoupai)
-                        }else{
+                        } else {
                             initShoupaiPopwindow((result as RoomAndCardModule).shoupai)
                             showPop(mShoupaiPopwindow, mBinding!!.llCard)
                         }
@@ -368,9 +367,9 @@ class ServiceItemsEditFragment : BaseFragment() {
         if (!Utils.isNetworkConnected(mContext)) {
             toast(com.gold.footimpression.R.string.net_error)
         } else {
-            (this.activity as BaseActivity).showProgressDialog { }
+            mActivity!!.showProgressDialog { }
             mLoginPresenter!!.getReicevers<MutableList<ReiceverModule>>() { code, msg, result ->
-                (this.activity as BaseActivity).closeProgressDialog()
+                mActivity!!.closeProgressDialog()
 
                 if (CodeUtils.isSuccess(code)) {
                     mReicevers = result!!
@@ -392,16 +391,16 @@ class ServiceItemsEditFragment : BaseFragment() {
         if (!Utils.isNetworkConnected(mContext)) {
             toast(com.gold.footimpression.R.string.net_error)
         } else {
-            (this.activity as BaseActivity).showProgressDialog { }
+            mActivity!!.showProgressDialog { }
             mLoginPresenter!!.submitOrder<Unit>(paramFuwuStr, paramStr) { code, msg, result ->
-                (this.activity as BaseActivity).closeProgressDialog()
+                mActivity!!.closeProgressDialog()
 
                 if (CodeUtils.isSuccess(code)) {
                     toast(R.string.submit_order_success)
 
                     var data = Bundle()
                     data.putString("fromKey", "SERVICEEDIT")
-                    (this@ServiceItemsEditFragment.activity as MainActivity).showFragment(
+                    mActivity!!.showFragment(
                         "ORDER_PREVIEW_FRAGMENT",
                         data
                     )
@@ -426,7 +425,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         mRoomPopwindow!!.setWidth(mBinding!!.llRoom.width)
         mRoomPopwindow!!.popDatas = lists.filterStringArrayName()
         mRoomPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -448,7 +447,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         mShoupaiPopwindow!!.setWidth(mBinding!!.llCard.width)
         mShoupaiPopwindow!!.popDatas = lists.filterShoupaiStringArrayName()
         mShoupaiPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -472,7 +471,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         mBuchaPopwindow!!.needTransation = true
         mBuchaPopwindow!!.popDatas = mutableListOf("否", "是")
         mBuchaPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -494,7 +493,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         mReiceverPopwindow!!.setWidth(mBinding!!.llReciverName.width)
         mReiceverPopwindow!!.popDatas = lists.filterReiceverNameStringArrayName()
         mReiceverPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any,viewid:Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -553,6 +552,7 @@ class ServiceItemsEditFragment : BaseFragment() {
     }
 }
 
+
 private fun ServiceItemModule.copy(mCurrentServiceItem: ServiceItemModule) {
 
 //    mCurrentServiceItem.fuwuXiangmuMingcheng = this.fuwuXiangmuMingcheng
@@ -572,6 +572,7 @@ private fun ServiceItemModule.copy(mCurrentServiceItem: ServiceItemModule) {
 //    mCurrentServiceItem.plannerName = this.plannerName
 //    mCurrentServiceItem.plannerGonghao = this.plannerGonghao
 //    mCurrentServiceItem.planners = this.planners
+
 
 }
 

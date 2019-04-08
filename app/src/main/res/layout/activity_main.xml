@@ -38,7 +38,6 @@
                         android:button="@null"
                         android:drawableTop="@mipmap/icon_tab_order"
                         android:background="@drawable/bg_tab_main_select"
-                        android:checked="true"
                         android:paddingTop="25dp"
                         android:textColor="@drawable/color_tab_select"
                         android:gravity="center"/>
@@ -55,6 +54,7 @@
                         android:id="@+id/rb_3"
                         android:layout_width="match_parent"
                         android:layout_height="75dp"
+                        android:checked="true"
                         android:drawableTop="@mipmap/icon_tab_room"
                         android:background="@drawable/bg_tab_main_select"
                         android:paddingTop="25dp"

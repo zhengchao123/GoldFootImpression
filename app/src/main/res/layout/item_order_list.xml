@@ -140,6 +140,15 @@
                     android:text="@{orderDetailModule.firstItem?@string/shagnzhong_shijian:orderDetailModule.shangzhongShijian}"
             />
             <TextView
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/xiazhong_shijian:orderDetailModule.xiazhongShijian}"
+            />
+            <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

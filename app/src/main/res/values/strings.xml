@@ -82,6 +82,7 @@
     <string name="item_during">项目时长</string>
     <string name="daodian_time">到店时间</string>
     <string name="shagnzhong_shijian">上钟时间</string>
+    <string name="xiazhong_shijian">下钟时间</string>
     <string name="over_time">结束倒计时</string>
     <string name="room_name">钟房名称</string>
     <string name="stay_overnight">是否留宿</string>
@@ -126,4 +127,5 @@
     <string name="push_transmission_data">收到一条透传测试消息</string>
     <string name="no_room">没有房间号信息，请切换项目尝试</string>
     <string name="no_shoupai">没有手牌信息，请切换项目尝试</string>
+    <string name="refresh_success">刷新成功</string>
 </resources>

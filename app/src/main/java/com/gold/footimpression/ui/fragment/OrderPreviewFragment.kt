@@ -1,19 +1,21 @@
 package com.gold.footimpression.ui.fragment
 
-import android.os.Bundle
+import android.content.Context
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.ObservableField
 import androidx.databinding.library.baseAdapters.BR
 import com.gold.footimpression.R
 import com.gold.footimpression.bindingadapter.CommonAdapter
 import com.gold.footimpression.databinding.OrderListFragmentBinding
-import com.gold.footimpression.module.*
+import com.gold.footimpression.module.OrderDetailModule
+import com.gold.footimpression.module.OrderIncrementModule
+import com.gold.footimpression.module.ReiceverModule
+import com.gold.footimpression.module.RoomStateModule
 import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.net.utils.LogUtils
 import com.gold.footimpression.presenter.OrderPresenter
+import com.gold.footimpression.ui.activity.MainActivity
 import com.gold.footimpression.ui.base.BaseActivity
 import com.gold.footimpression.ui.base.BaseFragment
 import com.gold.footimpression.ui.event.EventHandler
@@ -22,7 +24,6 @@ import com.gold.footimpression.utils.Utils
 import com.gold.footimpression.widget.BasePopupWindow
 import com.gold.footimpression.widget.ListPopupWindow
 import com.google.gson.Gson
-import com.google.gson.JsonElement
 
 class OrderPreviewFragment : BaseFragment() {
     override fun getContentview() = R.layout.order_list_fragment
@@ -45,10 +46,16 @@ class OrderPreviewFragment : BaseFragment() {
     private var editZengzhi = ObservableField<Boolean>(false)
     private var orderCreateDetail = ObservableField<Boolean>(false)
     private var hasZengzhiDetail = ObservableField<Boolean>(false)
-
+    private var searchText = ObservableField<String>("")
+    private var mActivity: MainActivity? = null
     override fun initBinding() {
         super.initBinding()
         mBinding = dataBinding as OrderListFragmentBinding
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mActivity = context as MainActivity?
     }
 
     override fun initView() {
@@ -57,7 +64,19 @@ class OrderPreviewFragment : BaseFragment() {
         mBinding!!.editZengzhi = editZengzhi
         mBinding!!.orderCreateDetail = orderCreateDetail
         mBinding!!.hasZengzhiDetail = hasZengzhiDetail
+
+        mBinding!!.searchText = searchText
         preView()
+        mBinding!!.swipeFreshLayout.setColorSchemeResources(
+            R.color.colorPrimary,
+            R.color.colorPrimary,
+            R.color.colorPrimary
+        )
+        mBinding!!.swipeFreshHistoryLayout.setColorSchemeResources(
+            R.color.colorPrimary,
+            R.color.colorPrimary,
+            R.color.colorPrimary
+        )
     }
 
     override fun initData() {
@@ -72,17 +91,23 @@ class OrderPreviewFragment : BaseFragment() {
             override fun onClickView(view: View?) {
                 when (view!!.id) {
                     R.id.tv_history -> {
+                        searchText.set("")
+                        orderDetailPropAdapter!!.update(mutableListOf())
                         if (!history.get()!!) {
                             orderCreateDetail.set(false)
                         }
                         history.set(true)
                         if (mOrderHistoryDetailLists.size == 0) {
                             loadHistoryList("0", "1000")
+                        }else{
+                            mCurrentHistoryOrdersAdapter!!.update(mOrderHistoryDetailLists)
                         }
                     }
                     R.id.tv_current -> {
+                        searchText.set("")
                         if (history.get()!!) {
                             orderCreateDetail.set(false)
+                            mCurrentOrdersAdapter!!.update(mOrderDetailLists)
                         }
 
                         history.set(false)
@@ -101,12 +126,46 @@ class OrderPreviewFragment : BaseFragment() {
                             Gson().toJson(mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.filterUsefulData())
                         )
                     }
+
+                    R.id.tv_search -> {
+                        val searchKey = searchText.get()
+                        orderCreateDetail.set(false)
+                        editZengzhi.set(false)
+                        if (!history.get()!!) {
+                            val result = mOrderDetailLists.searchByLeftKey(searchKey)
+                            if (result.size > 0) {
+                                mCurrentOrdersAdapter!!.update(result)
+                            }
+
+                        } else {
+                            val result = mOrderHistoryDetailLists.searchByLeftKey(searchKey)
+                            if (result.size > 0) {
+                                mCurrentHistoryOrdersAdapter!!.update(result)
+                            }
+                        }
+
+
+                        Utils.closeSoftKeyBord(mContext, mActivity!!)
+                        //TODO
+                    }
+
+
                 }
 
             }
         }
         mBinding!!.click = click
+        mBinding!!.swipeFreshLayout.setOnRefreshListener {
+            orderCreateDetail.set(false)
+            editZengzhi.set(false)
+            loadOrderList("", "", true)
+        }
 
+        mBinding!!.swipeFreshHistoryLayout.setOnRefreshListener {
+            orderCreateDetail.set(false)
+            editZengzhi.set(false)
+            loadHistoryList("", "", true)
+        }
     }
 
 
@@ -137,50 +196,88 @@ class OrderPreviewFragment : BaseFragment() {
 
     }
 
-    fun loadOrderList(start: String, limit: String) {
+    fun loadOrderList(start: String, limit: String, isFresh: Boolean = false) {
 
 
         if (!Utils.isNetworkConnected(mContext)) {
+            mBinding!!.swipeFreshLayout.isRefreshing = false
             toast(com.gold.footimpression.R.string.net_error)
         } else {
-            (this.activity as BaseActivity).showProgressDialog { }
+            if (!isFresh) {
+                (this.activity as BaseActivity).showProgressDialog { }
+            }
+
             mOrderPresenter!!.getOrders<MutableList<OrderDetailModule>>(start, limit) { code, msg, result ->
                 (this.activity as BaseActivity).closeProgressDialog()
+                if (isFresh) {
+                    mBinding!!.swipeFreshLayout.isRefreshing = false
+                    if (CodeUtils.isSuccess(code)) {
+                        toast(R.string.refresh_success)
 
-                if (CodeUtils.isSuccess(code)) {
-                    mOrderDetailLists = result!!
-                    mOrderDetailLists.add(0, OrderDetailModule(true))
-                    mCurrentOrdersAdapter = mOrderDetailLists.putToAdapter()
-                    mBinding!!.currentOrderAdapter = mCurrentOrdersAdapter
+                        mOrderDetailLists = result!!
+                        mOrderDetailLists.add(0, OrderDetailModule(true))
+                        mBinding!!.currentOrderAdapter!!.update(mOrderDetailLists)
+                    } else {
+                        toast(msg!!)
+                    }
+
+
                 } else {
-                    toast(msg!!)
+                    if (CodeUtils.isSuccess(code)) {
+                        mOrderDetailLists = result!!
+                        mOrderDetailLists.add(0, OrderDetailModule(true))
+                        mCurrentOrdersAdapter = mOrderDetailLists.putToAdapter()
+                        mBinding!!.currentOrderAdapter = mCurrentOrdersAdapter
+                    } else {
+                        toast(msg!!)
+                    }
                 }
+
             }
         }
 
     }
 
-    fun loadHistoryList(start: String, limit: String) {
+    fun loadHistoryList(start: String, limit: String, isFresh: Boolean = false) {
 
 
         if (!Utils.isNetworkConnected(mContext)) {
             toast(com.gold.footimpression.R.string.net_error)
+            if (isFresh) {
+                mBinding!!.swipeFreshHistoryLayout.isRefreshing = false
+            }
         } else {
-            (this.activity as BaseActivity).showProgressDialog { }
+            if (!isFresh) {
+                (this.activity as BaseActivity).showProgressDialog { }
+            }
+
             mOrderPresenter!!.getHistory<MutableList<OrderDetailModule>>(start, limit) { code, msg, result ->
                 (this.activity as BaseActivity).closeProgressDialog()
 
-                if (CodeUtils.isSuccess(code)) {
+                if (isFresh) {
+                    mBinding!!.swipeFreshHistoryLayout.isRefreshing = false
+                    toast(R.string.refresh_success)
                     mOrderHistoryDetailLists = result!!
                     mOrderHistoryDetailLists.add(0, OrderDetailModule(true))
                     mOrderHistoryDetailLists.forEach {
                         it.history = true
                     }
-                    mCurrentHistoryOrdersAdapter = mOrderHistoryDetailLists.putToAdapter()
-                    mBinding!!.historyOrderAdapter = mCurrentHistoryOrdersAdapter
+                    mCurrentHistoryOrdersAdapter!!.update(mOrderHistoryDetailLists)
+
                 } else {
-                    toast(msg!!)
+                    if (CodeUtils.isSuccess(code)) {
+                        mOrderHistoryDetailLists = result!!
+                        mOrderHistoryDetailLists.add(0, OrderDetailModule(true))
+                        mOrderHistoryDetailLists.forEach {
+                            it.history = true
+                        }
+                        mCurrentHistoryOrdersAdapter = mOrderHistoryDetailLists.putToAdapter()
+                        mBinding!!.historyOrderAdapter = mCurrentHistoryOrdersAdapter
+                    } else {
+                        toast(msg!!)
+                    }
                 }
+
             }
         }
 
@@ -240,40 +337,48 @@ class OrderPreviewFragment : BaseFragment() {
                         R.id.iv_gouwuche -> {
                             orderCreateDetail.set(false)
                             editZengzhi.set(true)
-                            if (!history.get()!!) {
-                                mCurrentOrderSelectPosition = position
-                                if (mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.size == 0) {
-                                    loadZengzhi()
-                                } else {
-                                    mOrderIncreateAdapter!!.update(mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements)
-                                    mOrderIncreateAdapter!!.notifyDataSetChanged()
-                                }
+//                            if (!history.get()!!) {
+                            mCurrentOrderSelectPosition = position
+//                            if (mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.size == 0) {
+                            if (mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderSelectPosition].orderEditIncrements.size == 0) {
+                                loadZengzhi()
+                            } else {
+//                                mOrderIncreateAdapter!!.update(mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements)
+                                mOrderIncreateAdapter!!.update(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderSelectPosition].orderEditIncrements)
+                                mOrderIncreateAdapter!!.notifyDataSetChanged()
                             }
+//                            }
 
 //                            toast(" click item $position ishistory = ${(instance as OrderDetailModule).history} clickid = start")
                         }
                         R.id.ll_end -> {
 
                             mCurrentOrderCreateDetailPosition = position
-                            orderCreateDetail.set(true)
+
                             if (!history.get()!!) {
 //                                if (mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
-                                loadZengzhiDetail(mOrderDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
-//                                } else {
-//                                    hasZengzhiDetail.set(true)
-//                                    orderDetailPropAdapter!!.update(mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
-//                                    orderDetailPropAdapter!!.notifyDataSetChanged()
-//                                }
-                            } else {
-                                if (mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
-                                    loadZengzhiDetail(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
+//                                loadZengzhiDetail(mOrderDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
+                                if (mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
+                                    loadZengzhiDetail(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
+
+
                                 } else {
+//                                    orderDetailPropAdapter!!.update(mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
+                                    orderDetailPropAdapter!!.update(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
                                     hasZengzhiDetail.set(true)
-                                    orderDetailPropAdapter!!.update(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
-                                    orderDetailPropAdapter!!.notifyDataSetChanged()
+                                }
+                            } else {
+//                                if (mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
+                                if (mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
+//                                    loadZengzhiDetail(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
+                                    loadZengzhiDetail(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
+                                } else {
+//                                    orderDetailPropAdapter!!.update(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
+                                    orderDetailPropAdapter!!.update(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
+                                    hasZengzhiDetail.set(true)
                                 }
                             }
-
+                            orderCreateDetail.set(true)
                         }
                     }
 
@@ -546,6 +651,149 @@ class OrderPreviewFragment : BaseFragment() {
         }
         return results
     }
+
+
+    private fun MutableList<OrderDetailModule>.searchByLeftKey(key: String?): MutableList<OrderDetailModule> {
+        val results = mutableListOf<OrderDetailModule>()
+        this.forEach {
+            try {
+                if (it.firstItem) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.dingdanUid.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.dingdanhao.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.dingdanSeq.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.dingdanLaiyuanName.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.dingdanRiqi.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.fuwuXiangmuMingcheng.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.dingdanJineFw.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+
+
+
+
+                if (it.daodianTimeStr.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.daojishi.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.dingdanStatusName.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+
+                if (it.fuwuShichang.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.huiyuanName.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.huiyuanTel.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+
+
+                if (it.huiyuanZhanghao.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.jiedaiGonghao.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.jiedaiName.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+
+
+
+                if (it.jiesuanStatusValue().contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.jishiGonghao.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.jishiName.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+
+
+                if (it.mendianMingcheng.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.price.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.shangzhongShijian.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+
+                if (it.shifouLiusu.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.shoupaihao.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.weizhifu.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+
+                if (it.yizhifu.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+                if (it.xiazhongShijian.contains(key!!)) {
+                    results.add(it)
+                    return@forEach
+                }
+
+
+            } catch (e: Exception) {
+                return@forEach
+            }
+
+        }
+        return results
+    }
+
+
 }
 
 

@@ -509,6 +509,7 @@
                                     android:textColor="@color/hint_color"
                             />
                             <EditText
+                                    android:id="@+id/et_xuanchuanyuan_code"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="match_parent"
@@ -544,6 +545,7 @@
                                     android:textColor="@color/hint_color"
                             />
                             <EditText
+                                    android:id="@+id/et_youhui_amount"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="match_parent"

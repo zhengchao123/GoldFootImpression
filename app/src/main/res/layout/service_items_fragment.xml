@@ -79,17 +79,25 @@
                         android:orientation="vertical">
 
                 </LinearLayout>
-                <com.gold.footimpression.widget.AutoRecyclerView
-                        android:id="@+id/list_pop_recycler"
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/swipe_fresh_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#ffffff"
                         android:layout_below="@id/iv_back"
                         android:layout_marginTop="15dp"
                         android:layout_above="@id/tv_comfire"
-                        app:diliver_style="2"
-                        android:adapter="@{itemsAdapter}"/>
+                        android:background="#00000000">
+                    <com.gold.footimpression.widget.AutoRecyclerView
+                            android:id="@+id/list_pop_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
 
+
+                            app:diliver_style="2"
+                            android:adapter="@{itemsAdapter}"/>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
                 <TextView
                         android:id="@+id/tv_comfire"
                         android:layout_width="match_parent"
@@ -178,15 +186,21 @@
                             android:text="@string/is_hour"
                     />
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <com.gold.footimpression.widget.AutoRecyclerView
-                        android:id="@+id/recycler_technician"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#ffffff"
-                        android:layout_below="@id/ll_head"
-                        app:diliver_style="2"
-                        android:adapter="@{technicianAdapter}"/>
+                <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+                        <!--android:id="@+id/swipe_fresh_planner_layout"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_below="@id/ll_head"-->
+                        <!--android:background="#00000000">-->
+                    <com.gold.footimpression.widget.AutoRecyclerView
+                            android:id="@+id/recycler_technician"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            android:layout_below="@id/ll_head"
+                            app:diliver_style="2"
+                            android:adapter="@{technicianAdapter}"/>
+                <!--</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"

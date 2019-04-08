@@ -113,7 +113,6 @@
                     android:gravity="center"
                     android:drawableEnd="@mipmap/icon_arraw_down"
                     android:textSize="14sp"
-                    android:hint="@string/reicever_la_num"
                     android:textColorHint="#989898"
                     android:background="@drawable/bg_input_regtangle"
                     android:paddingEnd="5dp"

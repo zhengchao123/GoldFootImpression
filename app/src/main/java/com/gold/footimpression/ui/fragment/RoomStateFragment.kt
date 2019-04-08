@@ -1,5 +1,6 @@
 package com.gold.footimpression.ui.fragment
 
+import android.content.Context
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.library.baseAdapters.BR
@@ -10,13 +11,11 @@ import com.gold.footimpression.module.PlannerStateModule
 import com.gold.footimpression.module.RoomStateModule
 import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.presenter.OrderPresenter
-import com.gold.footimpression.ui.base.BaseActivity
+import com.gold.footimpression.ui.activity.MainActivity
 import com.gold.footimpression.ui.base.BaseFragment
 import com.gold.footimpression.ui.event.EventHandler
 import com.gold.footimpression.ui.event.OnItemClick
 import com.gold.footimpression.utils.Utils
-import com.google.gson.Gson
-import java.lang.Exception
 
 class RoomStateFragment : BaseFragment() {
     private var leftSearchText = ObservableField<String>()
@@ -27,7 +26,7 @@ class RoomStateFragment : BaseFragment() {
     private var mRooms = mutableListOf<RoomStateModule>()
     private var mPlanners = mutableListOf<PlannerStateModule>()
     private var mBinding: RoomStateFragmentBinding? = null
-
+    private var mActivity: MainActivity? = null
     private var mPresenter: OrderPresenter? = null
     override fun getContentview() = R.layout.room_state_fragment
 
@@ -39,28 +38,42 @@ class RoomStateFragment : BaseFragment() {
         mBinding!!.rightSearchText = rightSearchText
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mActivity = context as MainActivity?
+    }
     override fun initData() {
         super.initData()
-        mPresenter = OrderPresenter.getInstance(this.activity)
+        mPresenter = OrderPresenter.getInstance(mActivity)
     }
 
     override fun initView() {
         super.initView()
         previewView()
+
+        mBinding!!.swipeFreshLayout.setColorSchemeResources(
+            R.color.colorPrimary,
+            R.color.colorPrimary,
+            R.color.colorPrimary
+        )
+        mBinding!!.swipeFreshJishiLayout.setColorSchemeResources(
+            R.color.colorPrimary,
+            R.color.colorPrimary,
+            R.color.colorPrimary
+        )
     }
 
     override fun initListener() {
-        super.initListener()
         super.initListener()
 
         val click = object : EventHandler(mContext, false) {
             override fun onClickView(view: View?) {
                 when (view!!.id) {
                     R.id.tv_search -> {
-                        var searchLeftKey = leftSearchText.get()
-                        var searchRightKey = rightSearchText.get()
-                        var leftResult = mRooms.searchByLeftKey(searchLeftKey)
-                        var rightResult = mPlanners.searchByRightKey(searchRightKey)
+                        val searchLeftKey = leftSearchText.get()
+                        val searchRightKey = rightSearchText.get()
+                        val leftResult = mRooms.searchByLeftKey(searchLeftKey)
+                        val rightResult = mPlanners.searchByRightKey(searchRightKey)
                         if (leftResult.size > 0) {
                             roomAdapter.update(leftResult)
                         }
@@ -68,7 +81,7 @@ class RoomStateFragment : BaseFragment() {
                             jishiAdapter.update(rightResult)
                         }
 
-                        Utils.closeSoftKeyBord(mContext, this@RoomStateFragment.activity!!)
+                        Utils.closeSoftKeyBord(mContext, mActivity!!)
                         //TODO
                     }
 
@@ -77,6 +90,14 @@ class RoomStateFragment : BaseFragment() {
             }
         }
         mBinding!!.click = click
+
+        mBinding!!.swipeFreshLayout.setOnRefreshListener {
+            loadRoomState(true)
+        }
+        mBinding!!.swipeFreshJishiLayout.setOnRefreshListener {
+            loadPlanners(true)
+        }
+
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -96,46 +117,83 @@ class RoomStateFragment : BaseFragment() {
 
     }
 
-    private fun loadRoomState() {
+    private fun loadRoomState(isFresh: Boolean = false) {
 
         if (!Utils.isNetworkConnected(mContext)) {
-            toast(com.gold.footimpression.R.string.net_error)
-        } else {
-            (this.activity as BaseActivity).showProgressDialog { }
-            mPresenter!!.getRoomStae<MutableList<RoomStateModule>>() { code, msg, result ->
-                (this.activity as BaseActivity).closeProgressDialog()
+            toast(R.string.net_error)
+            if (isFresh) {
+                mBinding!!.swipeFreshLayout.isRefreshing = false
+            }
 
-                if (CodeUtils.isSuccess(code)) {
-                    mRooms.clear()
-                    mRooms.addAll(result!!)
-                    roomAdapter = mRooms.putToAdapter()
-                    mBinding!!.roomAdapter = roomAdapter
+        } else {
+            if (!isFresh) {
+                mActivity!!.showProgressDialog { }
+            }
+            mPresenter!!.getRoomStae<MutableList<RoomStateModule>>() { code, msg, result ->
+                mActivity!!.closeProgressDialog()
+
+                if (isFresh) {
+                    mBinding!!.swipeFreshLayout.isRefreshing = false
+                    if (CodeUtils.isSuccess(code)) {
+                        toast(R.string.refresh_success)
+                        mRooms.clear()
+                        mRooms.addAll(result!!)
+                        roomAdapter.update(mRooms)
+                    } else {
+                        toast(msg!!)
+                    }
                 } else {
-                    toast(msg!!)
+                    if (CodeUtils.isSuccess(code)) {
+                        mRooms.clear()
+                        mRooms.addAll(result!!)
+                        roomAdapter = mRooms.putToAdapter()
+                        mBinding!!.roomAdapter = roomAdapter
+                    } else {
+                        toast(msg!!)
+                    }
                 }
+
             }
         }
 
     }
 
 
-    private fun loadPlanners() {
-
+    private fun loadPlanners(isFresh: Boolean = false) {
+//        mBinding!!.swipeFreshLayout.isRefreshing = false
         if (!Utils.isNetworkConnected(mContext)) {
-            toast(com.gold.footimpression.R.string.net_error)
+            toast(R.string.net_error)
+            if (isFresh) {
+                mBinding!!.swipeFreshJishiLayout.isRefreshing = false
+            }
         } else {
-            (this.activity as BaseActivity).showProgressDialog { }
-            mPresenter!!.getPlannerState<MutableList<PlannerStateModule>> { code, msg, result ->
-                (this.activity as BaseActivity).closeProgressDialog()
+            if (!isFresh) {
+                mActivity!!.showProgressDialog { }
+            }
 
-                if (CodeUtils.isSuccess(code)) {
-                    mPlanners.clear()
-                    mPlanners.addAll(result!!)
-                    jishiAdapter = mPlanners.putToPlannerAdapter()
-                    mBinding!!.jishiAdapter = jishiAdapter
+            mPresenter!!.getPlannerState<MutableList<PlannerStateModule>> { code, msg, result ->
+                mActivity!!.closeProgressDialog()
+                if (isFresh) {
+                    mBinding!!.swipeFreshJishiLayout.isRefreshing = false
+                    if (CodeUtils.isSuccess(code)) {
+                        toast(R.string.refresh_success)
+                        mPlanners.clear()
+                        mPlanners.addAll(result!!)
+                        jishiAdapter!!.update(mPlanners)
+                    } else {
+                        toast(msg!!)
+                    }
                 } else {
-                    toast(msg!!)
+                    if (CodeUtils.isSuccess(code)) {
+                        mPlanners.clear()
+                        mPlanners.addAll(result!!)
+                        jishiAdapter = mPlanners.putToPlannerAdapter()
+                        mBinding!!.jishiAdapter = jishiAdapter
+                    } else {
+                        toast(msg!!)
+                    }
                 }
+
             }
         }
 

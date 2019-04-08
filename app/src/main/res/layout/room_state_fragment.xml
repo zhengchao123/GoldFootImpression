@@ -181,12 +181,20 @@
                             android:textSize="15sp"
                             android:text="@string/count_down"/>
                 </LinearLayout>
-                <com.gold.footimpression.widget.AutoRecyclerView
+
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/swipe_fresh_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#ffffff"
-                        app:diliver_style="2"
-                        android:adapter="@{roomAdapter}"/>
+                        android:background="#00000000">
+                    <com.gold.footimpression.widget.AutoRecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            app:diliver_style="2"
+                            android:adapter="@{roomAdapter}"/>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </LinearLayout>
 
 
@@ -243,12 +251,20 @@
                             android:textSize="15sp"
                             android:text="@string/service_room"/>
                 </LinearLayout>
-                <com.gold.footimpression.widget.AutoRecyclerView
+
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/swipe_fresh_jishi_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#ffffff"
-                        app:diliver_style="2"
-                        android:adapter="@{jishiAdapter}"/>
+                        android:background="#00000000">
+                    <com.gold.footimpression.widget.AutoRecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#ffffff"
+                            app:diliver_style="2"
+                            android:adapter="@{jishiAdapter}"/>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </LinearLayout>
         </LinearLayout>
         <View

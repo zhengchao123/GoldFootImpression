@@ -16,7 +16,7 @@ android {
         versionName rootProject.ext.version_name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+            abiFilters "armeabi", "armeabi-v7a", "x86_64","x86"
         }
         manifestPlaceholders = [
                 GETUI_APP_ID : "EAwiEIncNu9eE8IJAr5HU",
