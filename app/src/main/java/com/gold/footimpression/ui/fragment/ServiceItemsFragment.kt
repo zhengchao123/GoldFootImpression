@@ -209,7 +209,7 @@ class ServiceItemsFragment : BaseFragment() {
 //            }
         } else {
 //            if (!isFresh) {
-                mActivity!!.showProgressDialog { }
+            mActivity!!.showProgressDialog { }
 //            }
             mLoginPresenter!!.getPlanners<MutableList<PlannerModule>>(
                 doorCode,
@@ -222,19 +222,19 @@ class ServiceItemsFragment : BaseFragment() {
                 if (isFresh) {
 //                    mBinding!!.swipeFreshPlannerLayout.isRefreshing = false
                     if (CodeUtils.isSuccess(code)) {
-                        toast(R.string.refresh_success)
+//                        toast(R.string.refresh_success)
                         result!!.filterFuwuCode(serviceCode)
                         mServiceItems.forEach { item ->
                             if (item.fuwuXiangmuBianma!!.equals(serviceCode)) {
                                 item.filterPlanners = result.filterSelect()
-                                mPlanners=item.filterPlanners
+                                mPlanners = item.filterPlanners
                                 item.planners = result
                                 return@forEach
                             }
                         }
                         mPlannersAdapter!!.update(mPlanners)
 
-                    }else{
+                    } else {
                         toast(msg!!)
                     }
                 } else {
@@ -286,27 +286,27 @@ class ServiceItemsFragment : BaseFragment() {
                     this@ServiceItemsFragment.mServiceItemsAdapter!!.update(this@putToAdapter)
 
                     var needLoad = true
-                    mServiceItems.forEach { item ->
-                        if (item.fuwuXiangmuBianma!!.equals(serviceCode)) {
-                            if (item.planners.size > 0) {
-                                needLoad = false
-                                item.filterPlanners = item.planners.filterSelect()
+//                    mServiceItems.forEach { item ->
+//                        if (item.fuwuXiangmuBianma!!.equals(serviceCode)) {
+//                            if (item.planners.size > 0) {
+//                                needLoad = false
+//                                item.filterPlanners = item.planners.filterSelect()
+////
 //
-
-                                //有数据不用再请求了
-                                plannerVisible.set(true)
-                                mPlanners.clear()
-                                mPlanners.addAll(item.filterPlanners)
-
-                                mPlannersAdapter = mPlanners.putPlannerToAdapter()
-                                mBinding!!.technicianAdapter = mPlannersAdapter
-
-
-                                return@forEach
-                            }
-
-                        }
-                    }
+//                                //有数据不用再请求了
+//                                plannerVisible.set(true)
+//                                mPlanners.clear()
+//                                mPlanners.addAll(item.filterPlanners)
+//
+//                                mPlannersAdapter = mPlanners.putPlannerToAdapter()
+//                                mBinding!!.technicianAdapter = mPlannersAdapter
+//
+//
+//                                return@forEach
+//                            }
+//
+//                        }
+//                    }
                     if (needLoad) {
                         loadTechnician()
                     }
@@ -333,7 +333,9 @@ class ServiceItemsFragment : BaseFragment() {
                 result.add(it)
             } else {
                 result.add(it)
-
+                if (selectedPlanners.contains(it)) {
+                    it.selected = true
+                }
                 selectedPlanners.forEach { item ->
                     if (gonghao!!.equals(item.gonghao)) {
                         if (!serviceCode.equals(item.fuwuxiangmuCode)) {

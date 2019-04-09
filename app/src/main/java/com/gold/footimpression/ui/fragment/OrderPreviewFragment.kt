@@ -358,25 +358,25 @@ class OrderPreviewFragment : BaseFragment() {
                             if (!history.get()!!) {
 //                                if (mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
 //                                loadZengzhiDetail(mOrderDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
-                                if (mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
+//                                if (mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
                                     loadZengzhiDetail(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
 
-
-                                } else {
-//                                    orderDetailPropAdapter!!.update(mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
-                                    orderDetailPropAdapter!!.update(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
-                                    hasZengzhiDetail.set(true)
-                                }
+//
+//                                } else {
+////                                    orderDetailPropAdapter!!.update(mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
+//                                    orderDetailPropAdapter!!.update(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
+//                                    hasZengzhiDetail.set(true)
+//                                }
                             } else {
 //                                if (mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
-                                if (mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
+//                                if (mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
 //                                    loadZengzhiDetail(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
                                     loadZengzhiDetail(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
-                                } else {
-//                                    orderDetailPropAdapter!!.update(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
-                                    orderDetailPropAdapter!!.update(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
-                                    hasZengzhiDetail.set(true)
-                                }
+//                                } else {
+////                                    orderDetailPropAdapter!!.update(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
+//                                    orderDetailPropAdapter!!.update(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
+//                                    hasZengzhiDetail.set(true)
+//                                }
                             }
                             orderCreateDetail.set(true)
                         }
