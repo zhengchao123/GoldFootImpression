@@ -21,7 +21,9 @@ open class MyScrollView(context: Context, attrs: AttributeSet?, defStyle: Int) :
 
     private var mLastXIntercept: Float = 0f
     private var mLastYIntercept: Float = 0f
-    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+
+
         var intercepted = false
         val x = ev.x
         val y = ev.y
@@ -37,10 +39,11 @@ open class MyScrollView(context: Context, attrs: AttributeSet?, defStyle: Int) :
                 val deltaX = x - mLastXIntercept
                 //纵坐标位移增量
                 val deltaY = y - mLastYIntercept
-                if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    intercepted = true;
+                if (Math.abs(deltaX) < Math.abs(deltaY)) {
+                    parent.requestDisallowInterceptTouchEvent(false)
                 } else {
-                    intercepted = false;
+                    parent.requestDisallowInterceptTouchEvent(true)
+                    intercepted = true;
                 }
             }
             MotionEvent.ACTION_UP -> {
@@ -49,7 +52,11 @@ open class MyScrollView(context: Context, attrs: AttributeSet?, defStyle: Int) :
         }
         mLastXIntercept = x
         mLastYIntercept = y
-        return intercepted
+//        return intercepted
+        return super.dispatchTouchEvent(ev)
+
+
     }
+
 
 }

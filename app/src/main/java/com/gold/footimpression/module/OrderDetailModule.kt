@@ -16,6 +16,7 @@ class OrderDetailModule(firstItem: Boolean = false) : BaseObservable() {
     }
 
     //    dingdanUid	string	订单Uid
+    var zhongfangMingcheng=""
     var dingdanUid = ""
     var dingdanhao = ""//	string	订单编号
     var dingdanSeq = ""//	int	订单行号

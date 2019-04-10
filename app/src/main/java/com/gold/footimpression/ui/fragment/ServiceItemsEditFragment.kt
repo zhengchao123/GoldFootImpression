@@ -56,7 +56,7 @@ class ServiceItemsEditFragment : BaseFragment() {
     //接待人员
     private var reiceverModule = ReiceverModule(Utils.getDisplayName()!!, Utils.getGonghao()!!)
 
-    private var mActivity:MainActivity?=null
+    private var mActivity: MainActivity? = null
 
     override fun initBinding() {
         super.initBinding()
@@ -73,6 +73,7 @@ class ServiceItemsEditFragment : BaseFragment() {
         super.onAttach(context)
         mActivity = context as MainActivity?
     }
+
     override fun initView() {
         super.initView()
 
@@ -129,8 +130,8 @@ class ServiceItemsEditFragment : BaseFragment() {
         val click = object : EventHandler(mContext, false) {
             override fun onClickView(view: View?) {
                 super.onClickView(view)
-                
-                Utils.closeSoftKeyBord(mContext,mActivity!!)
+
+                Utils.closeSoftKeyBord(mContext, mActivity!!)
                 clearInputFocuse()
                 when (view!!.id) {
                     R.id.tv_bucha -> {
@@ -171,12 +172,22 @@ class ServiceItemsEditFragment : BaseFragment() {
                                 return
                             }
                         }
+                        mSelectedShoupaiHao.remove(mCurrentSelectShoupai)
+                        mSelectedShoupaiHao.remove(mPreCurrentSelectShoupai)
+                        mSelectedShoupaiHao.add(mCurrentSelectShoupai)
+                        mCurrentSelectShoupai = ""
 
-                        visible.set(true)
                         mCurrentServiceItem.selected = true
                         mServiceItems[mCurrentPosition] = mCurrentServiceItem.clone()
                         mCurrentServiceItem.copy(mServiceItems[mCurrentPosition])
                         mServiceItemsAdapter!!.update(mServiceItems)
+                        var hasEditAll = true
+                        mServiceItems.forEach {
+                            if (!it.selected) {
+                                hasEditAll = false
+                            }
+                        }
+                        visible.set(hasEditAll)
                     }
                     R.id.tv_comfire -> {
                         mActivity!!.mOrderModule.paramFuwuStr.clear()
@@ -200,6 +211,9 @@ class ServiceItemsEditFragment : BaseFragment() {
                                 mActivity!!.mOrderModule.paramFuwuStr.add(
                                     mServiceInfo
                                 )
+                            } else {
+                                toast(R.string.has_un_edti_service)
+                                return
                             }
                         }
 
@@ -439,6 +453,10 @@ class ServiceItemsEditFragment : BaseFragment() {
 
     }
 
+    private var mSelectedShoupaiHao = mutableListOf<String>()
+
+    private var mCurrentSelectShoupai: String = ""
+    private var mPreCurrentSelectShoupai: String = ""
     /**
      * init 手牌popwindow
      */
@@ -453,7 +471,11 @@ class ServiceItemsEditFragment : BaseFragment() {
             override fun onItemClick(itemView: View, position: Int) {
                 mShoupaiPopwindow!!.closePop()
 //                shoupaiNumValue.set(lists[position].shoupaihao)
-                mCurrentServiceItem.mServiceEditModule.shoupaiNumValue = lists[position].shoupaihao
+//                mSelectedShoupaiHao.remove(mShoupaiPopwindow!!.popDatas[position])
+//                mSelectedShoupaiHao.add(mShoupaiPopwindow!!.popDatas[position])
+                mPreCurrentSelectShoupai = mCurrentServiceItem.mServiceEditModule.shoupaiNumValue
+                mCurrentSelectShoupai = mShoupaiPopwindow!!.popDatas[position]
+                mCurrentServiceItem.mServiceEditModule.shoupaiNumValue = mShoupaiPopwindow!!.popDatas[position]
             }
 
         }
@@ -517,7 +539,10 @@ class ServiceItemsEditFragment : BaseFragment() {
     private fun MutableList<RoomAndCardModule.Card>.filterShoupaiStringArrayName(): MutableList<String> {
         val result = mutableListOf<String>()
         this.forEach {
-            result.add(it.shoupaihao)
+            if (!mSelectedShoupaiHao.contains(it.shoupaihao)) {
+                result.add(it.shoupaihao)
+            }
+
         }
         return result
     }

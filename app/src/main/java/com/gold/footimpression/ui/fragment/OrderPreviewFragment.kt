@@ -92,7 +92,7 @@ class OrderPreviewFragment : BaseFragment() {
                 when (view!!.id) {
                     R.id.tv_history -> {
                         searchText.set("")
-                        orderDetailPropAdapter!!.update(mutableListOf())
+                        mCurrentOrdersAdapter!!.update(mutableListOf())
                         if (!history.get()!!) {
                             orderCreateDetail.set(false)
                         }

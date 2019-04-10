@@ -193,7 +193,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#00000000">
-                    <HorizontalScrollView
+                    <com.gold.footimpression.widget.MyScrollView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
@@ -205,7 +205,7 @@
                                 app:diliver_style="2"
                                 android:adapter="@{currentOrderAdapter}"/>
 
-                    </HorizontalScrollView>
+                    </com.gold.footimpression.widget.MyScrollView>
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat

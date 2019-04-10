@@ -19,6 +19,7 @@
     <string name="door_code">门店编码 :</string>
     <string name="door_name">门店名称 :</string>
     <string name="custom_source">客户来源 :</string>
+    <string name="custom_la_source">客户来源</string>
     <string name="platform">团购平台 :</string>
     <string name="platform_code">团购码 :</string>
     <string name="please_vip_acount">会员账号 :</string>
@@ -128,4 +129,5 @@
     <string name="no_room">没有房间号信息，请切换项目尝试</string>
     <string name="no_shoupai">没有手牌信息，请切换项目尝试</string>
     <string name="refresh_success">刷新成功</string>
+    <string name="has_un_edti_service">还有未录入的订单项目，请完成</string>
 </resources>

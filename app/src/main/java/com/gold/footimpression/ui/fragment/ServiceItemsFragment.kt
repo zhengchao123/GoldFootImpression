@@ -1,23 +1,15 @@
 package com.gold.footimpression.ui.fragment
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Rect
-import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.inputmethod.EditorInfo
 import androidx.databinding.ObservableField
 import androidx.databinding.library.baseAdapters.BR
 import com.gold.footimpression.R
 import com.gold.footimpression.bindingadapter.CommonAdapter
-import com.gold.footimpression.databinding.OrderInputFragmentBinding
 import com.gold.footimpression.databinding.ServiceItemsFragmentBinding
-import com.gold.footimpression.module.*
+import com.gold.footimpression.module.PlannerModule
+import com.gold.footimpression.module.ServiceItemModule
+import com.gold.footimpression.module.TimeModule
 import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.presenter.UserAcountPresenter
 import com.gold.footimpression.ui.activity.MainActivity
@@ -26,12 +18,6 @@ import com.gold.footimpression.ui.base.BaseFragment
 import com.gold.footimpression.ui.event.EventHandler
 import com.gold.footimpression.ui.event.OnItemClick
 import com.gold.footimpression.utils.Utils
-import com.gold.footimpression.utils.ViewUtils
-import com.gold.footimpression.widget.BasePopupWindow
-import com.gold.footimpression.widget.ListPopupWindow
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper
-import kotlinx.android.synthetic.main.service_items_fragment.*
-import java.util.*
 
 
 class ServiceItemsFragment : BaseFragment() {
