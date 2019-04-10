@@ -2,15 +2,16 @@ package com.gold.footimpression.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.print.PrintHelper
 import com.gold.footimpression.application.GoldFootApplication
 import com.gold.footimpression.net.Constants
 import com.gold.footimpression.net.utils.SharedPreferencesUtils
-import java.lang.Exception
 
 
 object Utils {
@@ -116,5 +117,15 @@ object Utils {
 
     fun getCommand(): Boolean {
         return getCommandStr().equals(Constants.COMMAND_STR)
+    }
+
+     fun doPhotoPrint(activity: Activity,drawableId:Int) {
+        val photoPrinter = PrintHelper(activity)
+        photoPrinter.scaleMode = PrintHelper.SCALE_MODE_FIT
+        val bitmap = BitmapFactory.decodeResource(
+            activity.getResources(),
+            drawableId
+        )
+        photoPrinter.printBitmap("droids.jpg - test print", bitmap)
     }
 }

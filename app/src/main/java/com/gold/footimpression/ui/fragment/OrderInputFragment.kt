@@ -1,14 +1,10 @@
 package com.gold.footimpression.ui.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.databinding.ObservableField
 import com.gold.footimpression.R
 import com.gold.footimpression.databinding.OrderInputFragmentBinding
@@ -112,6 +108,9 @@ class OrderInputFragment : BaseFragment() {
         val click = object : EventHandler(mContext, false) {
             override fun onClickView(view: View?) {
                 super.onClickView(view)
+
+//                Utils.doPhotoPrint(mActivity!!,R.mipmap.icon_service)
+//                return
                 Utils.closeSoftKeyBord(mContext, mActivity!!)
                 clearInputFocuse()
                 when (view!!.id) {
