@@ -8,10 +8,7 @@ import androidx.databinding.library.baseAdapters.BR
 import com.gold.footimpression.R
 import com.gold.footimpression.bindingadapter.CommonAdapter
 import com.gold.footimpression.databinding.OrderListFragmentBinding
-import com.gold.footimpression.module.OrderDetailModule
-import com.gold.footimpression.module.OrderIncrementModule
-import com.gold.footimpression.module.ReiceverModule
-import com.gold.footimpression.module.RoomStateModule
+import com.gold.footimpression.module.*
 import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.net.utils.LogUtils
 import com.gold.footimpression.presenter.OrderPresenter
@@ -24,6 +21,7 @@ import com.gold.footimpression.utils.Utils
 import com.gold.footimpression.widget.BasePopupWindow
 import com.gold.footimpression.widget.ListPopupWindow
 import com.google.gson.Gson
+import java.math.BigDecimal
 
 class OrderPreviewFragment : BaseFragment() {
     override fun getContentview() = R.layout.order_list_fragment
@@ -99,7 +97,7 @@ class OrderPreviewFragment : BaseFragment() {
                         history.set(true)
                         if (mOrderHistoryDetailLists.size == 0) {
                             loadHistoryList("0", "1000")
-                        }else{
+                        } else {
                             mCurrentHistoryOrdersAdapter!!.update(mOrderHistoryDetailLists)
                         }
                     }
@@ -125,6 +123,8 @@ class OrderPreviewFragment : BaseFragment() {
                             mOrderDetailLists[mCurrentOrderSelectPosition].huiyuanZhanghao,
                             Gson().toJson(mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.filterUsefulData())
                         )
+
+                        printOrigin(Gson().toJson(getPrintModule()))
                     }
 
                     R.id.tv_search -> {
@@ -168,10 +168,26 @@ class OrderPreviewFragment : BaseFragment() {
         }
     }
 
+    private fun getPrintModule(): PrintModule {
+        var printModule = PrintModule()
+        printModule.dingdanhao = mOrderDetailLists[mCurrentOrderSelectPosition].dingdanhao
+        printModule.jiedaiName = mOrderDetailLists[mCurrentOrderSelectPosition].jiedaiName
+        printModule.total =
+            mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.getAllAmount()
+
+        val room = PrintModule.Room()
+        room.fangjianhao = mOrderDetailLists[mCurrentOrderSelectPosition].zhongfangBianma
+        room.services = mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.getServices(
+            mOrderDetailLists[mCurrentOrderSelectPosition].shoupaihao
+        )
+        printModule.rooms.add(room)
+        return printModule
+    }
+
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if (hidden) {
+        if (!hidden) {
             preView()
         }
     }
@@ -180,6 +196,7 @@ class OrderPreviewFragment : BaseFragment() {
         val data = this.arguments
         if (null != data && data.containsKey("fromKey")) {
             fromKey = data.getString("fromKey", "")
+            LogUtils.i(TAG, "fromkey =$fromKey")
         }
         if (history.get()!!) {
             if (!TextUtils.equals(fromKey, "SERVICEEDIT") && mOrderHistoryDetailLists.size > 0) {
@@ -283,6 +300,13 @@ class OrderPreviewFragment : BaseFragment() {
 
     }
 
+    fun printOrigin(printJson: String) {
+        if (Utils.isNetworkConnected(mContext)) {
+            mOrderPresenter!!.submitPrint<Unit>(printJson) { code, msg, result ->
+            }
+        }
+    }
+
     /**
      * huiyuanZhanghao 会员账号
      * paramFuwuStr 增值服务内容
@@ -306,9 +330,6 @@ class OrderPreviewFragment : BaseFragment() {
                     editZengzhi.set(false)
                     loadOrderList("", "")
                 }
-//                else {
-//                    toast(msg!!)
-//                }
             }
         }
 
@@ -359,7 +380,7 @@ class OrderPreviewFragment : BaseFragment() {
 //                                if (mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
 //                                loadZengzhiDetail(mOrderDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
 //                                if (mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
-                                    loadZengzhiDetail(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
+                                loadZengzhiDetail(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
 
 //
 //                                } else {
@@ -371,7 +392,7 @@ class OrderPreviewFragment : BaseFragment() {
 //                                if (mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
 //                                if (mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
 //                                    loadZengzhiDetail(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
-                                    loadZengzhiDetail(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
+                                loadZengzhiDetail(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
 //                                } else {
 ////                                    orderDetailPropAdapter!!.update(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
 //                                    orderDetailPropAdapter!!.update(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
@@ -652,6 +673,37 @@ class OrderPreviewFragment : BaseFragment() {
         return results
     }
 
+    /**
+     * 增值服务 ，金额求和
+     */
+    private fun MutableList<OrderIncrementModule>.getAllAmount(): String {
+        var results :BigDecimal= BigDecimal(0)
+        this.forEach {
+            if (it.amount.toInt() > 0) {
+                results += it.allAmount().toBigDecimal()
+            }
+        }
+        return "" + results
+    }
+
+    /**
+     * 增值服务 ，金额求和
+     */
+    private fun MutableList<OrderIncrementModule>.getServices(shoupai: String): MutableList<PrintModule.Room.Service> {
+        val results = mutableListOf<PrintModule.Room.Service>()
+        this.forEach {
+            if (it.amount.toInt() > 0) {
+                val service = PrintModule.Room.Service()
+                service.amount = it.amount
+                service.dingdanJine = it.allAmount()
+                service.fuwuMingcheng = it.zengzhiFuwuMingcheng
+                service.price = it.price
+                service.shoupaihao = shoupai
+                results.add(service)
+            }
+        }
+        return results
+    }
 
     private fun MutableList<OrderDetailModule>.searchByLeftKey(key: String?): MutableList<OrderDetailModule> {
         val results = mutableListOf<OrderDetailModule>()

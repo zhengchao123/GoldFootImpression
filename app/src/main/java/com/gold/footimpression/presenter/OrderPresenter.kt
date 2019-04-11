@@ -4,6 +4,7 @@ import android.app.Activity
 import android.text.TextUtils
 import com.gold.footimpression.module.*
 import com.gold.footimpression.net.*
+import com.gold.footimpression.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.Call
@@ -375,6 +376,40 @@ class OrderPresenter(activity: Activity?) {
 
 
     /**
+
+    打印
+
+     */
+    fun <T> submitPrint(
+        printJson: String?,
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        if (!TextUtils.isEmpty(printJson)) {
+            params["printJson"] = printJson!!
+        }
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "print", Utils.getPrintAddress() + "/print")
+    }
+
+
+    /**
      * 获取订单
      */
     fun <T> getZengzhiDetails(
@@ -691,6 +726,8 @@ class OrderPresenter(activity: Activity?) {
             cancelRequest("getPlannerState")
             cancelRequest("updatePwd")
             cancelRequest("logOut")
+            cancelRequest("print")
+
             mInstance = null
         }
     }

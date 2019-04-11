@@ -96,6 +96,7 @@ class LoginActivity : BaseActivity() {
                     Utils.saveUserBumenName(bumenName)
                     Utils.saveDisplayName(result.displayName)
                     Utils.saveGonghao(result.gonghao)
+                    Utils.savePrintAddress(result.printDomain)
                     gotoMain()
                 }
             }

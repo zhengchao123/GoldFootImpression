@@ -87,12 +87,23 @@ object Utils {
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, token)
     }
 
+    fun getPrintAddress(): String? {
+        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_PRINT_ADDRESS)
+    }
+
+    fun savePrintAddress(printAddress: String) {
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance())
+            .putString(Constants.USER_PRINT_ADDRESS, printAddress)
+    }
+
+
     fun clearUserInfo() {
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.LOGIN_TOKEN_INFO, "")
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_BUMEN_CODE, "")
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_BUMEN_NAME, "")
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_DISPLAY_NAME, "")
         SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_GONGHAO_NAME, "")
+        SharedPreferencesUtils.init(GoldFootApplication.getInstance()).putString(Constants.USER_PRINT_ADDRESS, "")
     }
 
 
@@ -119,7 +130,7 @@ object Utils {
         return getCommandStr().equals(Constants.COMMAND_STR)
     }
 
-     fun doPhotoPrint(activity: Activity,drawableId:Int) {
+    fun doPhotoPrint(activity: Activity, drawableId: Int) {
         val photoPrinter = PrintHelper(activity)
         photoPrinter.scaleMode = PrintHelper.SCALE_MODE_FIT
         val bitmap = BitmapFactory.decodeResource(

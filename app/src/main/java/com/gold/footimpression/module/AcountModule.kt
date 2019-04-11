@@ -53,5 +53,13 @@ class AcountModule() : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.gonghao)
         }
+    var printDomain = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.printDomain)
+        }
+
 
 }

@@ -179,7 +179,7 @@ class ServiceItemsEditFragment : BaseFragment() {
 
                         mCurrentServiceItem.selected = true
                         mServiceItems[mCurrentPosition] = mCurrentServiceItem.clone()
-                        mCurrentServiceItem.copy(mServiceItems[mCurrentPosition])
+//                        mCurrentServiceItem.copy(mServiceItems[mCurrentPosition])
                         mServiceItemsAdapter!!.update(mServiceItems)
                         var hasEditAll = true
                         mServiceItems.forEach {
@@ -194,20 +194,38 @@ class ServiceItemsEditFragment : BaseFragment() {
                         mServiceItems.forEach {
                             if (it.selected) {
                                 val mServiceInfo = ServiceInfo()
-                                mServiceInfo.zhongfangBianma = mCurrentServiceItem.mServiceEditModule.roomNum
-                                mServiceInfo.dingdanJineFwdz = mCurrentServiceItem.mServiceEditModule.discountPrice
-                                mServiceInfo.tuangoujia = mCurrentServiceItem.mServiceEditModule.groupPrice
-                                mServiceInfo.fuwuXiangmuBianma = mCurrentServiceItem.fuwuXiangmuBianma
-                                mServiceInfo.jishiGonghao = mCurrentServiceItem.plannerGonghao
-                                mServiceInfo.dianzhong = mCurrentServiceItem.selectHourService
-                                mServiceInfo.shoupaihao = mCurrentServiceItem.mServiceEditModule.shoupaiNumValue
-                                mServiceInfo.jiedaiGonghao = mCurrentServiceItem.mServiceEditModule.reicever.gonghao
-                                mServiceInfo.xcrenName = mCurrentServiceItem.mServiceEditModule.xcrenName
-                                mServiceInfo.xcrenCode = mCurrentServiceItem.mServiceEditModule.xcrenCode
-                                mServiceInfo.youhuijia = mCurrentServiceItem.mServiceEditModule.youhuijia
+//                                mServiceInfo.zhongfangBianma = mCurrentServiceItem.mServiceEditModule.roomNum
+//                                mServiceInfo.dingdanJineFwdz = mCurrentServiceItem.mServiceEditModule.discountPrice
+//                                mServiceInfo.tuangoujia = mCurrentServiceItem.mServiceEditModule.groupPrice
+//                                mServiceInfo.fuwuXiangmuBianma = mCurrentServiceItem.fuwuXiangmuBianma
+//                                mServiceInfo.jishiGonghao = mCurrentServiceItem.plannerGonghao
+//                                mServiceInfo.dianzhong = mCurrentServiceItem.selectHourService
+//                                mServiceInfo.shoupaihao = mCurrentServiceItem.mServiceEditModule.shoupaiNumValue
+//                                mServiceInfo.jiedaiGonghao = mCurrentServiceItem.mServiceEditModule.reicever.gonghao
+//                                mServiceInfo.xcrenName = mCurrentServiceItem.mServiceEditModule.xcrenName
+//                                mServiceInfo.xcrenCode = mCurrentServiceItem.mServiceEditModule.xcrenCode
+//                                mServiceInfo.youhuijia = mCurrentServiceItem.mServiceEditModule.youhuijia
+//                                mServiceInfo.buchajia =
+//                                    if (mCurrentServiceItem.mServiceEditModule.buchajiaValue.equals("是")) "1" else "0"
+//                                mServiceInfo.buchajiaValue = mCurrentServiceItem.mServiceEditModule.buchajiaValue
+//                                mActivity!!.mOrderModule.paramFuwuStr.add(
+//                                    mServiceInfo
+//                                )
+
+                                mServiceInfo.zhongfangBianma = it.mServiceEditModule.roomNum
+                                mServiceInfo.dingdanJineFwdz = it.mServiceEditModule.discountPrice
+                                mServiceInfo.tuangoujia = it.mServiceEditModule.groupPrice
+                                mServiceInfo.fuwuXiangmuBianma = it.fuwuXiangmuBianma
+                                mServiceInfo.jishiGonghao = it.plannerGonghao
+                                mServiceInfo.dianzhong = it.selectHourService
+                                mServiceInfo.shoupaihao = it.mServiceEditModule.shoupaiNumValue
+                                mServiceInfo.jiedaiGonghao = it.mServiceEditModule.reicever.gonghao
+                                mServiceInfo.xcrenName = it.mServiceEditModule.xcrenName
+                                mServiceInfo.xcrenCode = it.mServiceEditModule.xcrenCode
+                                mServiceInfo.youhuijia = it.mServiceEditModule.youhuijia
                                 mServiceInfo.buchajia =
-                                    if (mCurrentServiceItem.mServiceEditModule.buchajiaValue.equals("是")) "1" else "0"
-                                mServiceInfo.buchajiaValue = mCurrentServiceItem.mServiceEditModule.buchajiaValue
+                                    if (it.mServiceEditModule.buchajiaValue.equals("是")) "1" else "0"
+                                mServiceInfo.buchajiaValue = it.mServiceEditModule.buchajiaValue
                                 mActivity!!.mOrderModule.paramFuwuStr.add(
                                     mServiceInfo
                                 )
@@ -414,10 +432,11 @@ class ServiceItemsEditFragment : BaseFragment() {
 
                     var data = Bundle()
                     data.putString("fromKey", "SERVICEEDIT")
-                    mActivity!!.showFragment(
-                        "ORDER_PREVIEW_FRAGMENT",
-                        data
-                    )
+//                    mActivity!!.showFragment(
+//                        "ORDER_PREVIEW_FRAGMENT",
+//                        data
+//                    )
+                    mActivity!!.rb2Select(data)
                 } else {
                     toast(msg!!)
                 }

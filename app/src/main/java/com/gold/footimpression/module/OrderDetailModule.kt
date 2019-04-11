@@ -15,6 +15,9 @@ class OrderDetailModule(firstItem: Boolean = false) : BaseObservable() {
         this.firstItem = firstItem
     }
 
+
+
+
     //    dingdanUid	string	订单Uid
     var zhongfangMingcheng=""
     var dingdanUid = ""
@@ -57,6 +60,8 @@ class OrderDetailModule(firstItem: Boolean = false) : BaseObservable() {
     var xiazhongShijian = ""
     var xiazhongShijianStr = ""
 
+
+    var zhongfangBianma=""
     var history = false
     fun jiesuanStatusValue(): String {
         if (jiesuanStatus == 1) {

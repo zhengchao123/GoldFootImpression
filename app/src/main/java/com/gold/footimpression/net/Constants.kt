@@ -1,6 +1,7 @@
 package com.gold.footimpression.net
 
 import com.gold.footimpression.BuildConfig
+import com.gold.footimpression.utils.Utils
 
 object Constants {
     const val HOST = BuildConfig.URL
@@ -45,6 +46,7 @@ object Constants {
     const val URL_UPDATE_PWD = HOST + "updatePwd"
     //注销
     const val URL_LOG_OUT = HOST + "logout"
+
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
     val downtest =
@@ -107,6 +109,7 @@ object Constants {
     val USER_BUMEN_NAME = "user_bumen_name"
     val USER_DISPLAY_NAME = "user_display_name"
     val USER_GONGHAO_NAME = "user_gonghao_name"
+    val USER_PRINT_ADDRESS = "user_print_address"
     val COMMAND_KEY = "command_key"
     const val  COMMAND_STR = "stop"
     const val  COMMAND_RELEASE_STR = "release"

@@ -133,8 +133,6 @@ class OrderIncrementModule() : BaseObservable(), Cloneable {
             field = value
             notifyPropertyChanged(BR.dingdanUid)
         }
-
-
     var tcrenGonghao = ""
         @Bindable
         get() = field

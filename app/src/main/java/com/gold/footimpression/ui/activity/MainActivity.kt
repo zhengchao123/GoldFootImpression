@@ -10,6 +10,7 @@ import com.gold.footimpression.R
 import com.gold.footimpression.databinding.ActivityMainBinding
 import com.gold.footimpression.module.OrderModule
 import com.gold.footimpression.module.ServiceItemModule
+import com.gold.footimpression.net.utils.LogUtils
 import com.gold.footimpression.ui.base.BaseActivity
 import com.gold.footimpression.ui.fragment.*
 import com.gold.footimpression.utils.Utils
@@ -88,11 +89,17 @@ class MainActivity : BaseActivity() {
                     showFragment(TAG_ORDER_INPUT_FRAGMENT);
                 }
                 R.id.rb_2 -> {
+                    LogUtils.i(TAG," rb2 selected")
                     Utils.closeSoftKeyBord(mContext!!, this)
-                    val data = Bundle()
-                    data.putString("fromKey", "mainActivity")
-                    showFragment(TAG_ORDER_PREVIEW_FRAGMENT, data);
+                    var data = Bundle()
+                    if(reiceveData != null){
+                        data = reiceveData!!
+                    }else{
+                        data.putString("fromKey", "mainActivity")
+                    }
 
+                    showFragment(TAG_ORDER_PREVIEW_FRAGMENT, data);
+                    reiceveData = null
                 }
                 R.id.rb_3 -> {
                     Utils.closeSoftKeyBord(mContext!!, this)
@@ -107,7 +114,14 @@ class MainActivity : BaseActivity() {
     }
 
 
-     var mData: Bundle? = null
+    var mData: Bundle? = null
+
+    private var reiceveData: Bundle?=null
+
+    fun rb2Select(data: Bundle = Bundle()) {
+        reiceveData  = data
+        mMainActivityBinding!!.rb2.isChecked = true
+    }
 
     fun showFragment(tag: String?, data: Bundle = Bundle()): Unit {
 
