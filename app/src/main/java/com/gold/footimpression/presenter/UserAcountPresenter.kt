@@ -545,6 +545,71 @@ class UserAcountPresenter(activity: Activity?) {
         }.type, "submitOrder", Constants.URL_SUBMIT_ORDER)
     }
 
+    /**
+     * 获取接待
+     */
+    fun <T> getOrderDetail(
+        dingdanUid:String ,
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        if(!TextUtils.isEmpty(dingdanUid)){
+            params["dingdanUid"] = dingdanUid
+        }
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+
+                val dataCount = (t as BaseNetArrayModule).root!!.size()
+                val data = (t as BaseNetArrayModule).root!!.toString()
+
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        if (dataCount == 0) {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE_NO_DATA,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE_NO_DATA), null
+                            )
+                        } else {
+                            callBack(
+                                HttpCallBack.SUCCESS_CODE,
+                                CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE),
+                                Gson().fromJson(data, object : TypeToken<MutableList<OrderDetailModule>>() {}.type)
+                            )
+                        }
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "getOrderDetail", Constants.URL_GET_DINGDAN_DETAIL)
+    }
 
     public fun cancelRequest(flag: String) {
         HttpManager.getmInstance().cancleCallByKey(flag)
@@ -560,7 +625,7 @@ class UserAcountPresenter(activity: Activity?) {
             cancelRequest("getReicevers")
             cancelRequest("getRoom")
             cancelRequest("submitOrder")
-
+            cancelRequest("getOrderDetail")
             mInstance = null
         }
     }

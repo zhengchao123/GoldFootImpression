@@ -16,6 +16,36 @@ class EditServiceModule() : BaseObservable(),Cloneable {
 
         return person!!
     }
+
+
+    var dingdanUid = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.dingdanUid)
+        }
+    var zhongfangBianma = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.zhongfangBianma)
+        }
+    var shoupaihao = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.shoupaihao)
+        }
+    var jiedaiGonghao = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.jiedaiGonghao)
+        }
     //折扣价
     var discountPrice = ""
         @Bindable

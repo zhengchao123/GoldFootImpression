@@ -27,6 +27,12 @@
                </intent-filter>-->
         </activity>
         <activity
+                android:name="com.gold.footimpression.ui.activity.EditOrderActivity"
+                android:theme="@style/AppTheme"
+                android:windowSoftInputMode="adjustResize|stateHidden"
+                android:screenOrientation="landscape">
+        </activity>
+        <activity
                 android:name="com.gold.footimpression.ui.activity.LoginActivity"
                 android:theme="@style/AppTheme"
                 android:screenOrientation="landscape">

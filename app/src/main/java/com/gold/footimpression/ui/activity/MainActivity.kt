@@ -47,7 +47,7 @@ class MainActivity : BaseActivity() {
             super.onBackPressed()
         } else if (mCurrentFragment is ServiceItemsFragment) {
             showFragment("ORDER_INPUT_FRAGMENT")
-        } else if (mCurrentFragment is ServiceItemsEditFragment) {
+        } else if (mCurrentFragment is ServiceAllItemsEditFragment) {
             showFragment("SERVICE_ITEMS_FRAGMENT")
         } else {
             super.onBackPressed()

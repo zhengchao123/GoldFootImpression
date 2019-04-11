@@ -102,7 +102,7 @@ class RoomStateFragment : BaseFragment() {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if (hidden) {
+        if (!hidden) {
             previewView()
         }
     }

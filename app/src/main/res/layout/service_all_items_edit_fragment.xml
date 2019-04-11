@@ -15,26 +15,12 @@
                 type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
 
         <variable
-                name="itemsAdapter"
+                name="itemAdapter"
                 type="com.gold.footimpression.bindingadapter.CommonAdapter"/>
 
         <variable
                 name="visible"
                 type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
-        <variable
-                name="group"
-                type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
-        <variable
-                name="coupon"
-                type="androidx.databinding.ObservableField&lt;Boolean&gt;"/>
-        //折扣价
-        <variable
-                name="discountPrice"
-                type="androidx.databinding.ObservableField&lt;String&gt;"/>
-        //团购价
-        <variable
-                name="groupPrice"
-                type="androidx.databinding.ObservableField&lt;String&gt;"/>
         //手牌号
         <variable
                 name="shoupaiNumValue"
@@ -48,28 +34,7 @@
         <variable
                 name="reiceverModule"
                 type="com.gold.footimpression.module.ReiceverModule"/>
-        //默认接待人，是当前用户
-        <variable
-                name="currentUserName"
-                type="androidx.databinding.ObservableField&lt;String&gt;"/>
-        //默认接待人，是当前用户
-        <variable
-                name="currentUserNumber"
-                type="androidx.databinding.ObservableField&lt;String&gt;"/>
 
-        //宣传员编码
-        <variable
-                name="xuanchuanyuan"
-                type="androidx.databinding.ObservableField&lt;String&gt;"/>
-        //优惠卷金额
-        <variable
-                name="couponAmount"
-                type="androidx.databinding.ObservableField&lt;String&gt;"/>
-
-        //补差
-        <variable
-                name="bucha"
-                type="androidx.databinding.ObservableField&lt;String&gt;"/>
 
 
         //补差
@@ -184,7 +149,7 @@
                         android:layout_below="@id/ll_head"
                         android:layout_above="@id/tv_comfire"
                         app:diliver_style="2"
-                        android:adapter="@{itemsAdapter}"/>
+                        android:adapter="@{itemAdapter}"/>
 
                 <TextView
                         android:id="@+id/tv_comfire"
@@ -270,7 +235,7 @@
                                     android:layout_height="match_parent"
                                     android:orientation="horizontal"
                                     android:paddingStart="20dp"
-                                    android:background="@{!coupon?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}">
+                                    android:background="@drawable/bg_input_gray_regtangle">
 
                                 <TextView
                                         android:layout_width="wrap_content"
@@ -281,17 +246,13 @@
                                         android:textColor="@color/hint_color"
                                 />
 
-                                <EditText
+                                <TextView
                                         android:id="@+id/price_zhekou"
                                         android:layout_width="0dp"
                                         android:layout_weight="1"
                                         android:layout_height="match_parent"
                                         android:gravity="start|center_vertical"
                                         android:paddingStart="10dp"
-                                        android:inputType="numberDecimal"
-                                        android:imeOptions="actionNext"
-                                        android:text="@={editServiceModule.discountPrice}"
-                                        android:enabled="@{!coupon}"
                                         android:background="#00000000"
                                         android:textSize="@dimen/text_size_14"
                                         android:textColor="@color/hint_color"
@@ -308,7 +269,7 @@
                                     android:layout_height="match_parent"
                                     android:orientation="horizontal"
                                     android:paddingStart="20dp"
-                                    android:background="@{group?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}">
+                                    android:background="@drawable/bg_input_gray_regtangle">
                                 <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -318,17 +279,14 @@
                                         android:textColor="@color/hint_color"
                                 />
 
-                                <EditText
+                                <TextView
                                         android:id="@+id/et_price_group"
                                         android:layout_width="0dp"
                                         android:layout_weight="1"
                                         android:layout_height="match_parent"
                                         android:gravity="start|center_vertical"
-                                        android:inputType="numberDecimal"
                                         android:paddingStart="10dp"
                                         android:imeOptions="actionNext"
-                                        android:text="@={editServiceModule.groupPrice}"
-                                        android:enabled="@{group}"
                                         android:background="#00000000"
                                         android:textSize="@dimen/text_size_14"
                                         android:textColor="@color/hint_color"
@@ -370,7 +328,6 @@
                                         android:layout_height="match_parent"
                                         android:gravity="start|center_vertical"
                                         android:paddingStart="10dp"
-                                        android:inputType="number"
                                         android:text="@={editServiceModule.roomNum}"
                                         android:textSize="@dimen/text_size_14"
                                         android:textColor="@color/hint_color"
@@ -496,7 +453,7 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="20dp"
                                 android:paddingStart="20dp"
-                                android:background="@{coupon?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}"
+                                android:background="@drawable/bg_input_gray_regtangle"
                                 android:orientation="horizontal">
 
 
@@ -508,7 +465,7 @@
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                             />
-                            <EditText
+                            <TextView
                                     android:id="@+id/et_xuanchuanyuan_code"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -517,12 +474,9 @@
                                     android:paddingStart="10dp"
                                     android:inputType="number"
                                     android:background="#00000000"
-                                    android:text="@={editServiceModule.xcrenCode}"
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                                     android:paddingEnd="20dp"
-                                    android:enabled="@{coupon}"
-
                             />
 
 
@@ -533,7 +487,7 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="20dp"
                                 android:paddingStart="20dp"
-                                android:background="@{coupon?@drawable/bg_input_regtangle:@drawable/bg_input_gray_regtangle}"
+                                android:background="@drawable/bg_input_gray_regtangle"
                                 android:orientation="horizontal">
 
                             <TextView
@@ -544,20 +498,17 @@
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                             />
-                            <EditText
+                            <TextView
                                     android:id="@+id/et_youhui_amount"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="match_parent"
                                     android:gravity="start|center_vertical"
                                     android:paddingStart="10dp"
-                                    android:inputType="numberDecimal"
-                                    android:text="@={editServiceModule.youhuijia}"
                                     android:textSize="@dimen/text_size_14"
                                     android:background="#00000000"
                                     android:textColor="@color/hint_color"
                                     android:paddingEnd="20dp"
-                                    android:enabled="@{coupon}"
 
                             />
 
@@ -570,7 +521,7 @@
                                 android:layout_height="45dp"
                                 android:layout_marginTop="20dp"
                                 android:paddingStart="20dp"
-                                android:background="@{coupon?@drawable/bg_input_gray_regtangle:@drawable/bg_input_regtangle}"
+                                android:background="@drawable/bg_input_gray_regtangle"
                                 android:orientation="horizontal">
 
                             <TextView
@@ -590,14 +541,10 @@
                                     android:layout_height="match_parent"
                                     android:gravity="start|center_vertical"
                                     android:paddingStart="10dp"
-                                    android:text="@={editServiceModule.buchajiaValue}"
                                     android:textSize="@dimen/text_size_14"
                                     android:textColor="@color/hint_color"
                                     android:drawableEnd="@mipmap/icon_arraw_down"
-                                    android:paddingEnd="20dp"
-                                    android:clickable="@{!coupon}"
-                                    android:onClick="@{click::onClickView}"
-                                    android:focusable="true"/>
+                                    android:paddingEnd="20dp"/>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 

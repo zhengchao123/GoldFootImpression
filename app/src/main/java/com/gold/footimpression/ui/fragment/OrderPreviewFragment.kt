@@ -1,6 +1,7 @@
 package com.gold.footimpression.ui.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import android.view.View
 import androidx.databinding.ObservableField
@@ -12,6 +13,7 @@ import com.gold.footimpression.module.*
 import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.net.utils.LogUtils
 import com.gold.footimpression.presenter.OrderPresenter
+import com.gold.footimpression.ui.activity.EditOrderActivity
 import com.gold.footimpression.ui.activity.MainActivity
 import com.gold.footimpression.ui.base.BaseActivity
 import com.gold.footimpression.ui.base.BaseFragment
@@ -372,6 +374,17 @@ class OrderPreviewFragment : BaseFragment() {
 
 //                            toast(" click item $position ishistory = ${(instance as OrderDetailModule).history} clickid = start")
                         }
+                        R.id.iv_edit -> {
+                            toast("click edit")
+
+                            val intent = Intent(mContext, EditOrderActivity::class.java)
+
+
+//
+                            intent.putExtra("dingdanUid",mCurrentOrdersAdapter!!.getDatas()!![position].dingdanUid)
+
+                            startActivity(intent)
+                        }
                         R.id.ll_end -> {
 
                             mCurrentOrderCreateDetailPosition = position
@@ -677,7 +690,7 @@ class OrderPreviewFragment : BaseFragment() {
      * 增值服务 ，金额求和
      */
     private fun MutableList<OrderIncrementModule>.getAllAmount(): String {
-        var results :BigDecimal= BigDecimal(0)
+        var results: BigDecimal = BigDecimal(0)
         this.forEach {
             if (it.amount.toInt() > 0) {
                 results += it.allAmount().toBigDecimal()

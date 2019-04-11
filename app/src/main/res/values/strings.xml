@@ -130,4 +130,5 @@
     <string name="no_shoupai">没有手牌信息，请切换项目尝试</string>
     <string name="refresh_success">刷新成功</string>
     <string name="has_un_edti_service">还有未录入的订单项目，请完成</string>
+    <string name="edit">编辑</string>
 </resources>

@@ -16,10 +16,8 @@ class OrderDetailModule(firstItem: Boolean = false) : BaseObservable() {
     }
 
 
-
-
     //    dingdanUid	string	订单Uid
-    var zhongfangMingcheng=""
+    var zhongfangMingcheng = ""
     var dingdanUid = ""
     var dingdanhao = ""//	string	订单编号
     var dingdanSeq = ""//	int	订单行号
@@ -61,8 +59,15 @@ class OrderDetailModule(firstItem: Boolean = false) : BaseObservable() {
     var xiazhongShijianStr = ""
 
 
-    var zhongfangBianma=""
+    var zhongfangBianma = ""
     var history = false
+
+    fun needEdit(): Boolean {
+        return dingdanLaiyuanName.toLowerCase().equals("ios") || dingdanLaiyuanName.toLowerCase().equals("android") || dingdanLaiyuanName.toLowerCase().equals(
+            "安卓"
+        )
+    }
+
     fun jiesuanStatusValue(): String {
         if (jiesuanStatus == 1) {
             return "是"
