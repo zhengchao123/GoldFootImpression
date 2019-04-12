@@ -191,8 +191,10 @@ class UserAcountPresenter(activity: Activity?) {
 
                 val dataCount = (t as BaseNetArrayModule).root!!.size()
                 val data = (t as BaseNetArrayModule).root!!.toString()
-                LogUtils.i(TAG, " exception ${(t as BaseNetArrayModule).success} + msg= $(t as BaseNetArrayModule).msg"
-                        +"root =${(t as BaseNetArrayModule).root.toString()}")
+                LogUtils.i(
+                    TAG, " exception ${(t as BaseNetArrayModule).success} + msg= $(t as BaseNetArrayModule).msg"
+                            + "root =${(t as BaseNetArrayModule).root.toString()}"
+                )
                 runCallBack {
                     if ((t as BaseNetArrayModule).success) {
                         if (dataCount == 0) {
@@ -549,12 +551,12 @@ class UserAcountPresenter(activity: Activity?) {
      * 获取接待
      */
     fun <T> getOrderDetail(
-        dingdanUid:String ,
+        dingdanUid: String,
         callBack: (code: Int, msg: String?, result: T?) -> Unit
     ) {
 
         val params = mutableMapOf<String, String>()
-        if(!TextUtils.isEmpty(dingdanUid)){
+        if (!TextUtils.isEmpty(dingdanUid)) {
             params["dingdanUid"] = dingdanUid
         }
         Client2Server.doPostAsyn(params, object : HttpCallBack() {
@@ -611,6 +613,62 @@ class UserAcountPresenter(activity: Activity?) {
         }.type, "getOrderDetail", Constants.URL_GET_DINGDAN_DETAIL)
     }
 
+
+    /**
+     * 获取接待
+     */
+    fun <T> updateDingdan(
+        paramStr: String,
+        callBack: (code: Int, msg: String?, result: T?) -> Unit
+    ) {
+
+        val params = mutableMapOf<String, String>()
+        if (!TextUtils.isEmpty(paramStr)) {
+            params["paramStr"] = paramStr
+        }
+        Client2Server.doPostAsyn(params, object : HttpCallBack() {
+            override fun onFailed(code: Int, exceptionMsg: String?, call: Call?) {
+                super.onFailed(code, exceptionMsg, call)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    callBack(
+                        code,
+                        if (TextUtils.isEmpty(CodeUtils.getMsg(code))) exceptionMsg!! else CodeUtils.getMsg(code),
+                        null
+                    )
+                }
+            }
+
+            override fun <K : Any?> onResponse(call: Call?, response: Response?, t: K) {
+                super.onResponse(call, response, t)
+                if (null == activity) {
+                    return
+                }
+                runCallBack {
+                    if ((t as BaseNetArrayModule).success) {
+                        callBack(
+                            HttpCallBack.SUCCESS_CODE,
+                            CodeUtils.getMsg(HttpCallBack.SUCCESS_CODE), null
+                        )
+                    } else {
+                        callBack(
+                            HttpCallBack.FAILE_CODE,
+                            t.msg,
+                            null
+                        )
+                    }
+
+
+                }
+
+            }
+        }, object : TypeToken<BaseNetArrayModule>() {
+        }.type, "updateDingdan", Constants.URL_UPDATE_DIANGDAN)
+    }
+
+
     public fun cancelRequest(flag: String) {
         HttpManager.getmInstance().cancleCallByKey(flag)
     }
@@ -626,6 +684,7 @@ class UserAcountPresenter(activity: Activity?) {
             cancelRequest("getRoom")
             cancelRequest("submitOrder")
             cancelRequest("getOrderDetail")
+            cancelRequest("updateDingdan")
             mInstance = null
         }
     }

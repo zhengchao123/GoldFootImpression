@@ -27,6 +27,14 @@ class ServiceItemModule() : BaseObservable(),Cloneable  {
 //    "fuwuShichang": 80, 时长
 //    "price": 129, 价格
 //    "priceMember": 89 会员价
+    var dingdanUid: String? = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.dingdanUid)
+        }
+
     var fuwuXiangmuBianma: String? = ""
         @Bindable
         get() = field

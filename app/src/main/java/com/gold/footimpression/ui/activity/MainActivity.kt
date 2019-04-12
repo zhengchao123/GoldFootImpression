@@ -1,5 +1,6 @@
 package com.gold.footimpression.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -89,23 +90,26 @@ class MainActivity : BaseActivity() {
                     showFragment(TAG_ORDER_INPUT_FRAGMENT);
                 }
                 R.id.rb_2 -> {
-                    LogUtils.i(TAG," rb2 selected")
+                    LogUtils.i(TAG, " rb2 selected")
                     Utils.closeSoftKeyBord(mContext!!, this)
                     var data = Bundle()
-                    if(reiceveData != null){
+                    if (reiceveData != null) {
                         data = reiceveData!!
-                    }else{
+                    } else {
                         data.putString("fromKey", "mainActivity")
                     }
+                    clearUnsuefulFragment()
 
                     showFragment(TAG_ORDER_PREVIEW_FRAGMENT, data);
                     reiceveData = null
                 }
                 R.id.rb_3 -> {
+                    clearUnsuefulFragment()
                     Utils.closeSoftKeyBord(mContext!!, this)
                     showFragment(TAG_ROOM_STATE_FRAGMENT);
                 }
                 R.id.rb_4 -> {
+                    clearUnsuefulFragment()
                     Utils.closeSoftKeyBord(mContext!!, this)
                     showFragment(TAG_SETTING_FRAGMENT);
                 }
@@ -113,13 +117,30 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private fun clearUnsuefulFragment() {
+        if (null != mFragmentManager.findFragmentByTag(TAG_ORDER_INPUT_FRAGMENT)) {
+            mFragmentManager.beginTransaction()
+                .remove(mFragmentManager.findFragmentByTag(TAG_ORDER_INPUT_FRAGMENT)!!).commit()
+        }
+
+        if (null != mFragmentManager.findFragmentByTag(TAG_SERVICE_ITEMS)) {
+            mFragmentManager.beginTransaction()
+                .remove(mFragmentManager.findFragmentByTag(TAG_SERVICE_ITEMS)!!).commit()
+        }
+
+        if (null != mFragmentManager.findFragmentByTag(TAG_SERVICE_EDIT_ITEMS)) {
+            mFragmentManager.beginTransaction()
+                .remove(mFragmentManager.findFragmentByTag(TAG_SERVICE_EDIT_ITEMS)!!).commit()
+        }
+    }
+
 
     var mData: Bundle? = null
 
-    private var reiceveData: Bundle?=null
+    private var reiceveData: Bundle? = null
 
     fun rb2Select(data: Bundle = Bundle()) {
-        reiceveData  = data
+        reiceveData = data
         mMainActivityBinding!!.rb2.isChecked = true
     }
 
@@ -191,5 +212,8 @@ class MainActivity : BaseActivity() {
     }
 
     override fun configLoadingPage(): Boolean = false
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        LogUtils.i(TAG, "mainactivity on result $resultCode")
+    }
 }

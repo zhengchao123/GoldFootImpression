@@ -1,5 +1,6 @@
 package com.gold.footimpression.ui.fragment
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -151,7 +152,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                             toast(R.string.please_select_room)
                             return
                         }
-                        if (mCurrentServiceItem.mServiceEditModule.shoupaihao.equals("")) {
+                        if (mCurrentServiceItem.mServiceEditModule.shoupaiNumValue.equals("")) {
                             toast(R.string.please_select_shoupai)
                             return
                         }
@@ -176,7 +177,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                         visible.set(hasEditAll)
                     }
                     R.id.tv_comfire -> {
-                        mActivity!!.mOrderModule.paramFuwuStr.clear()
+                        editDetails.clear()
                         mServiceItems.forEach {
                             if (it.selected) {
 
@@ -194,6 +195,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                                 return
                             }
                         }
+                        updateDingDan(Gson().toJson(editDetails))
 
 //                        mActivity!!.mOrderModule.paramStr.mendianBianma =
 //                            Utils.getUserBumenCode()
@@ -207,7 +209,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                     }
                     R.id.iv_back -> {
                         mCurrentPosition = 0
-//                        mActivity!!.showFragment("SERVICE_ITEMS_FRAGMENT")
+                        mActivity!!.finish()
                     }
                     R.id.et_room_num -> {
                         if (mRoomCardModule.zhongfang.size == 0) {
@@ -262,11 +264,12 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                     }
                     mServiceItems[position].clicked = true
                     mCurrentServiceItem = mServiceItems[position].clone()
+                    mBinding!!.editServiceModule = mCurrentServiceItem.mServiceEditModule
 //                    mServiceItems[position].copy(mCurrentServiceItem)
 
-                    if (mCurrentServiceItem.mServiceEditModule.reicever.name.equals("")) {
-                        mCurrentServiceItem.mServiceEditModule.reicever = reiceverModule
-                    }
+//                    if (mCurrentServiceItem.mServiceEditModule.reicever.name.equals("")) {
+//                        mCurrentServiceItem.mServiceEditModule.reicever = reiceverModule
+//                    }
                     mCurrentPosition = position
 //                    mBinding!!.editServiceModule = mCurrentServiceItem.mServiceEditModule
                     mServiceItemsAdapter!!.update(mServiceItems)
@@ -398,6 +401,26 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         }
     }
 
+    /**
+     * 获取接待
+     */
+    fun updateDingDan(paramStr: String) {
+        if (!Utils.isNetworkConnected(mContext)) {
+            toast(com.gold.footimpression.R.string.net_error)
+        } else {
+            mActivity!!.showProgressDialog { }
+            mLoginPresenter!!.updateDingdan<Unit>(paramStr) { code, msg, result ->
+                mActivity!!.closeProgressDialog()
+                toast(msg!!)
+                if (CodeUtils.isSuccess(code)) {
+                    mActivity!!.setResult(RESULT_OK)
+                    mActivity!!.finish()
+                } else {
+
+                }
+            }
+        }
+    }
 
     /**
      * 获取接待
@@ -536,20 +559,33 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         this.forEach {
             val item = ServiceItemModule()
             item.clicked = i == 0
-            if (i == 0) {
-                reiceverModule.name = it.jiedaiName
-                reiceverModule.gonghao = it.jiedaiGonghao
-                mCurrentServiceItem.mServiceEditModule.roomNum = it.mendianBianma
-                mCurrentServiceItem.mServiceEditModule.shoupaiNumValue = it.shoupaihao
-                mCurrentServiceItem.mServiceEditModule.shoupaihao = it.shoupaihao
-                mCurrentServiceItem.mServiceEditModule.reicever = reiceverModule
-            }
+//            if (i == 0) {
+//                reiceverModule.name = it.jiedaiName
+//                reiceverModule.gonghao = it.jiedaiGonghao
+//                mCurrentServiceItem.mServiceEditModule.roomNum = it.mendianBianma
+//                mCurrentServiceItem.mServiceEditModule.shoupaiNumValue = it.shoupaihao
+//                mCurrentServiceItem.mServiceEditModule.shoupaihao = it.shoupaihao
+//                mCurrentServiceItem.mServiceEditModule.reicever = reiceverModule
+//                mCurrentServiceItem.mServiceEditModule.dingdanUid = it.dingdanUid
+//                mCurrentServiceItem.fuwuXiangmuMingcheng = it.fuwuXiangmuMingcheng
+//                mCurrentServiceItem.price = it.price
+//                mCurrentServiceItem.fuwuShichang = it.fuwuShichang
+//                mCurrentServiceItem.plannerName = it.jishiName
+//            }
             i++
+            val reciver = ReiceverModule(it.jiedaiName,it.jiedaiGonghao)
             item.fuwuXiangmuMingcheng = it.fuwuXiangmuMingcheng
             item.price = it.price
             item.fuwuShichang = it.fuwuShichang
             item.plannerName = it.jishiName
+            item.mServiceEditModule.roomNum = it.mendianBianma
+            item.mServiceEditModule.shoupaiNumValue = it.shoupaihao
+            item.mServiceEditModule.shoupaihao = it.shoupaihao
+            item.mServiceEditModule.dingdanUid = it.dingdanUid
+            item.mServiceEditModule.reicever = reciver
+
             result.add(item)
+            mCurrentServiceItem =result[0].clone()
         }
         return result
     }

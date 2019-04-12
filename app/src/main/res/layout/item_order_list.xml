@@ -44,7 +44,7 @@
                     android:tag="imageview"
                     android:onClick="@{click::onClickView}"
                     android:visibility="@{orderDetailModule.firstItem?View.GONE:View.VISIBLE}"
-                    android:src="@mipmap/icon_gouwuche_selected"/>
+                    android:src="@drawable/icon_gouwuche_selected"/>
         </FrameLayout>
         <FrameLayout
                 android:layout_width="90dp"
@@ -72,7 +72,7 @@
                     android:tag="imageview"
                     android:onClick="@{click::onClickView}"
                     android:visibility="@{orderDetailModule.firstItem?View.GONE:View.VISIBLE}"
-                    android:src="@{orderDetailModule.firstItem?@drawable/icon_gouwuche_selected:@drawable/icon_gouwuche_selected}"/>
+                    android:src="@{orderDetailModule.needEdit()?@drawable/icon_edit_selected:@drawable/icon_edit_selected}"/>
         </FrameLayout>
         <LinearLayout
                 android:id="@+id/ll_end"

@@ -1,5 +1,6 @@
 package com.gold.footimpression.ui.fragment
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
@@ -223,11 +224,11 @@ class OrderPreviewFragment : BaseFragment() {
             toast(com.gold.footimpression.R.string.net_error)
         } else {
             if (!isFresh) {
-                (this.activity as BaseActivity).showProgressDialog { }
+                mActivity!!.showProgressDialog { }
             }
 
             mOrderPresenter!!.getOrders<MutableList<OrderDetailModule>>(start, limit) { code, msg, result ->
-                (this.activity as BaseActivity).closeProgressDialog()
+                mActivity!!.closeProgressDialog()
                 if (isFresh) {
                     mBinding!!.swipeFreshLayout.isRefreshing = false
                     if (CodeUtils.isSuccess(code)) {
@@ -375,42 +376,21 @@ class OrderPreviewFragment : BaseFragment() {
 //                            toast(" click item $position ishistory = ${(instance as OrderDetailModule).history} clickid = start")
                         }
                         R.id.iv_edit -> {
-                            toast("click edit")
 
                             val intent = Intent(mContext, EditOrderActivity::class.java)
 
+                            intent.putExtra("dingdanUid", mCurrentOrdersAdapter!!.getDatas()!![position].dingdanUid)
 
-//
-                            intent.putExtra("dingdanUid",mCurrentOrdersAdapter!!.getDatas()!![position].dingdanUid)
-
-                            startActivity(intent)
+                            startActivityForResult(intent, 1)
                         }
                         R.id.ll_end -> {
 
                             mCurrentOrderCreateDetailPosition = position
 
                             if (!history.get()!!) {
-//                                if (mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
-//                                loadZengzhiDetail(mOrderDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
-//                                if (mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
                                 loadZengzhiDetail(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
-
-//
-//                                } else {
-////                                    orderDetailPropAdapter!!.update(mOrderDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
-//                                    orderDetailPropAdapter!!.update(mCurrentOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
-//                                    hasZengzhiDetail.set(true)
-//                                }
                             } else {
-//                                if (mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
-//                                if (mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements.size == 0) {
-//                                    loadZengzhiDetail(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].dingdanUid)
                                 loadZengzhiDetail(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].dingdanUid)
-//                                } else {
-////                                    orderDetailPropAdapter!!.update(mOrderHistoryDetailLists[mCurrentOrderCreateDetailPosition].orderIncrements)
-//                                    orderDetailPropAdapter!!.update(mCurrentHistoryOrdersAdapter!!.getDatas()!![mCurrentOrderCreateDetailPosition].orderIncrements)
-//                                    hasZengzhiDetail.set(true)
-//                                }
                             }
                             orderCreateDetail.set(true)
                         }
@@ -856,6 +836,15 @@ class OrderPreviewFragment : BaseFragment() {
 
         }
         return results
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        LogUtils.i(TAG, "orderpreviewfragment on result $resultCode")
+        if (resultCode == RESULT_OK) {
+            loadOrderList("", "", false)
+        }
     }
 
 

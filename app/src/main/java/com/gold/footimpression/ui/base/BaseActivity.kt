@@ -148,7 +148,10 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     public fun closeProgressDialog() {
-        loadingDialog!!.dismiss()
+        if(null!= loadingDialog){
+            loadingDialog!!.dismiss()
+        }
+
     }
 
     private fun releaseProgressDialog() {
