@@ -194,23 +194,6 @@ class ServiceItemsEditFragment : BaseFragment() {
                         mServiceItems.forEach {
                             if (it.selected) {
                                 val mServiceInfo = ServiceInfo()
-//                                mServiceInfo.zhongfangBianma = mCurrentServiceItem.mServiceEditModule.roomNum
-//                                mServiceInfo.dingdanJineFwdz = mCurrentServiceItem.mServiceEditModule.discountPrice
-//                                mServiceInfo.tuangoujia = mCurrentServiceItem.mServiceEditModule.groupPrice
-//                                mServiceInfo.fuwuXiangmuBianma = mCurrentServiceItem.fuwuXiangmuBianma
-//                                mServiceInfo.jishiGonghao = mCurrentServiceItem.plannerGonghao
-//                                mServiceInfo.dianzhong = mCurrentServiceItem.selectHourService
-//                                mServiceInfo.shoupaihao = mCurrentServiceItem.mServiceEditModule.shoupaiNumValue
-//                                mServiceInfo.jiedaiGonghao = mCurrentServiceItem.mServiceEditModule.reicever.gonghao
-//                                mServiceInfo.xcrenName = mCurrentServiceItem.mServiceEditModule.xcrenName
-//                                mServiceInfo.xcrenCode = mCurrentServiceItem.mServiceEditModule.xcrenCode
-//                                mServiceInfo.youhuijia = mCurrentServiceItem.mServiceEditModule.youhuijia
-//                                mServiceInfo.buchajia =
-//                                    if (mCurrentServiceItem.mServiceEditModule.buchajiaValue.equals("是")) "1" else "0"
-//                                mServiceInfo.buchajiaValue = mCurrentServiceItem.mServiceEditModule.buchajiaValue
-//                                mActivity!!.mOrderModule.paramFuwuStr.add(
-//                                    mServiceInfo
-//                                )
 
                                 mServiceInfo.zhongfangBianma = it.mServiceEditModule.roomNum
                                 mServiceInfo.dingdanJineFwdz = it.mServiceEditModule.discountPrice
@@ -247,6 +230,7 @@ class ServiceItemsEditFragment : BaseFragment() {
                     }
                     R.id.iv_back -> {
                         mCurrentPosition = 0
+                        mSelectedShoupaiHao.clear()
                         mActivity!!.showFragment("SERVICE_ITEMS_FRAGMENT")
                     }
                     R.id.et_room_num -> {

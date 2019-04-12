@@ -118,20 +118,24 @@ class MainActivity : BaseActivity() {
     }
 
     private fun clearUnsuefulFragment() {
-        if (null != mFragmentManager.findFragmentByTag(TAG_ORDER_INPUT_FRAGMENT)) {
-            mFragmentManager.beginTransaction()
-                .remove(mFragmentManager.findFragmentByTag(TAG_ORDER_INPUT_FRAGMENT)!!).commit()
-        }
+        removeFragment(TAG_ORDER_INPUT_FRAGMENT)
+        removeFragment(TAG_SERVICE_ITEMS)
+        removeFragment(TAG_SERVICE_EDIT_ITEMS)
 
-        if (null != mFragmentManager.findFragmentByTag(TAG_SERVICE_ITEMS)) {
-            mFragmentManager.beginTransaction()
-                .remove(mFragmentManager.findFragmentByTag(TAG_SERVICE_ITEMS)!!).commit()
-        }
-
-        if (null != mFragmentManager.findFragmentByTag(TAG_SERVICE_EDIT_ITEMS)) {
-            mFragmentManager.beginTransaction()
-                .remove(mFragmentManager.findFragmentByTag(TAG_SERVICE_EDIT_ITEMS)!!).commit()
-        }
+//        if (null != mFragmentManager.findFragmentByTag(TAG_ORDER_INPUT_FRAGMENT)) {
+//            mFragmentManager.beginTransaction()
+//                .remove(mFragmentManager.findFragmentByTag(TAG_ORDER_INPUT_FRAGMENT)!!).commit()
+//        }
+//
+//        if (null != mFragmentManager.findFragmentByTag(TAG_SERVICE_ITEMS)) {
+//            mFragmentManager.beginTransaction()
+//                .remove(mFragmentManager.findFragmentByTag(TAG_SERVICE_ITEMS)!!).commit()
+//        }
+//
+//        if (null != mFragmentManager.findFragmentByTag(TAG_SERVICE_EDIT_ITEMS)) {
+//            mFragmentManager.beginTransaction()
+//                .remove(mFragmentManager.findFragmentByTag(TAG_SERVICE_EDIT_ITEMS)!!).commit()
+//        }
     }
 
 
@@ -144,6 +148,13 @@ class MainActivity : BaseActivity() {
         mMainActivityBinding!!.rb2.isChecked = true
     }
 
+    fun removeFragment(tag:String){
+        if (null != mFragmentManager.findFragmentByTag(tag)) {
+            mFragmentManager.beginTransaction()
+                .remove(mFragmentManager.findFragmentByTag(tag)!!).commit()
+        }
+
+    }
     fun showFragment(tag: String?, data: Bundle = Bundle()): Unit {
 
         mData = data

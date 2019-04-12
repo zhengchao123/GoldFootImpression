@@ -358,7 +358,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     }
 
 
-
     private var mRoomPopwindow: ListPopupWindow? = null
     private var mShoupaiPopwindow: ListPopupWindow? = null
     private var mReiceverPopwindow: ListPopupWindow? = null
@@ -465,13 +464,16 @@ class ServiceAllItemsEditFragment : BaseFragment() {
             val item = ServiceItemModule()
             item.clicked = i == 0
             i++
-            val reciver = ReiceverModule(it.jiedaiName, it.jiedaiGonghao)
+            //接待人员
+            var reciver = ReiceverModule(Utils.getDisplayName()!!, Utils.getGonghao()!!)
+
+//            val reciver = ReiceverModule(it.jiedaiName, it.jiedaiGonghao)
             item.fuwuXiangmuMingcheng = it.fuwuXiangmuMingcheng
             item.price = it.price
             item.fuwuShichang = it.fuwuShichang
             item.plannerName = it.jishiName
-            item.mServiceEditModule.roomNum = it.mendianBianma
-            item.mServiceEditModule.shoupaiNumValue = it.shoupaihao
+//            item.mServiceEditModule.roomNum = it.mendianBianma
+//            item.mServiceEditModule.shoupaiNumValue = it.shoupaihao
             item.mServiceEditModule.shoupaihao = it.shoupaihao
             item.mServiceEditModule.dingdanUid = it.dingdanUid
             item.mServiceEditModule.reicever = reciver
