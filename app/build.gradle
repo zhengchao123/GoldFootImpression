@@ -82,18 +82,14 @@ android {
         }
 
     }
+
+
     applicationVariants.all { variant ->
         variant.outputs.all { output -> // each 改为 all
-            def date = new Date(System.currentTimeMillis())
             def calender = Calendar.getInstance()
             calender.setTimeInMillis(System.currentTimeMillis())
-//                def fileName = ""+date.getYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds()
-//                +"_" + "${variant.buildType.name}_${variant.productFlavors[0].name}_${variant.versionName}.apk"
-            def fileName = calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DAY_OF_MONTH) + "" + calender.get(Calendar.HOUR_OF_DAY) + "" + calender.get(Calendar.MINUTE) + "_" + "${variant.buildType.name}_${variant.productFlavors[0].name}_${variant.versionName}.apk"
-            def outFile = output.outputFile
-            if (outFile != null && outFile.name.endsWith('.apk')) {
-                outputFileName = fileName // output.outputFile 改为 outputFileName
-            }
+            def fileName = calender.get(Calendar.YEAR) + "-" + (calender.get(Calendar.MONTH) + 1) + "-" + calender.get(Calendar.DAY_OF_MONTH) + "-" + calender.get(Calendar.HOUR_OF_DAY) + "-" + calender.get(Calendar.MINUTE) + "_" + "${variant.buildType.name}_${variant.productFlavors[0].name}_${variant.versionName}.apk"
+            outputFileName = fileName // output.outputFile 改为 outputFileName
         }
     }
 

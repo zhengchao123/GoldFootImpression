@@ -9,7 +9,6 @@ import androidx.databinding.library.baseAdapters.BR
 import com.gold.footimpression.R
 import com.gold.footimpression.bindingadapter.CommonAdapter
 import com.gold.footimpression.module.*
-import com.gold.footimpression.module.OrderModule.ServiceInfo
 import com.gold.footimpression.net.CodeUtils
 import com.gold.footimpression.net.utils.DensyUtils
 import com.gold.footimpression.net.utils.LogUtils
@@ -38,10 +37,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     //服务项目
     private var mServiceItemsAdapter: CommonAdapter<ServiceItemModule>? = null
 
-//    //是团购
-//    private var group = ObservableField<Boolean>(false)
-//    //是优惠券
-//    private var coupon = ObservableField<Boolean>(false)
 
     //当前选中的编辑服务项目
     private var mCurrentServiceItem = ServiceItemModule()
@@ -50,9 +45,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     override fun getContentview() = com.gold.footimpression.R.layout.service_all_items_edit_fragment
     //房间和手牌信息
     private var mRoomCardModule = RoomAndCardModule()
-
-    //接待人员
-    private var reiceverModule = ReiceverModule(Utils.getDisplayName()!!, Utils.getGonghao()!!)
 
 
     private var mActivity: EditOrderActivity? = null
@@ -156,10 +148,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                             toast(R.string.please_select_shoupai)
                             return
                         }
-//                        if (mBinding!!.etReciverName.text.equals("")) {
-//                            toast(R.string.please_select_shoupai)
-//                            return
-//                        }
                         mSelectedShoupaiHao.remove(mCurrentSelectShoupai)
                         mSelectedShoupaiHao.remove(mPreCurrentSelectShoupai)
                         mSelectedShoupaiHao.add(mCurrentSelectShoupai)
@@ -196,16 +184,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                             }
                         }
                         updateDingDan(Gson().toJson(editDetails))
-
-//                        mActivity!!.mOrderModule.paramStr.mendianBianma =
-//                            Utils.getUserBumenCode()
-//                        LogUtils.i(
-//                            TAG,
-//                            "=== submit order str = ${Gson().toJson(mActivity!!.mOrderModule)}"
-//                        )
-//                        var orderModule = mActivity!!.mOrderModule
-//                        submitOrder(Gson().toJson(orderModule.paramFuwuStr), Gson().toJson(orderModule.paramStr))
-
                     }
                     R.id.iv_back -> {
                         mCurrentPosition = 0
@@ -265,13 +243,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                     mServiceItems[position].clicked = true
                     mCurrentServiceItem = mServiceItems[position].clone()
                     mBinding!!.editServiceModule = mCurrentServiceItem.mServiceEditModule
-//                    mServiceItems[position].copy(mCurrentServiceItem)
-
-//                    if (mCurrentServiceItem.mServiceEditModule.reicever.name.equals("")) {
-//                        mCurrentServiceItem.mServiceEditModule.reicever = reiceverModule
-//                    }
                     mCurrentPosition = position
-//                    mBinding!!.editServiceModule = mCurrentServiceItem.mServiceEditModule
                     mServiceItemsAdapter!!.update(mServiceItems)
                 }
             })
@@ -279,43 +251,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         }
     }
 
-
-    //处理服务项目列表的选中状态
-    fun MutableList<ServiceItemModule>.filterArrays(): MutableList<ServiceItemModule> {
-        val result = mutableListOf<ServiceItemModule>()
-        var i = 0
-        this.forEach {
-            it.filterPlanners.forEach { item ->
-                if (item.selected) {
-                    val value = ServiceItemModule()
-
-
-                    value.selected = false
-                    value.filterPlanners = it.filterPlanners
-                    value.planners = it.planners
-                    value.fuwuXiangmuMingcheng = it.fuwuXiangmuMingcheng
-                    value.fuwuShichang = it.fuwuShichang
-                    value.price = it.price
-                    value.priceMember = it.priceMember
-                    value.plannerName = item.name!!
-                    value.plannerGonghao = item.gonghao!!
-                    value.selectHourService = item.hour
-                    value.fuwuXiangmuBianma = it.fuwuXiangmuBianma
-//                    it.avalibleData = true
-                    if (i == 0) {
-                        mCurrentServiceItem = value.clone()
-                        value.copy(mCurrentServiceItem)
-                        value.clicked = true
-                    }
-                    result.add(value)
-                    i++
-
-                }
-            }
-
-        }
-        return result
-    }
 
     /**
      * 获取房间和手牌
@@ -422,32 +357,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         }
     }
 
-    /**
-     * 获取接待
-     */
-    fun submitOrder(paramFuwuStr: String, paramStr: String) {
-        if (!Utils.isNetworkConnected(mContext)) {
-            toast(com.gold.footimpression.R.string.net_error)
-        } else {
-            mActivity!!.showProgressDialog { }
-            mLoginPresenter!!.submitOrder<Unit>(paramFuwuStr, paramStr) { code, msg, result ->
-                mActivity!!.closeProgressDialog()
-
-                if (CodeUtils.isSuccess(code)) {
-                    toast(R.string.submit_order_success)
-
-                    var data = Bundle()
-                    data.putString("fromKey", "SERVICEEDIT")
-//                    mActivity!!.showFragment(
-//                        "ORDER_PREVIEW_FRAGMENT",
-//                        data
-//                    )
-                } else {
-                    toast(msg!!)
-                }
-            }
-        }
-    }
 
 
     private var mRoomPopwindow: ListPopupWindow? = null
@@ -468,7 +377,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
 
             override fun onItemClick(itemView: View, position: Int) {
                 mRoomPopwindow!!.closePop()
-//                roomNum.set(lists[position].zhongfangBianma)
                 mCurrentServiceItem.mServiceEditModule.roomNum = lists[position].zhongfangBianma
 
             }
@@ -494,9 +402,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
 
             override fun onItemClick(itemView: View, position: Int) {
                 mShoupaiPopwindow!!.closePop()
-//                shoupaiNumValue.set(lists[position].shoupaihao)
-//                mSelectedShoupaiHao.remove(mShoupaiPopwindow!!.popDatas[position])
-//                mSelectedShoupaiHao.add(mShoupaiPopwindow!!.popDatas[position])
                 mPreCurrentSelectShoupai = mCurrentServiceItem.mServiceEditModule.shoupaiNumValue
                 mCurrentSelectShoupai = mShoupaiPopwindow!!.popDatas[position]
                 mCurrentServiceItem.mServiceEditModule.shoupaiNumValue = mShoupaiPopwindow!!.popDatas[position]
@@ -559,21 +464,8 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         this.forEach {
             val item = ServiceItemModule()
             item.clicked = i == 0
-//            if (i == 0) {
-//                reiceverModule.name = it.jiedaiName
-//                reiceverModule.gonghao = it.jiedaiGonghao
-//                mCurrentServiceItem.mServiceEditModule.roomNum = it.mendianBianma
-//                mCurrentServiceItem.mServiceEditModule.shoupaiNumValue = it.shoupaihao
-//                mCurrentServiceItem.mServiceEditModule.shoupaihao = it.shoupaihao
-//                mCurrentServiceItem.mServiceEditModule.reicever = reiceverModule
-//                mCurrentServiceItem.mServiceEditModule.dingdanUid = it.dingdanUid
-//                mCurrentServiceItem.fuwuXiangmuMingcheng = it.fuwuXiangmuMingcheng
-//                mCurrentServiceItem.price = it.price
-//                mCurrentServiceItem.fuwuShichang = it.fuwuShichang
-//                mCurrentServiceItem.plannerName = it.jishiName
-//            }
             i++
-            val reciver = ReiceverModule(it.jiedaiName,it.jiedaiGonghao)
+            val reciver = ReiceverModule(it.jiedaiName, it.jiedaiGonghao)
             item.fuwuXiangmuMingcheng = it.fuwuXiangmuMingcheng
             item.price = it.price
             item.fuwuShichang = it.fuwuShichang
@@ -585,7 +477,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
             item.mServiceEditModule.reicever = reciver
 
             result.add(item)
-            mCurrentServiceItem =result[0].clone()
+            mCurrentServiceItem = result[0].clone()
         }
         return result
     }
@@ -639,27 +531,4 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     }
 }
 
-
-private fun ServiceItemModule.copy(mCurrentServiceItem: ServiceItemModule) {
-
-//    mCurrentServiceItem.fuwuXiangmuMingcheng = this.fuwuXiangmuMingcheng
-//    mCurrentServiceItem.fuwuShichang = this.fuwuShichang
-//
-//    mCurrentServiceItem.price = this.price
-//    mCurrentServiceItem.filterPlanners = this.filterPlanners
-
-    mCurrentServiceItem.mServiceEditModule = this.mServiceEditModule.clone()
-    mCurrentServiceItem.mServiceEditModule.reicever = this.mServiceEditModule.reicever.clone()
-//    mCurrentServiceItem.avalibleData = this.avalibleData
-//    mCurrentServiceItem.selectHourService = this.selectHourService
-//    mCurrentServiceItem.selected = this.selected
-//    mCurrentServiceItem.fuwuXiangmuBianma = this.fuwuXiangmuBianma
-//    mCurrentServiceItem.clicked = this.clicked
-//    mCurrentServiceItem.priceMember = this.priceMember
-//    mCurrentServiceItem.plannerName = this.plannerName
-//    mCurrentServiceItem.plannerGonghao = this.plannerGonghao
-//    mCurrentServiceItem.planners = this.planners
-
-
-}
 
