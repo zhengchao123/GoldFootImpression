@@ -2,7 +2,6 @@ package com.gold.footimpression.ui.fragment
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
-import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.library.baseAdapters.BR
@@ -76,7 +75,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         }
     }
 
-    fun preDada() {
+    private fun preDada() {
         val data = this.arguments
         if (null != data && data.containsKey("dingdanUid")) {
             val dingdanUid = data.getString("dingdanUid", "")
@@ -86,7 +85,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         }
     }
 
-    fun preview() {
+    private fun preview() {
         visible.set(false)
         mServiceItemsAdapter = mServiceItems.putToAdapter()
         mBinding!!.itemAdapter = mServiceItemsAdapter
@@ -140,8 +139,8 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                             Utils.closeSoftKeyBord(mContext, mActivity!!)
                         }
 
-                        if (mCurrentServiceItem.mServiceEditModule.roomNum.equals("")) {
-                            toast(R.string.please_select_room)
+                        if (mCurrentServiceItem.mServiceEditModule.roomName.equals("")) {
+                            toast(R.string.please_room)
                             return
                         }
                         if (mCurrentServiceItem.mServiceEditModule.shoupaiNumValue.equals("")) {
@@ -226,14 +225,14 @@ class ServiceAllItemsEditFragment : BaseFragment() {
 
     private var mCurrentPosition: Int = 0
 
-    fun MutableList<ServiceItemModule>.putToAdapter(): CommonAdapter<ServiceItemModule> {
+    private fun MutableList<ServiceItemModule>.putToAdapter(): CommonAdapter<ServiceItemModule> {
 
         return CommonAdapter(
             mContext!!, this, R.layout.item_service_edit_items,
             BR.serviceItemModule
         ).let {
             it.setOnItemClick(object : OnItemClick {
-                override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
+                override fun onItemClick(itemView: View, position: Int, instance: Any, viewId: Int) {
                 }
 
                 override fun onItemClick(itemView: View, position: Int) {
@@ -251,11 +250,10 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         }
     }
 
-
     /**
      * 获取房间和手牌
      */
-    fun loadRoom(fromRoom: Boolean = true) {
+    private fun loadRoom(fromRoom: Boolean = true) {
         if (!Utils.isNetworkConnected(mContext)) {
             toast(com.gold.footimpression.R.string.net_error)
         } else {
@@ -266,18 +264,18 @@ class ServiceAllItemsEditFragment : BaseFragment() {
                 if (CodeUtils.isSuccess(code)) {
                     mRoomCardModule = result as RoomAndCardModule
                     if (fromRoom) {
-                        if ((result as RoomAndCardModule).zhongfang.size == 0) {
+                        if ((result).zhongfang.size == 0) {
                             toast(R.string.no_room)
                         } else {
-                            initRoomPopwindow((result as RoomAndCardModule).zhongfang)
+                            initRoomPopwindow((result).zhongfang)
                             showPop(mRoomPopwindow, mBinding!!.llRoom)
                         }
 
                     } else {
-                        if ((result as RoomAndCardModule).shoupai.size == 0) {
+                        if ((result).shoupai.size == 0) {
                             toast(R.string.no_shoupai)
                         } else {
-                            initShoupaiPopwindow((result as RoomAndCardModule).shoupai)
+                            initShoupaiPopwindow((result).shoupai)
                             showPop(mShoupaiPopwindow, mBinding!!.llCard)
                         }
 
@@ -293,7 +291,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     /**
      * 获取接待
      */
-    fun loadReciver() {
+    private fun loadReciver() {
         if (!Utils.isNetworkConnected(mContext)) {
             toast(com.gold.footimpression.R.string.net_error)
         } else {
@@ -317,7 +315,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     /**
      * 获取接待
      */
-    fun loadOrderDetail(digndanUid: String) {
+    private fun loadOrderDetail(digndanUid: String) {
         if (!Utils.isNetworkConnected(mContext)) {
             toast(com.gold.footimpression.R.string.net_error)
         } else {
@@ -339,12 +337,12 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     /**
      * 获取接待
      */
-    fun updateDingDan(paramStr: String) {
+    private fun updateDingDan(paramStr: String) {
         if (!Utils.isNetworkConnected(mContext)) {
             toast(com.gold.footimpression.R.string.net_error)
         } else {
             mActivity!!.showProgressDialog { }
-            mLoginPresenter!!.updateDingdan<Unit>(paramStr) { code, msg, result ->
+            mLoginPresenter!!.updateDingdan<Unit>(paramStr) { code, msg, _ ->
                 mActivity!!.closeProgressDialog()
                 toast(msg!!)
                 if (CodeUtils.isSuccess(code)) {
@@ -371,13 +369,13 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         mRoomPopwindow!!.setWidth(mBinding!!.llRoom.width)
         mRoomPopwindow!!.popDatas = lists.filterStringArrayName()
         mRoomPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewId: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
                 mRoomPopwindow!!.closePop()
                 mCurrentServiceItem.mServiceEditModule.roomNum = lists[position].zhongfangBianma
-
+                mCurrentServiceItem.mServiceEditModule.roomName = lists[position].zhongfangMingcheng
             }
 
         }
@@ -396,7 +394,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         mShoupaiPopwindow!!.setWidth(mBinding!!.llCard.width)
         mShoupaiPopwindow!!.popDatas = lists.filterShoupaiStringArrayName()
         mShoupaiPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewId: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -421,7 +419,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         mBuchaPopwindow!!.needTransation = true
         mBuchaPopwindow!!.popDatas = mutableListOf("否", "是")
         mBuchaPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewId: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -443,7 +441,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
         mReiceverPopwindow!!.setWidth(mBinding!!.llReciverName.width)
         mReiceverPopwindow!!.popDatas = lists.filterReiceverNameStringArrayName()
         mReiceverPopwindow!!.mItemClick = object : OnItemClick {
-            override fun onItemClick(itemView: View, position: Int, instance: Any, viewid: Int) {
+            override fun onItemClick(itemView: View, position: Int, instance: Any, viewId: Int) {
             }
 
             override fun onItemClick(itemView: View, position: Int) {
@@ -487,7 +485,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     private fun MutableList<RoomAndCardModule.Room>.filterStringArrayName(): MutableList<String> {
         val result = mutableListOf<String>()
         this.forEach {
-            result.add(it.zhongfangBianma)
+            result.add(it.zhongfangMingcheng)
         }
         return result
     }
@@ -498,7 +496,6 @@ class ServiceAllItemsEditFragment : BaseFragment() {
             if (!mSelectedShoupaiHao.contains(it.shoupaihao)) {
                 result.add(it.shoupaihao)
             }
-
         }
         return result
     }
@@ -514,7 +511,7 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     /**
      * 弹出popwindow 知道popwindow类型
      */
-    fun showPop(popwindow: BasePopupWindow?, view: View) {
+    private fun showPop(popwindow: BasePopupWindow?, view: View) {
         if (popwindow!!.isShowing()) {
             popwindow.closePop()
         }
@@ -524,8 +521,8 @@ class ServiceAllItemsEditFragment : BaseFragment() {
     /**
      * close popwindow制定popwindow
      */
-    fun closePopWindow(popwindow: BasePopupWindow?): Boolean {
-        if (null != popwindow && popwindow!!.isShowing()) {
+    private fun closePopWindow(popwindow: BasePopupWindow?): Boolean {
+        if (null != popwindow && popwindow.isShowing()) {
             popwindow.closePop()
             return true
         }

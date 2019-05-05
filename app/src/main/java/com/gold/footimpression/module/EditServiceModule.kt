@@ -70,6 +70,14 @@ class EditServiceModule() : BaseObservable(),Cloneable {
             field = value
             notifyPropertyChanged(BR.roomNum)
         }
+    //钟房名称
+    var roomName = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.roomName)
+        }
 
     //手牌号
     var shoupaiNumValue = ""

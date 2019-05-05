@@ -154,8 +154,8 @@ class ServiceItemsEditFragment : BaseFragment() {
                             }
                         }
 
-                        if (mCurrentServiceItem.mServiceEditModule.roomNum.equals("")) {
-                            toast(R.string.please_select_room)
+                        if (mCurrentServiceItem.mServiceEditModule.roomName.equals("")) {
+                            toast(R.string.please_room)
                             return
                         }
                         if (mCurrentServiceItem.mServiceEditModule.shoupaiNumValue.equals("")) {
@@ -449,6 +449,7 @@ class ServiceItemsEditFragment : BaseFragment() {
                 mRoomPopwindow!!.closePop()
 //                roomNum.set(lists[position].zhongfangBianma)
                 mCurrentServiceItem.mServiceEditModule.roomNum = lists[position].zhongfangBianma
+                mCurrentServiceItem.mServiceEditModule.roomName = lists[position].zhongfangMingcheng
 
             }
 
@@ -534,7 +535,7 @@ class ServiceItemsEditFragment : BaseFragment() {
     private fun MutableList<RoomAndCardModule.Room>.filterStringArrayName(): MutableList<String> {
         val result = mutableListOf<String>()
         this.forEach {
-            result.add(it.zhongfangBianma)
+            result.add(it.zhongfangMingcheng)
         }
         return result
     }

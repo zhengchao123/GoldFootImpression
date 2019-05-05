@@ -85,7 +85,7 @@
     <string name="shagnzhong_shijian">上钟时间</string>
     <string name="xiazhong_shijian">下钟时间</string>
     <string name="over_time">结束倒计时</string>
-    <string name="room_name">钟房名称</string>
+    <string name="room_name">钟房名称:</string>
     <string name="stay_overnight">是否留宿</string>
     <string name="vip_num">会员号</string>
     <string name="vip_title_name">会员姓名</string>
@@ -131,4 +131,5 @@
     <string name="refresh_success">刷新成功</string>
     <string name="has_un_edti_service">还有未录入的订单项目，请完成</string>
     <string name="edit">编辑</string>
+    <string name="please_room">请选择房间</string>
 </resources>

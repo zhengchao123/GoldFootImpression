@@ -202,7 +202,7 @@ class ServiceItemsFragment : BaseFragment() {
                 if (null != timeModule) timeModule!!.fullTime!! else "",
                 if (null != timeModule) timeModule!!.shortTime!! else "",
                 serviceCode,
-                "true"
+                ""
             ) { code, msg, result ->
                 mActivity!!.closeProgressDialog()
                 if (isFresh) {
