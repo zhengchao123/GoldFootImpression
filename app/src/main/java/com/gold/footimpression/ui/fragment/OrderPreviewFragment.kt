@@ -93,20 +93,25 @@ class OrderPreviewFragment : BaseFragment() {
                 when (view!!.id) {
                     R.id.tv_history -> {
                         searchText.set("")
-                        mCurrentOrdersAdapter!!.update(mutableListOf())
-                        if (!history.get()!!) {
-                            orderCreateDetail.set(false)
-                        }
                         history.set(true)
-                        if (mOrderHistoryDetailLists.size == 0) {
-                            loadHistoryList("0", "1000")
-                        } else {
-                            mCurrentHistoryOrdersAdapter!!.update(mOrderHistoryDetailLists)
+                        if (mCurrentOrdersAdapter != null) {
+
+                            mCurrentOrdersAdapter!!.update(mutableListOf())
+                            if (!history.get()!!) {
+                                orderCreateDetail.set(false)
+                            }
+
+                            if (mOrderHistoryDetailLists.size == 0) {
+                                loadHistoryList("0", "1000")
+                            } else {
+                                mCurrentHistoryOrdersAdapter!!.update(mOrderHistoryDetailLists)
+                            }
                         }
+
                     }
                     R.id.tv_current -> {
                         searchText.set("")
-                        if (history.get()!!) {
+                        if (history.get()!! && mCurrentOrdersAdapter != null) {
                             orderCreateDetail.set(false)
                             mCurrentOrdersAdapter!!.update(mOrderDetailLists)
                         }
@@ -136,7 +141,7 @@ class OrderPreviewFragment : BaseFragment() {
                         editZengzhi.set(false)
                         if (!history.get()!!) {
                             val result = mOrderDetailLists.searchByLeftKey(searchKey)
-                            if (result.size > 0) {
+                            if (result.size > 0 && mCurrentOrdersAdapter != null) {
                                 mCurrentOrdersAdapter!!.update(result)
                             }
 
@@ -174,13 +179,14 @@ class OrderPreviewFragment : BaseFragment() {
     private fun getPrintModule(): PrintModule {
         var printModule = PrintModule()
         printModule.dingdanhao = mOrderDetailLists[mCurrentOrderSelectPosition].dingdanhao
-        printModule.jiedaiName = mOrderDetailLists[mCurrentOrderSelectPosition].jiedaiName
+        printModule.dingdanUid = mOrderDetailLists[mCurrentOrderSelectPosition].dingdanUid
+        printModule.jiedaiGongName = mOrderDetailLists[mCurrentOrderSelectPosition].jiedaiName
         printModule.total =
             mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.getAllAmount()
 
         val room = PrintModule.Room()
-        room.fangjianhao = mOrderDetailLists[mCurrentOrderSelectPosition].zhongfangBianma
-        room.services = mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.getServices(
+        room.fanjianhao = mOrderDetailLists[mCurrentOrderSelectPosition].zhongfangBianma
+        room.slicks = mOrderDetailLists[mCurrentOrderSelectPosition].orderEditIncrements.getServices(
             mOrderDetailLists[mCurrentOrderSelectPosition].shoupaihao
         )
         printModule.rooms.add(room)
@@ -233,10 +239,17 @@ class OrderPreviewFragment : BaseFragment() {
                     mBinding!!.swipeFreshLayout.isRefreshing = false
                     if (CodeUtils.isSuccess(code)) {
                         toast(R.string.refresh_success)
-
+//192.168.0.253  9999
                         mOrderDetailLists = result!!
                         mOrderDetailLists.add(0, OrderDetailModule(true))
-                        mBinding!!.currentOrderAdapter!!.update(mOrderDetailLists)
+                        if (mCurrentOrdersAdapter == null) {
+                            mCurrentOrdersAdapter = mOrderDetailLists.putToAdapter()
+                            mBinding!!.currentOrderAdapter = mCurrentOrdersAdapter
+                        } else {
+                            mBinding!!.currentOrderAdapter!!.update(mOrderDetailLists)
+                        }
+
+
                     } else {
                         toast(msg!!)
                     }
@@ -282,7 +295,13 @@ class OrderPreviewFragment : BaseFragment() {
                     mOrderHistoryDetailLists.forEach {
                         it.history = true
                     }
-                    mCurrentHistoryOrdersAdapter!!.update(mOrderHistoryDetailLists)
+                    if (null == mCurrentHistoryOrdersAdapter) {
+                        mCurrentHistoryOrdersAdapter = mOrderHistoryDetailLists.putToAdapter()
+                        mBinding!!.historyOrderAdapter = mCurrentHistoryOrdersAdapter
+                    } else {
+                        mCurrentHistoryOrdersAdapter!!.update(mOrderHistoryDetailLists)
+                    }
+
 
                 } else {
                     if (CodeUtils.isSuccess(code)) {
@@ -689,7 +708,7 @@ class OrderPreviewFragment : BaseFragment() {
                 val service = PrintModule.Room.Service()
                 service.amount = it.amount
                 service.dingdanJine = it.allAmount()
-                service.fuwuMingcheng = it.zengzhiFuwuMingcheng
+                service.zengzhiFuwuMingcheng = it.zengzhiFuwuMingcheng
                 service.price = it.price
                 service.shoupaihao = shoupai
                 results.add(service)
@@ -846,8 +865,6 @@ class OrderPreviewFragment : BaseFragment() {
             loadOrderList("", "", false)
         }
     }
-
-
 }
 
 

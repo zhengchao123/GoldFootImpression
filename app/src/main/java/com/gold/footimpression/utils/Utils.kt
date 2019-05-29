@@ -88,7 +88,8 @@ object Utils {
     }
 
     fun getPrintAddress(): String? {
-        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_PRINT_ADDRESS)
+//        return SharedPreferencesUtils.init(GoldFootApplication.getInstance()).getString(Constants.USER_PRINT_ADDRESS)
+        return "http://192.168.0.253:9999"
     }
 
     fun savePrintAddress(printAddress: String) {

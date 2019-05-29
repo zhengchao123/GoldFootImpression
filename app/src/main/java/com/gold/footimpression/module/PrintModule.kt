@@ -11,19 +11,20 @@ import com.google.gson.Gson
 class PrintModule() : BaseObservable() {
 
     var dingdanhao = ""
-    var jiedaiName = ""
+    var dingdanUid = ""
+    var jiedaiGongName = ""
     var total = ""
 
     var rooms = mutableListOf<Room>()
 
     class Room {
-        var fangjianhao = ""
-        var services = mutableListOf<Service>()
+        var fanjianhao = ""
+        var slicks = mutableListOf<Service>()
 
         class Service {
 
             var shoupaihao = ""
-            var fuwuMingcheng = ""
+            var zengzhiFuwuMingcheng = ""
             var amount = ""
             var price = ""
             var dingdanJine = ""

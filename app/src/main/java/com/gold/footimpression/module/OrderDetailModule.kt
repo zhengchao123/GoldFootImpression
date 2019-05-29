@@ -42,6 +42,7 @@ class OrderDetailModule(firstItem: Boolean = false) : BaseObservable() {
     var jiedaiGonghao = "-"//	string	接待工号
     var jiedaiName = "-"//	string	接待姓名
     var jiesuanStatus = 0//	int	是否结算->说明：0：否；1：是
+    var jiesuanBeizhu  = ""//	int	是否结算->说明：0：否；1：是
     var jishiGonghao = "-"//	string	技师工号
     var jishiName = "-"//	string	技师姓名
     var mendianBianma = "-"//	string	门店编码

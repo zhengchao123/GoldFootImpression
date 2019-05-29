@@ -67,6 +67,15 @@ class RoomStateModule() : BaseObservable() {
 
     }
 
+
+
+    var zhongfangMingcheng = ""
+        @Bindable
+        get() = field
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.zhongfangMingcheng)
+        }
     var zhongfangBianma = ""
         @Bindable
         get() = field

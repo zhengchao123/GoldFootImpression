@@ -138,7 +138,7 @@
                             android:textColor="#242C40"
                             android:gravity="center"
                             android:textSize="15sp"
-                            android:text="@string/room_name"/>
+                            android:text="@string/room_name_no"/>
 
                     <TextView
                             android:layout_width="0dp"

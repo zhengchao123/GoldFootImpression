@@ -85,7 +85,11 @@
     <string name="shagnzhong_shijian">上钟时间</string>
     <string name="xiazhong_shijian">下钟时间</string>
     <string name="over_time">结束倒计时</string>
+    <string name="room_la_name">钟房名称</string>
+    <string name="jiesuan_beizhu">结算备注</string>
     <string name="room_name">钟房名称:</string>
+    <string name="zhongfang_code">钟房编码</string>
+    <string name="room_name_no">钟房名称</string>
     <string name="stay_overnight">是否留宿</string>
     <string name="vip_num">会员号</string>
     <string name="vip_title_name">会员姓名</string>

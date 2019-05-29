@@ -28,8 +28,8 @@ android {
     buildTypes {
         release {
             buildConfigField("boolean", "RELEASE", "true")
-            buildConfigField("String", "URL", "\"http://120.79.29.181:9000/pc_verify/\"")
-            buildConfigField("String", "URL_NO_VERIFY", "\"http://120.79.29.181:9000/pc/\"")
+            buildConfigField("String", "URL", "\"https://www.cdjzyx.com:9001/pc_verify/\"")
+            buildConfigField("String", "URL_NO_VERIFY", "\"https://www.cdjzyx.com:9001/pc/\"")
             //是否移除无用资源
             shrinkResources true
             //是否混淆
@@ -39,8 +39,8 @@ android {
         }
         debug {
             buildConfigField("boolean", "RELEASE", "false")
-            buildConfigField("String", "URL", "\"http://120.79.29.181:9000/pc_verify/\"")
-            buildConfigField("String", "URL_NO_VERIFY", "\"http://120.79.29.181:9000/pc/\"")
+            buildConfigField("String", "URL", "\"https://www.cdjzyx.com:9001/pc_verify/\"")
+            buildConfigField("String", "URL_NO_VERIFY", "\"https://www.cdjzyx.com:9001/pc/\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue("string", "productName", "金足印象debug")

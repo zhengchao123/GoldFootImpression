@@ -93,7 +93,7 @@ class ServiceItemsFragment : BaseFragment() {
             if (!time.equals(timeModule) || !dcode.equals(doorCode)) {
                 doorCode = data!!["doorCode"] as String
                 timeModule = data!!["time"] as TimeModule
-                visible.set(false)
+                visible.set(if(selectedPlanners.size > 0) true else false)
                 loadServiceItems()
             }
 

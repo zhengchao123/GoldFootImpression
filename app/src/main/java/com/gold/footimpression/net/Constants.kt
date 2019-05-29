@@ -54,7 +54,7 @@ object Constants {
 
     val downloaadUrl = "http://pic.58pic.com/58pic/15/63/07/42Q58PIC42U_1024.jpg"
 
-
+//    192.168.0.114
     val LOGIN_TOKEN_INFO = "user_token"
     val USER_BUMEN_CODE = "user_bumen_code"
     val USER_BUMEN_NAME = "user_bumen_name"

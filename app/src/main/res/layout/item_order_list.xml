@@ -102,26 +102,6 @@
                     android:textColor="@color/text_242c40_color"
                     android:text="@{orderDetailModule.firstItem?@string/custom_la_source:orderDetailModule.kehuLaiyuan}"
             />
-
-            <TextView
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/order_code:orderDetailModule.dingdanhao}"
-            />
-            <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/order_hanghao:orderDetailModule.dingdanSeq}"
-            />
-
             <TextView
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
@@ -133,33 +113,6 @@
             />
 
             <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/item_name:orderDetailModule.fuwuXiangmuMingcheng}"
-            />
-            <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/item_amount:orderDetailModule.dingdanJineFw}"
-            />
-            <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/item_during:orderDetailModule.fuwuShichang}"
-            />
-            <TextView
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -168,36 +121,17 @@
                     android:textColor="@color/text_242c40_color"
                     android:text="@{orderDetailModule.firstItem?@string/daodian_time:orderDetailModule.daodianTime}"
             />
-
-
-
-            <TextView
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/shagnzhong_shijian:orderDetailModule.shangzhongShijian}"
-            />
-            <TextView
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/xiazhong_shijian:orderDetailModule.xiazhongShijian}"
-            />
             <!--<TextView-->
-                    <!--android:layout_width="100dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:textSize="@dimen/text_size_15"-->
-                    <!--android:gravity="center"-->
-                    <!--android:textColor="@color/text_242c40_color"-->
-                    <!--android:text="@{orderDetailModule.firstItem?@string/over_time:orderDetailModule.daojishi}"-->
+            <!--android:layout_width="90dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:textSize="@dimen/text_size_15"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/text_242c40_color"-->
+            <!--android:text="@{orderDetailModule.firstItem?@string/zhongfang_code:orderDetailModule.zhongfangBianma}"-->
             <!--/>-->
+
+
             <TextView
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
@@ -205,7 +139,7 @@
                     android:textSize="@dimen/text_size_15"
                     android:gravity="center"
                     android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/room_name:orderDetailModule.zhongfangMingcheng}"
+                    android:text="@{orderDetailModule.firstItem?@string/room_la_name:orderDetailModule.zhongfangMingcheng}"
             />
             <TextView
                     android:layout_width="90dp"
@@ -215,34 +149,6 @@
                     android:gravity="center"
                     android:textColor="@color/text_242c40_color"
                     android:text="@{orderDetailModule.firstItem?@string/shoupai_la_num:orderDetailModule.shoupaihao}"
-            />
-            <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/stay_overnight:orderDetailModule.shifouLiusu}"
-            />
-
-            <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/vip_num:orderDetailModule.huiyuanTel}"
-            />
-            <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/text_size_15"
-                    android:gravity="center"
-                    android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/vip_title_name:orderDetailModule.huiyuanName}"
             />
             <TextView
                     android:layout_width="90dp"
@@ -263,24 +169,44 @@
                     android:text="@{orderDetailModule.firstItem?@string/order_state:orderDetailModule.dingdanStatusName}"
             />
 
+
             <TextView
-                    android:layout_width="90dp"
+                    android:layout_width="210dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textSize="@dimen/text_size_15"
                     android:gravity="center"
                     android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/should_pay:orderDetailModule.weizhifu}"
+                    android:text="@{orderDetailModule.firstItem?@string/order_code:orderDetailModule.dingdanhao}"
             />
             <TextView
-                    android:layout_width="90dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textSize="@dimen/text_size_15"
                     android:gravity="center"
                     android:textColor="@color/text_242c40_color"
-                    android:text="@{orderDetailModule.firstItem?@string/actual_pay:orderDetailModule.yizhifu}"
+                    android:text="@{orderDetailModule.firstItem?@string/order_hanghao:orderDetailModule.dingdanSeq}"
+            />
 
+
+            <TextView
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/shagnzhong_shijian:orderDetailModule.shangzhongShijian}"
+            />
+            <TextView
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/xiazhong_shijian:orderDetailModule.xiazhongShijian}"
             />
 
             <TextView
@@ -302,6 +228,93 @@
                     android:text="@{orderDetailModule.firstItem?@string/planner_name:orderDetailModule.jishiName}"
             />
 
+            <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/vip_num:orderDetailModule.huiyuanTel}"
+            />
+            <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/vip_title_name:orderDetailModule.huiyuanName}"
+            />
+
+
+            <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/item_name:orderDetailModule.fuwuXiangmuMingcheng}"
+            />
+            <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/item_amount:orderDetailModule.dingdanJineFw}"
+            />
+
+            <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/item_during:orderDetailModule.fuwuShichang}"
+            />
+
+            <!--<TextView-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:textSize="@dimen/text_size_15"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/text_242c40_color"-->
+            <!--android:text="@{orderDetailModule.firstItem?@string/over_time:orderDetailModule.daojishi}"-->
+            <!--/>-->
+
+            <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/should_pay:orderDetailModule.weizhifu}"
+            />
+            <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/actual_pay:orderDetailModule.yizhifu}"
+
+            />
+            <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:text="@{orderDetailModule.firstItem?@string/stay_overnight:orderDetailModule.shifouLiusu}"
+            />
 
             <TextView
                     android:layout_width="90dp"
@@ -321,6 +334,20 @@
                     android:textColor="@color/text_242c40_color"
                     android:text="@{orderDetailModule.firstItem?@string/reicever_va_name:orderDetailModule.jiedaiName}"
             />
+
+            <!--ddddd-->
+            <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_15"
+                    android:gravity="center"
+                    android:textColor="@color/text_242c40_color"
+                    android:ellipsize="end"
+                    android:text="@{orderDetailModule.firstItem?@string/jiesuan_beizhu:orderDetailModule.jiesuanBeizhu}"
+            />
+
+
         </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
